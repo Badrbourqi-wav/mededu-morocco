@@ -335,13 +335,6 @@ export default function DetailedModulePage() {
         </div>
       )}
 
-      {/* TAB: DIAGRAMS */}
-      {activeTab === 'DIAGRAMS' && (
-        <div className="space-y-6">
-          <InteractiveDiagram diagram={CARDIOLOGY_DIAGRAM} />
-        </div>
-      )}
-
       {/* TAB: QCMS */}
       {activeTab === 'QCMS' && (
         <div className="glass-panel rounded-2xl p-6 border border-slate-800 bg-slate-900/80">
