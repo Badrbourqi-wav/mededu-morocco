@@ -1,0 +1,294 @@
+// prisma/schema.prisma
+// MedEdu Morocco — Complete Production Database Schema
+// Moroccan Medical Reform (Réforme 6 Ans / 12 Semestres)
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ─────────────────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────────────────
+
+enum Role {
+  STUDENT
+  ADMIN
+  PROFESSOR
+}
+
+enum CycleCategory {
+  PRECLINICAL // Cycle 1: S1-S4 (Sciences Fondamentales & Précliniques)
+  CLINICAL    // Cycle 2: S5-S10 (Pathologies, Sémiologie & Clinique)
+  INTERNSHIP  // Cycle 3: S11-S12 (Internat, Stage Hospitalier & Thèse PFE)
+}
+
+enum QuestionDifficulty {
+  EASY
+  MEDIUM
+  HARD
+  HIGH_YIELD_PFE // Critical exam question for PFE / Résidanat National
+}
+
+enum AnimatedProcessType {
+  CARDIAC_ACTION_POTENTIAL
+  CARDIAC_CYCLE
+  RENIN_ANGIOTENSIN_ALDOSTERONE
+  SYNAPTIC_TRANSMISSION
+  NEUROMUSCULAR_JUNCTION
+  RENAL_FILTRATION
+  RESPIRATORY_MECHANICS
+  COAGULATION_CASCADE
+  COMPLEMENT_SYSTEM
+  CELL_CYCLE
+}
+
+enum QuizType {
+  CHAPTER     // 5-10 QCMs at end of each chapter/lesson
+  MODULE_EXAM // Comprehensive 25+ QCMs covering whole module
+  RANDOM_PRACTICE // Cross-module random session
+}
+
+// ─────────────────────────────────────────────────────────
+// USER & AUTH
+// ─────────────────────────────────────────────────────────
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  passwordHash   String
+  role           Role     @default(STUDENT)
+  medicalFaculty String?  // FMPR (Rabat), FMPC (Casablanca), FMPM (Marrakech), FMPT (Tanger), FMPF (Fès)
+  currentYear    Int      @default(1) // 1-6
+  currentSemCode String?  // e.g., "S5"
+  avatarUrl      String?
+  studyStreak    Int      @default(0) // Days in a row
+  totalStudyHours Float   @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  progress        UserProgress[]
+  chapterProgress ChapterProgress[]
+  quizResults     QuizResult[]
+  weaknessProfile WeaknessProfile[]
+
+  @@index([email])
+}
+
+// ─────────────────────────────────────────────────────────
+// CURRICULUM STRUCTURE
+// ─────────────────────────────────────────────────────────
+
+model Semester {
+  id          String        @id @default(cuid())
+  code        String        @unique // S1, S2 ... S12
+  title       String        // e.g., "Semestre 5 — Sémiologie & Pathologie Cardiovasculaire"
+  number      Int           @unique // 1 to 12
+  cycle       CycleCategory
+  description String?       @db.Text
+  icon        String?       // Lucide icon name
+  colorHex    String?       // e.g., "#0d9488" for theming
+
+  modules     Module[]
+
+  @@index([number])
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  code        String   @unique // e.g., MOD-CARDIO-S5, MOD-NEURO-S6
+  title       String   // e.g., "Cardiologie & Pathologies Vasculaires"
+  description String   @db.Text
+  icon        String   // Lucide icon identifier
+  duration    Int      // Official duration in hours (CNOM referential)
+  order       Int      @default(0) // Order within the semester
+  semesterId  String
+  semester    Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+
+  chapters    Chapter[]
+  moduleQuiz  ModuleQuiz?
+  progress    UserProgress[]
+  bankEntries GlobalQuestionBank[]
+
+  @@index([semesterId])
+  @@index([code])
+}
+
+model Chapter {
+  id                  String               @id @default(cuid())
+  title               String
+  order               Int                  // Order within the module
+  summary             String?              @db.Text
+  content             String               @db.Text  // Rich markdown/HTML with clinical callouts
+  highYieldNotes      String?              @db.Text  // PFE critical summary
+  diagramsJson        Json?                // SVG hotspot coordinates & annotations for InteractiveDiagram
+  animatedProcessType AnimatedProcessType? // Links to AnimatedPhysiology component
+  linkedDiagramId     String?              // Optional reference to a standard diagram
+  durationMins        Int      @default(30)
+  moduleId            String
+  module              Module               @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  chapterQuiz         ChapterQuiz?
+  progress            ChapterProgress[]
+
+  @@unique([moduleId, order])
+  @@index([moduleId])
+}
+
+// ─────────────────────────────────────────────────────────
+// QUIZ SYSTEM — THREE LEVELS
+// ─────────────────────────────────────────────────────────
+
+/// Level 1 — Chapter-level quiz (5-10 targeted QCMs, appears at end of each chapter)
+model ChapterQuiz {
+  id          String   @id @default(cuid())
+  title       String
+  passingScore Int     @default(60) // Percentage
+  chapterId   String   @unique
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  questions   ChapterQuestion[]
+  results     QuizResult[]
+}
+
+model ChapterQuestion {
+  id            String             @id @default(cuid())
+  chapterQuizId String
+  chapterQuiz   ChapterQuiz        @relation(fields: [chapterQuizId], references: [id], onDelete: Cascade)
+  prompt        String             @db.Text
+  optionsJson   Json               // [{ id: "A", text: "..." }, ...]
+  correctOption String             // "A", "B", "C", "D", or "E"
+  explanation   String             @db.Text
+  difficulty    QuestionDifficulty @default(MEDIUM)
+  clinicalPearl String?            @db.Text // Extra high-yield note shown post-answer
+  imageUrl      String?            // Optional diagram reference
+
+  @@index([chapterQuizId])
+}
+
+/// Level 2 — Full module comprehensive exam (25-50 QCMs with timer)
+model ModuleQuiz {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?  @db.Text
+  durationMins Int      @default(60) // Exam timer in minutes
+  passingScore Int      @default(70)
+  moduleId     String   @unique
+  module       Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  questions    ModuleQuestion[]
+  results      QuizResult[]
+}
+
+model ModuleQuestion {
+  id            String             @id @default(cuid())
+  moduleQuizId  String
+  moduleQuiz    ModuleQuiz         @relation(fields: [moduleQuizId], references: [id], onDelete: Cascade)
+  prompt        String             @db.Text
+  optionsJson   Json
+  correctOption String
+  explanation   String             @db.Text
+  difficulty    QuestionDifficulty @default(MEDIUM)
+  topicTag      String?            // e.g., "ECG", "HTA", "Insuffisance Cardiaque"
+  imageUrl      String?
+
+  @@index([moduleQuizId])
+}
+
+/// Level 3 — Global centralized QCM bank (drives the Random Practice cross-module mode)
+model GlobalQuestionBank {
+  id            String             @id @default(cuid())
+  prompt        String             @db.Text
+  optionsJson   Json               // [{ id: "A", text: "..." }, ...]
+  correctOption String
+  explanation   String             @db.Text
+  difficulty    QuestionDifficulty @default(MEDIUM)
+  semesterCode  String             // "S1" to "S12"
+  moduleId      String
+  module        Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  topicTag      String?            // e.g., "Anatomie", "Physiologie", "Pharmacologie"
+  disciplineTag String?            // e.g., "Cardiologie", "Neurologie", "Pneumologie"
+  imageUrl      String?
+  clinicalPearl String?            @db.Text
+  isVerified    Boolean            @default(false) // Admin-validated question
+  source        String?            // e.g., "Épreuve PFE 2023", "Résidanat 2022"
+  createdAt     DateTime           @default(now())
+
+  @@index([semesterCode])
+  @@index([moduleId])
+  @@index([difficulty])
+  @@index([disciplineTag])
+}
+
+// ─────────────────────────────────────────────────────────
+// PROGRESS TRACKING & ANALYTICS
+// ─────────────────────────────────────────────────────────
+
+model UserProgress {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId       String
+  module         Module    @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  completionRate Float     @default(0.0) // 0.0 to 100.0 percent
+  lastAccessedAt DateTime  @updatedAt
+
+  @@unique([userId, moduleId])
+  @@index([userId])
+}
+
+model ChapterProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  readTimeSeconds Int  @default(0) // Tracked reading time
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([userId])
+}
+
+model QuizResult {
+  id               String     @id @default(cuid())
+  userId           String
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizType         QuizType
+  // Polymorphic quiz references (only one will be set)
+  chapterQuizId    String?
+  chapterQuiz      ChapterQuiz? @relation(fields: [chapterQuizId], references: [id])
+  moduleQuizId     String?
+  moduleQuiz       ModuleQuiz?  @relation(fields: [moduleQuizId], references: [id])
+  // Score data
+  score            Float      // Percentage 0-100
+  totalQuestions   Int
+  correctCount     Int
+  timeTakenSeconds Int?       // For timed exams
+  answerLog        Json?      // [{ questionId, selectedOption, isCorrect }]
+  completedAt      DateTime   @default(now())
+
+  @@index([userId])
+  @@index([quizType])
+}
+
+/// Aggregated per-topic weakness tracking for personalized recommendations
+model WeaknessProfile {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  disciplineTag String  // e.g., "Cardiologie", "Neurologie"
+  semesterCode String
+  accuracy     Float    @default(0.0) // Running average accuracy 0-100
+  questionsAttempted Int @default(0)
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, disciplineTag, semesterCode])
+  @@index([userId])
+}
