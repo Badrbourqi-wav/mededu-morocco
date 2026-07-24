@@ -320,37 +320,114 @@ export default function CommunityChat() {
 
   const openCtx = (e: React.MouseEvent, id: string) => { e.preventDefault(); setCtxMenu({ id, x: e.clientX, y: e.clientY }); };
 
+  // ── waveform bars (stable per message) ───────────────────────────────────
+  const waveform = (id: string) => Array.from({ length: 28 }, (_, i) => {
+    const seed = id.charCodeAt(i % id.length) + i * 7;
+    return 20 + (seed % 65);
+  });
+
   return (
-    <div className="flex flex-col rounded-3xl overflow-hidden border border-white/8 shadow-2xl" style={{ height: 'calc(100vh - 5rem)', background: '#000', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif' }}
+    <>
+      {/* iOS-style global CSS */}
+      <style>{`
+        .ios-chat-scroll::-webkit-scrollbar { display: none; }
+        .ios-chat-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Bubble tail — mine (right) */
+        .bubble-mine::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: -7px;
+          width: 14px;
+          height: 18px;
+          background: #0A84FF;
+          clip-path: polygon(0 0, 0 100%, 100% 100%);
+          border-radius: 0 0 4px 0;
+        }
+
+        /* Bubble tail — other (left) */
+        .bubble-other::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: -7px;
+          width: 14px;
+          height: 18px;
+          background: #1C1C1E;
+          clip-path: polygon(100% 0, 100% 100%, 0 100%);
+          border-radius: 0 0 0 4px;
+        }
+
+        /* Bubble tail — FLAKKAI (left, teal) */
+        .bubble-ai::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: -7px;
+          width: 14px;
+          height: 18px;
+          background: #0D2A24;
+          clip-path: polygon(100% 0, 100% 100%, 0 100%);
+          border-radius: 0 0 0 4px;
+        }
+
+        /* Message appear animation */
+        @keyframes msg-in {
+          from { opacity: 0; transform: scale(0.92) translateY(6px); }
+          to   { opacity: 1; transform: scale(1)    translateY(0); }
+        }
+        .msg-appear { animation: msg-in 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+        /* Audio waveform playing */
+        @keyframes bar-dance {
+          0%,100% { transform: scaleY(1); }
+          50%      { transform: scaleY(1.8); }
+        }
+        .bar-playing { animation: bar-dance 0.5s ease-in-out infinite; }
+
+        /* Typing dots */
+        @keyframes dot-bounce {
+          0%,80%,100% { transform: translateY(0); }
+          40%          { transform: translateY(-5px); }
+        }
+      `}</style>
+
+    <div className="flex flex-col rounded-3xl overflow-hidden shadow-2xl"
+      style={{ height: 'calc(100vh - 5rem)', background: '#000000', fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif', border: '1px solid rgba(255,255,255,0.07)' }}
       onClick={() => setCtxMenu(null)}>
 
-      {/* Header */}
-      <div className="shrink-0 px-5 pt-4 pb-3 border-b border-white/6" style={{ background: 'rgba(15,15,15,0.95)' }}>
+      {/* ─── iOS Header ─── */}
+      <div className="shrink-0 px-4 pt-3 pb-3" style={{ background: 'rgba(18,18,18,0.98)', borderBottom: '0.5px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)' }}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #14b8a6, #0891b2)' }}>
-            <Users className="w-5 h-5 text-white" />
+          {/* Group avatar with glow */}
+          <div className="relative shrink-0">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#14b8a6 0%,#0891b2 100%)', boxShadow: '0 0 12px rgba(20,184,166,0.4)' }}>
+              <Users className="w-[18px] h-[18px] text-white" />
+            </div>
+            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#30D158] border-2 border-black" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-semibold text-[15px]">Communauté MedEdu</p>
-            <p className="text-[#8E8E93] text-[12px]">47 en ligne · Tape <span className="text-teal-400 font-mono text-[11px]">/flakkai</span> pour l'IA</p>
+            <p style={{ color: '#fff', fontSize: 16, fontWeight: 600, letterSpacing: '-0.3px', lineHeight: 1.2 }}>Communauté MedEdu</p>
+            <p style={{ color: '#8E8E93', fontSize: 12, marginTop: 1 }}>47 en ligne · <span style={{ color: '#30D158', fontWeight: 500 }}>FLAKKAI actif</span></p>
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'rgba(20,184,166,0.12)', border: '1px solid rgba(20,184,166,0.2)' }}>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'linear-gradient(135deg,rgba(20,184,166,0.15),rgba(8,145,178,0.1))', border: '0.5px solid rgba(20,184,166,0.25)' }}>
             <Sparkles className="w-3 h-3 text-teal-400" />
-            <span className="text-teal-300 text-[11px] font-bold tracking-wide">FLAKKAI</span>
+            <span style={{ color: '#5AC8FA', fontSize: 11, fontWeight: 700, letterSpacing: '0.5px' }}>FLAKKAI</span>
           </div>
         </div>
       </div>
 
-      {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-5 space-y-1" style={{ background: 'linear-gradient(180deg,#000 0%,#080808 100%)', scrollbarWidth: 'none' }}>
+      {/* ─── Messages ─── */}
+      <div ref={scrollRef} className="ios-chat-scroll flex-1 overflow-y-auto px-4 py-4" style={{ background: '#000', gap: 2, display: 'flex', flexDirection: 'column' }}>
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full gap-4 select-none">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'rgba(20,184,166,0.08)', border: '1px solid rgba(20,184,166,0.15)' }}>
-              <Sparkles className="w-7 h-7" style={{ color: 'rgba(20,184,166,0.4)' }} />
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, userSelect: 'none' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(20,184,166,0.07)', border: '1px solid rgba(20,184,166,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Sparkles style={{ width: 28, height: 28, color: 'rgba(20,184,166,0.35)' }} />
             </div>
-            <div className="text-center">
-              <p className="text-[#48484A] text-[13px] font-medium">Aucun message</p>
-              <p className="text-[#3A3A3C] text-[12px] mt-1">Tapez <span className="text-teal-500/60 font-mono">/flakkai bonjour</span> pour commencer</p>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ color: '#48484A', fontSize: 14, fontWeight: 500 }}>Aucun message pour l'instant</p>
+              <p style={{ color: '#3A3A3C', fontSize: 12, marginTop: 6 }}>Tapez <code style={{ color: 'rgba(20,184,166,0.5)', fontFamily: 'monospace' }}>/flakkai bonjour</code> pour commencer</p>
             </div>
           </div>
         )}
@@ -360,94 +437,145 @@ export default function CommunityChat() {
           const ai = msg.sender === 'flakkai';
           const prevSame = idx > 0 && messages[idx - 1].sender === msg.sender;
           const nextSame = idx < messages.length - 1 && messages[idx + 1].sender === msg.sender;
+          const isLast = !nextSame;
+          const bars = waveform(msg.id);
 
           return (
-            <div key={msg.id} className={`flex flex-col ${mine ? 'items-end' : 'items-start'} ${prevSame ? 'mt-0.5' : 'mt-4'}`}>
+            <div key={msg.id} className={`msg-appear flex flex-col ${mine ? 'items-end' : 'items-start'}`}
+              style={{ marginTop: prevSame ? 2 : 14 }}>
+
+              {/* Sender name */}
               {!mine && !prevSame && (
-                <span className={`text-[11px] font-medium mb-1 ml-9 ${ai ? 'text-teal-400' : 'text-[#8E8E93]'}`}>
-                  {ai ? '✦ FLAKKAI' : msg.senderName}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4, marginLeft: 36 }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: ai ? '#5AC8FA' : '#8E8E93', letterSpacing: '-0.1px' }}>
+                    {ai ? '✦ FLAKKAI' : msg.senderName}
+                  </span>
+                </div>
               )}
 
-              <div className={`flex items-end gap-2 max-w-[80%] ${mine ? 'flex-row-reverse' : 'flex-row'}`}>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, maxWidth: '82%', flexDirection: mine ? 'row-reverse' : 'row' }}>
+
                 {/* Avatar */}
-                <div className={`w-6 h-6 rounded-full shrink-0 text-[9px] font-bold flex items-center justify-center mb-0.5 ${nextSame ? 'opacity-0' : 'opacity-100'}`}
-                  style={{
-                    background: ai ? 'linear-gradient(135deg,#14b8a6,#0891b2)' : mine ? 'linear-gradient(135deg,#0A84FF,#0066CC)' : '#2C2C2E',
-                    color: '#fff',
-                    border: ai || mine ? 'none' : '1px solid rgba(255,255,255,0.08)',
-                  }}>
-                  {ai ? '✦' : msg.senderName.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                <div style={{
+                  width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                  fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: 2, opacity: isLast ? 1 : 0,
+                  background: ai ? 'linear-gradient(135deg,#14b8a6,#0891b2)' : mine ? 'linear-gradient(135deg,#0A84FF,#0055D4)' : '#2C2C2E',
+                  color: '#fff',
+                  boxShadow: ai ? '0 0 8px rgba(20,184,166,0.35)' : mine ? '0 0 8px rgba(10,132,255,0.3)' : 'none',
+                  border: (!ai && !mine) ? '0.5px solid rgba(255,255,255,0.1)' : 'none',
+                  transition: 'opacity 0.15s',
+                }}>
+                  {ai ? '✦' : msg.senderName.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
                 </div>
 
                 {/* Bubble */}
                 <div
                   onContextMenu={e => mine && msg.type === 'text' && !msg.isTyping && openCtx(e, msg.id)}
                   onDoubleClick={e => mine && msg.type === 'text' && !msg.isTyping && openCtx(e, msg.id)}
-                  className={`overflow-hidden ${mine ? 'rounded-[20px] rounded-br-[5px]' : 'rounded-[20px] rounded-bl-[5px]'}`}
+                  className={`relative ${isLast ? (mine ? 'bubble-mine' : ai ? 'bubble-ai' : 'bubble-other') : ''}`}
                   style={{
+                    borderRadius: mine
+                      ? (prevSame ? '18px 18px 6px 18px' : '18px 18px 6px 18px')
+                      : (prevSame ? '18px 18px 18px 6px' : '18px 18px 18px 6px'),
+                    overflow: msg.type === 'image' ? 'hidden' : 'visible',
                     background: mine
-                      ? 'linear-gradient(135deg, #0A84FF 0%, #007AFF 100%)'
+                      ? '#0A84FF'
                       : ai
-                      ? 'linear-gradient(135deg, #0D2A24 0%, #091a16 100%)'
+                      ? 'linear-gradient(145deg,#0f2d26,#0a1f1a)'
                       : '#1C1C1E',
-                    border: ai ? '1px solid rgba(20,184,166,0.2)' : mine ? 'none' : '1px solid rgba(255,255,255,0.05)',
+                    border: ai ? '0.5px solid rgba(20,184,166,0.22)' :
+                            mine ? 'none' :
+                            '0.5px solid rgba(255,255,255,0.06)',
+                    boxShadow: mine ? '0 1px 6px rgba(10,132,255,0.25)' :
+                               ai   ? '0 1px 6px rgba(20,184,166,0.12)' :
+                                      '0 1px 4px rgba(0,0,0,0.5)',
                   }}
                 >
-                  {/* Typing */}
+                  {/* TYPING INDICATOR */}
                   {msg.isTyping && (
-                    <div className="px-4 py-3 flex gap-1 items-center h-10">
-                      {[0, 0.2, 0.4].map((d, i) => (
-                        <span key={i} className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-bounce" style={{ animationDelay: `${d}s` }} />
+                    <div style={{ padding: '10px 16px', display: 'flex', gap: 4, alignItems: 'center', height: 40 }}>
+                      {[0, 160, 320].map((d, i) => (
+                        <span key={i} style={{
+                          width: 7, height: 7, borderRadius: '50%',
+                          background: '#5AC8FA',
+                          display: 'inline-block',
+                          animation: `dot-bounce 0.9s ${d}ms ease-in-out infinite`,
+                        }} />
                       ))}
                     </div>
                   )}
 
-                  {/* Text */}
+                  {/* TEXT */}
                   {!msg.isTyping && msg.type === 'text' && editingId !== msg.id && (
-                    <div className="px-[13px] py-[9px] text-[14.5px] text-white" style={{ whiteSpace: 'pre-line', lineHeight: 1.4 }}>
+                    <div style={{ padding: '9px 14px', fontSize: 15, color: '#fff', whiteSpace: 'pre-line', lineHeight: 1.42, fontWeight: 400, letterSpacing: '-0.1px' }}>
                       <RenderContent text={msg.content} />
-                      {msg.edited && <span className="text-[10px] opacity-40 ml-1">modifié</span>}
+                      {msg.edited && <span style={{ fontSize: 10, opacity: 0.38, marginLeft: 4 }}>modifié</span>}
                     </div>
                   )}
 
-                  {/* Editing */}
+                  {/* EDIT MODE */}
                   {editingId === msg.id && (
-                    <div className="px-2 py-2 flex gap-1 items-center">
+                    <div style={{ padding: '6px 8px', display: 'flex', gap: 4, alignItems: 'center' }}>
                       <input autoFocus value={editValue} onChange={e => setEditValue(e.target.value)}
                         onKeyDown={e => { if (e.key === 'Enter') confirmEdit(); if (e.key === 'Escape') setEditingId(null); }}
-                        className="flex-1 bg-transparent text-white text-[14px] outline-none px-2" />
-                      <button onClick={confirmEdit} className="p-1"><Check className="w-4 h-4 text-green-400" /></button>
-                      <button onClick={() => setEditingId(null)} className="p-1"><X className="w-4 h-4 text-red-400" /></button>
+                        style={{ flex: 1, background: 'transparent', color: '#fff', fontSize: 15, outline: 'none', padding: '0 8px', fontFamily: 'inherit' }} />
+                      <button onClick={confirmEdit} style={{ padding: 4, color: '#30D158' }}><Check style={{ width: 16, height: 16 }} /></button>
+                      <button onClick={() => setEditingId(null)} style={{ padding: 4, color: '#FF453A' }}><X style={{ width: 16, height: 16 }} /></button>
                     </div>
                   )}
 
-                  {/* Image */}
+                  {/* IMAGE — iOS style full bleed */}
                   {msg.type === 'image' && msg.imageUrl && (
-                    <img src={msg.imageUrl} alt="" className="max-w-[220px] max-h-[200px] object-cover" />
+                    <div style={{ borderRadius: 18, overflow: 'hidden', maxWidth: 240 }}>
+                      <img src={msg.imageUrl} alt="" style={{ display: 'block', width: '100%', maxHeight: 220, objectFit: 'cover' }} />
+                    </div>
                   )}
 
-                  {/* Audio */}
+                  {/* AUDIO — iOS waveform */}
                   {msg.type === 'audio' && msg.audioUrl && (
-                    <div className="px-3 py-2.5 flex items-center gap-2.5 min-w-[180px]">
-                      <button onClick={() => togglePlay(msg.id, msg.audioUrl!)}
-                        className="w-8 h-8 rounded-full flex items-center justify-center transition-colors shrink-0"
-                        style={{ background: 'rgba(255,255,255,0.2)' }}>
-                        <span className="text-white text-xs">{playingId === msg.id ? '⏸' : '▶'}</span>
+                    <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, minWidth: 200, maxWidth: 240 }}>
+                      <button
+                        onClick={() => togglePlay(msg.id, msg.audioUrl!)}
+                        style={{
+                          width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+                          background: mine ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.12)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          border: 'none', cursor: 'pointer', transition: 'background 0.15s',
+                          boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                        }}>
+                        <span style={{ color: '#fff', fontSize: 14, marginLeft: playingId === msg.id ? 0 : 2 }}>
+                          {playingId === msg.id ? '⏸' : '▶'}
+                        </span>
                       </button>
-                      <div className="flex items-center gap-px h-5 flex-1">
-                        {Array.from({ length: 22 }).map((_, i) => (
-                          <div key={i} className="flex-1 rounded-full" style={{ height: `${25 + Math.abs(Math.sin(i * 0.9)) * 65}%`, background: 'rgba(255,255,255,0.35)' }} />
+
+                      {/* Waveform */}
+                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 1.5, height: 28, overflow: 'hidden' }}>
+                        {bars.map((h, i) => (
+                          <div key={i}
+                            className={playingId === msg.id ? 'bar-playing' : ''}
+                            style={{
+                              flex: 1, borderRadius: 99,
+                              background: mine ? 'rgba(255,255,255,0.5)' : 'rgba(20,184,166,0.5)',
+                              height: `${h}%`,
+                              transformOrigin: 'center',
+                              animationDelay: `${(i * 37) % 500}ms`,
+                            }}
+                          />
                         ))}
                       </div>
-                      <span className="text-white/50 text-[10px] shrink-0">{msg.audioDuration || '0:00'}</span>
+
+                      <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>
+                        {msg.audioDuration || '0:00'}
+                      </span>
                     </div>
                   )}
                 </div>
               </div>
 
-              {(!nextSame || msg.sender !== messages[idx + 1]?.sender) && (
-                <span className={`text-[10px] mt-1 ${mine ? 'mr-8' : 'ml-8'}`} style={{ color: '#3A3A3C' }}>
+              {/* Timestamp — show after last in group */}
+              {isLast && (
+                <span style={{ fontSize: 11, color: '#48484A', marginTop: 4, [mine ? 'marginRight' : 'marginLeft']: 36, fontWeight: 400 }}>
                   {fmtTime(msg.timestamp)}
                 </span>
               )}
@@ -456,76 +584,87 @@ export default function CommunityChat() {
         })}
       </div>
 
-      {/* Context Menu */}
+      {/* ─── iOS Context Menu (blur sheet) ─── */}
       {ctxMenu && (
-        <div className="fixed z-[999] rounded-2xl overflow-hidden shadow-2xl min-w-[150px]"
-          style={{ top: ctxMenu.y, left: Math.min(ctxMenu.x, (typeof window !== 'undefined' ? window.innerWidth : 400) - 160), background: '#1C1C1E', border: '1px solid rgba(255,255,255,0.1)' }}
+        <div className="fixed z-[999]" style={{ top: ctxMenu.y - 10, left: Math.min(ctxMenu.x, (typeof window !== 'undefined' ? window.innerWidth : 400) - 170) }}
           onClick={e => e.stopPropagation()}>
-          <button onClick={() => { const m = messages.find(x => x.id === ctxMenu.id); if (m) startEdit(m); }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-white text-[14px] hover:bg-white/5 transition-colors border-b border-white/5">
-            <Pencil className="w-4 h-4" style={{ color: '#0A84FF' }} />Modifier
-          </button>
-          <button onClick={() => { deleteMsg(ctxMenu.id); setCtxMenu(null); }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-[14px] text-red-400 hover:bg-red-500/10 transition-colors">
-            <Trash2 className="w-4 h-4" />Supprimer
-          </button>
+          <div style={{ background: 'rgba(44,44,46,0.95)', backdropFilter: 'blur(25px)', borderRadius: 16, overflow: 'hidden', minWidth: 160, boxShadow: '0 8px 32px rgba(0,0,0,0.6)', border: '0.5px solid rgba(255,255,255,0.12)' }}>
+            <button onClick={() => { const m = messages.find(x => x.id === ctxMenu.id); if (m) startEdit(m); }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '13px 16px', color: '#fff', fontSize: 15, fontWeight: 400, background: 'transparent', cursor: 'pointer', borderBottom: '0.5px solid rgba(255,255,255,0.08)', fontFamily: 'inherit' }}
+              className="hover:bg-white/5 transition-colors">
+              <Pencil style={{ width: 16, height: 16, color: '#0A84FF' }} />Modifier
+            </button>
+            <button onClick={() => { deleteMsg(ctxMenu.id); setCtxMenu(null); }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '13px 16px', color: '#FF453A', fontSize: 15, fontWeight: 400, background: 'transparent', cursor: 'pointer', fontFamily: 'inherit' }}
+              className="hover:bg-red-500/10 transition-colors">
+              <Trash2 style={{ width: 16, height: 16 }} />Supprimer
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Recording bar */}
+      {/* ─── Recording Bar ─── */}
       {isRecording && (
-        <div className="shrink-0 flex items-center gap-3 px-4 py-2.5 border-t border-red-500/15" style={{ background: 'rgba(239,68,68,0.08)' }}>
-          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-          <span className="text-red-400 text-[13px] flex-1">Enregistrement…</span>
-          <span className="text-red-400 font-mono text-[13px] font-bold">{fmtDur(recordingSeconds)}</span>
-          <span className="text-red-400/50 text-[11px]">Tap 🎤 pour envoyer</span>
+        <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 16px', background: 'rgba(255,69,58,0.07)', borderTop: '0.5px solid rgba(255,69,58,0.15)' }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#FF453A', display: 'inline-block', animation: 'dot-bounce 1s ease-in-out infinite' }} />
+          <span style={{ color: '#FF453A', fontSize: 13, flex: 1, fontWeight: 500 }}>Enregistrement en cours…</span>
+          <span style={{ color: '#FF453A', fontFamily: 'monospace', fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{fmtDur(recordingSeconds)}</span>
+          <span style={{ color: 'rgba(255,69,58,0.45)', fontSize: 11 }}>Tap 🎤 pour envoyer</span>
         </div>
       )}
 
-      {/* /flakkai autocomplete */}
+      {/* ─── /flakkai autocomplete ─── */}
       {inputValue.startsWith('/f') && !inputValue.startsWith('/flakkai ') && (
-        <div className="shrink-0 px-4 py-2 border-t border-white/5" style={{ background: 'rgba(15,15,15,0.98)' }}>
+        <div style={{ flexShrink: 0, padding: '6px 12px', background: 'rgba(12,12,12,0.98)', borderTop: '0.5px solid rgba(255,255,255,0.06)' }}>
           <button onClick={() => { setInputValue('/flakkai '); inputRef.current?.focus(); }}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-teal-400 text-[13px] w-full hover:bg-white/5 transition-colors"
-            style={{ background: 'rgba(20,184,166,0.08)', border: '1px solid rgba(20,184,166,0.15)' }}>
-            <Sparkles className="w-3.5 h-3.5" />
-            <span className="font-mono font-bold">/flakkai</span>
-            <span className="text-teal-400/60">— Poser une question à l'IA</span>
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '9px 12px', borderRadius: 12, background: 'rgba(20,184,166,0.07)', border: '0.5px solid rgba(20,184,166,0.18)', cursor: 'pointer', fontFamily: 'inherit' }}>
+            <Sparkles style={{ width: 13, height: 13, color: '#5AC8FA' }} />
+            <span style={{ color: '#5AC8FA', fontSize: 13, fontFamily: 'monospace', fontWeight: 700 }}>/flakkai</span>
+            <span style={{ color: 'rgba(90,200,250,0.5)', fontSize: 12 }}>— Poser une question à l'IA</span>
           </button>
         </div>
       )}
 
-      {/* Input */}
-      <div className="shrink-0 px-3 py-3 border-t border-white/5" style={{ background: 'rgba(10,10,10,0.97)' }}>
-        <form onSubmit={sendText} className="flex items-center gap-2">
-          <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImage} className="hidden" />
-          <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2 transition-colors" style={{ color: '#636366' }}>
-            <ImageIcon className="w-5 h-5" />
+      {/* ─── iOS Input Bar ─── */}
+      <div style={{ flexShrink: 0, padding: '8px 12px 10px', background: 'rgba(18,18,18,0.97)', borderTop: '0.5px solid rgba(255,255,255,0.08)' }}>
+        <form onSubmit={sendText} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImage} style={{ display: 'none' }} />
+
+          {/* Image btn */}
+          <button type="button" onClick={() => fileInputRef.current?.click()}
+            style={{ padding: 6, color: '#636366', background: 'transparent', border: 'none', cursor: 'pointer', borderRadius: '50%', transition: 'color 0.15s', flexShrink: 0 }}>
+            <ImageIcon style={{ width: 22, height: 22 }} />
           </button>
 
-          <div className="flex-1 flex items-center px-4 py-2.5 rounded-full" style={{ background: '#1C1C1E', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <input ref={inputRef} type="text" value={inputValue} onChange={e => setInputValue(e.target.value)}
+          {/* Mic btn */}
+          <button type="button" onClick={toggleRecording}
+            style={{ padding: 6, borderRadius: '50%', border: 'none', cursor: 'pointer', flexShrink: 0, transition: 'all 0.15s',
+              color: isRecording ? '#FF453A' : '#636366',
+              background: isRecording ? 'rgba(255,69,58,0.12)' : 'transparent',
+              animation: isRecording ? 'dot-bounce 1s ease-in-out infinite' : 'none',
+            }}>
+            {isRecording ? <MicOff style={{ width: 22, height: 22 }} /> : <Mic style={{ width: 22, height: 22 }} />}
+          </button>
+
+          {/* Text input pill */}
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '9px 16px', borderRadius: 999, background: '#1C1C1E', border: '0.5px solid rgba(255,255,255,0.08)' }}>
+            <input ref={inputRef} type="text" value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) sendText(); }}
               disabled={isRecording}
-              placeholder={isRecording ? '🎤 Enregistrement...' : 'Message   •   /flakkai'}
-              className="flex-1 bg-transparent text-white text-[15px] outline-none placeholder-[#48484A]"
-              style={{ fontFamily: 'inherit' }} />
+              placeholder={isRecording ? '🎤 Enregistrement...' : 'iMessage  ·  /flakkai'}
+              style={{ flex: 1, background: 'transparent', color: '#fff', fontSize: 15, outline: 'none', fontFamily: 'inherit', fontWeight: 400, letterSpacing: '-0.1px' }} />
           </div>
 
-          <button type="button" onClick={toggleRecording}
-            className={`p-2 rounded-full transition-all ${isRecording ? 'animate-pulse' : ''}`}
-            style={{ color: isRecording ? '#FF453A' : '#636366', background: isRecording ? 'rgba(255,69,58,0.12)' : 'transparent' }}>
-            {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-          </button>
-
-          {inputValue.trim() && !isRecording && (
-            <button type="submit" className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
-              style={{ background: '#0A84FF' }}>
-              <Send className="w-4 h-4 text-white ml-0.5" />
+          {/* Send btn — appears when text present */}
+          {inputValue.trim() && !isRecording ? (
+            <button type="submit" style={{ width: 34, height: 34, borderRadius: '50%', background: '#0A84FF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 2px 8px rgba(10,132,255,0.35)', transition: 'transform 0.12s', }}>
+              <Send style={{ width: 16, height: 16, color: '#fff', marginLeft: 1 }} />
             </button>
-          )}
+          ) : null}
         </form>
       </div>
     </div>
+    </>
   );
 }
