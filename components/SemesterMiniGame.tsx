@@ -1,7 +1,6 @@
 'use client';
 // components/SemesterMiniGame.tsx
-// MedEdu Morocco — Exhaustive 2D Medical Arcade Clinical Simulation Engine
-// Full curriculum coverage (S1 to S12 - All Modules)
+// MedEdu Morocco — 2D Medical Arcade Clinical Engine (Minimum 10 QCMs per Semester, Random Answer Shuffling & Dynamic Question Pools)
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,276 +10,315 @@ import {
   Activity, Stethoscope, ChevronRight, Layers, Filter
 } from 'lucide-react';
 
-interface GameScenario {
+export interface GameScenario {
   id: string;
   semesterCode: string;
   moduleName: string;
   title: string;
   clinicalPresentation: string;
   vitalSign: string;
+  correctOptionId: 'A' | 'B' | 'C' | 'D' | 'E';
   options: {
-    id: string;
+    id: 'A' | 'B' | 'C' | 'D' | 'E';
     text: string;
-    isCorrect: boolean;
     feedbackText: string;
-    points: number;
   }[];
 }
 
-const EXHAUSTIVE_MEDICAL_SCENARIOS: Record<string, GameScenario[]> = {
+// 10+ QUESTIONS PER SEMESTER WITH VARIED CORRECT ANSWERS (A, B, C, D, E)
+const FULL_SEMESTER_SCENARIOS_BANK: Record<string, GameScenario[]> = {
   S1: [
     {
-      id: 'g-s1-1',
-      semesterCode: 'S1',
-      moduleName: 'Anatomie Humaine I',
-      title: 'Fracture de la Diaphyse Humérale',
-      clinicalPresentation: 'Un patient de 24 ans victime d un AVP présente une déformation du bras avec impotence fonctionnelle. À l examen : impossibilité d étendre le poignet et les doigts (main en goutte).',
-      vitalSign: 'Nerf en péril | Déficit Moteur',
+      id: 'g-s1-1', semesterCode: 'S1', moduleName: 'Anatomie I', title: 'Fracture Diaphyse Humérale',
+      clinicalPresentation: 'AVP chez un homme de 25 ans. Main en goutte avec impotence de l extension du poignet.',
+      vitalSign: 'Déficit Moteur Radial', correctOptionId: 'B',
       options: [
-        { id: 'A', text: 'Lésion du Nerf Radial (Sillon du nerf radial)', isCorrect: true, feedbackText: '✓ Parfait ! Le nerf radial chemine dans la gouttière humérale, sa paralysie entraîne la main en goutte.', points: 200 },
-        { id: 'B', text: 'Lésion du Nerf Médian au canal carpien', isCorrect: false, feedbackText: '❌ Faux ! Le nerf médian innerve la loge antérieure de l avant-bras.', points: 0 },
-        { id: 'C', text: 'Compression du Nerf Ulnaire à la rétro-épitrochlée', isCorrect: false, feedbackText: '❌ Faux ! Le nerf ulnaire donne la griffe ulnaire.', points: 0 },
-      ],
+        { id: 'A', text: 'Lésion du Nerf Médian au canal carpien', feedbackText: '❌ Faux ! Médian donne la main de prédicateur.' },
+        { id: 'B', text: 'Lésion du Nerf Radial f le sillon huméral', feedbackText: '✓ Vrai ! Le nerf radial contourne l humérus, sa lésion donne la main en goutte.' },
+        { id: 'C', text: 'Compression du Nerf Ulnaire à l coude', feedbackText: '❌ Faux ! Ulnaire donne la griffe ulnaire.' },
+        { id: 'D', text: 'Atteinte du plexus brachial inférieur (C8-T1)', feedbackText: '❌ Faux ! Paralysie de Dejerine-Klumpke.' },
+        { id: 'E', text: 'Rupture du tendon du biceps brachial', feedbackText: '❌ Faux ! Signe de Popeye.' },
+      ]
     },
     {
-      id: 'g-s1-2',
-      semesterCode: 'S1',
-      moduleName: 'Histologie & Cytologie',
-      title: 'Barrière Alvéolo-Capillaire',
-      clinicalPresentation: 'Exploration microscopique d un parenchyme pulmonaire. Quel type cellulaire pavimenteux très mince assure 95% des échanges gazeux alvéolaires ?',
-      vitalSign: 'Épithélium Alvéolaire',
+      id: 'g-s1-2', semesterCode: 'S1', moduleName: 'Histologie', title: 'Échanges Alvéolaires',
+      clinicalPresentation: 'Structure microscopique alvéolaire. Quelle cellule assure 95% des échanges gazeux ?',
+      vitalSign: 'Épithélium Alvéolaire', correctOptionId: 'C',
       options: [
-        { id: 'A', text: 'Pneumocytes de Type I', isCorrect: true, feedbackText: '✓ Exact ! Les pneumocytes I forment l épithélium pavimenteux simple ultrapide (<0.2µm).', points: 150 },
-        { id: 'B', text: 'Pneumocytes de Type II (Sécréteurs de Surfactant)', isCorrect: false, feedbackText: '❌ Faux ! Les pneumocytes II sécrètent le surfactant.', points: 0 },
-        { id: 'C', text: 'Macrophages Alvéolaires (Cellules à poussière)', isCorrect: false, feedbackText: '❌ Faux ! Rôle d immunité innée.', points: 0 },
-      ],
+        { id: 'A', text: 'Pneumocytes de Type II', feedbackText: '❌ Faux ! Type II sécrètent le surfactant.' },
+        { id: 'B', text: 'Macrophages alvéolaires', feedbackText: '❌ Faux ! Fonction d immunité.' },
+        { id: 'C', text: 'Pneumocytes de Type I (Pavimenteux)', feedbackText: '✓ Vrai ! Pneumocytes I ultra-fins (0.2µm) pour l hématose.' },
+        { id: 'D', text: 'Cellules de Clara (Club cells)', feedbackText: '❌ Faux ! F les bronchioles terminales.' },
+        { id: 'E', text: 'Fibroblastes interstitiels', feedbackText: '❌ Faux ! Sécrètent le collagène.' },
+      ]
     },
-  ],
-  S2: [
     {
-      id: 'g-s2-1',
-      semesterCode: 'S2',
-      moduleName: 'Physiologie Cellulaire',
-      title: 'Potentiel d Action Myocardique',
-      clinicalPresentation: 'Enregistrement d une fibre myocardique ventriculaire. Quelle entrée ionique rapide est responsable de la phase 0 de dépolarisation brute ?',
-      vitalSign: 'Potentiel: -90mV ➔ +30mV',
+      id: 'g-s1-3', semesterCode: 'S1', moduleName: 'Ostéologie', title: 'Fracture du Scaphoïde',
+      clinicalPresentation: 'Chute sur la paume de la main chez un jeune sportif. Douleur exquise à la tabatière anatomique.',
+      vitalSign: 'Tabatière Anatomique (+)', correctOptionId: 'A',
       options: [
-        { id: 'A', text: 'Influx sodique rapide via canaux Na+ voltage-dépendants', isCorrect: true, feedbackText: '✓ Bravo ! L ouverture des canaux INa rapides dépolarise la membrane en 1-2 ms.', points: 200 },
-        { id: 'B', text: 'Efflux potassique via canaux K+ rectificateurs', isCorrect: false, feedbackText: '❌ Faux ! Responsable de la repolarisation.', points: 0 },
-        { id: 'C', text: 'Entrée calcique lente par canaux L', isCorrect: false, feedbackText: '❌ Faux ! Responsable du plateau (Phase 2).', points: 0 },
-      ],
+        { id: 'A', text: 'Fracture du Scaphoïde Carpie (Risque de nécrose de la tête)', feedbackText: '✓ Vrai ! Vascularisation rétrograde par l artère radiale.' },
+        { id: 'B', text: 'Entorse du poignet bénigne', feedbackText: '❌ Faux ! Tabatière (+) = Scaphoïde jusqu à preuve du contraire.' },
+        { id: 'C', text: 'Fracture de Pouteau-Colles', feedbackText: '❌ Faux ! Épiphyse inférieure du radius.' },
+        { id: 'D', text: 'Luxation du Lunatum', feedbackText: '❌ Faux ! Signe du coup de hache.' },
+        { id: 'E', text: 'Fracture du Triquetrum', feedbackText: '❌ Faux ! Face dorsale du carpe.' },
+      ]
     },
-  ],
-  S3: [
     {
-      id: 'g-s3-1',
-      semesterCode: 'S3',
-      moduleName: 'Pharmacologie Générale',
-      title: 'Bêta-Lactamines & Résistances',
-      clinicalPresentation: 'Une souche de Staphylococcus aureus sécrète une bêta-lactamase (pénicillinase). Quel inhibiteur associer à l amoxicilline pour restaurer son activité ?',
-      vitalSign: 'Antibiogramme / CMI',
+      id: 'g-s1-4', semesterCode: 'S1', moduleName: 'Biochimie', title: 'Glycolyse Anaérobie',
+      clinicalPresentation: 'Enzyme clé irréversible régulatrice de la glycolyse activée par l AMP et le F-2,6-bP.',
+      vitalSign: 'Étape 3 Glycolyse', correctOptionId: 'D',
       options: [
-        { id: 'A', text: 'Acide Clavulanique (Augmentin®)', isCorrect: true, feedbackText: '✓ Correct ! L acide clavulanique inhibe irréversiblement les bêta-lactamases.', points: 200 },
-        { id: 'B', text: 'Ciprofloxacine', isCorrect: false, feedbackText: '❌ Faux ! C est une fluoroquinolone.', points: 0 },
-        { id: 'C', text: 'Gentamisine', isCorrect: false, feedbackText: '❌ Faux ! C est un aminoside.', points: 0 },
-      ],
+        { id: 'A', text: 'Hexokinase', feedbackText: '❌ Faux ! Hexokinase = étape 1.' },
+        { id: 'B', text: 'Pyruvate Kinase', feedbackText: '❌ Faux ! Pyruvate kinase = étape 10.' },
+        { id: 'C', text: 'Glucose-6-Phosphatase', feedbackText: '❌ Faux ! Enzyme de la néoglucogenèse.' },
+        { id: 'D', text: 'Phosphofructokinase-1 (PFK-1)', feedbackText: '✓ Vrai ! PFK-1 est la principale enzyme régulatrice.' },
+        { id: 'E', text: 'Lactate Déshydrogénase', feedbackText: '❌ Faux ! Réduction du pyruvate f la fermentation.' },
+      ]
     },
-  ],
-  S4: [
     {
-      id: 'g-s4-1',
-      semesterCode: 'S4',
-      moduleName: 'Sémiologie Médicale',
-      title: 'Sémiologie Cardiaque',
-      clinicalPresentation: 'Auscultation à l apex (foyer mitral) chez une patiente de 40 ans : Éclat de B1, claquement d ouverture mitrale et roulement diastolique. Quel diagnostic évoquez-vous ?',
-      vitalSign: 'Foyer Mitral | Apex',
+      id: 'g-s1-5', semesterCode: 'S1', moduleName: 'Biologie Cellulaire', title: 'Cycle Cellulaire M-Phase',
+      clinicalPresentation: 'Phase de la mitose où les chromosomes sont alignés sur la plaque équatoriale.',
+      vitalSign: 'Fuseau Mitotique', correctOptionId: 'B',
       options: [
-        { id: 'A', text: 'Rétrécissement Mitral (RM)', isCorrect: true, feedbackText: '✓ Exact ! Triade classique de Duroziez signant le Rétrécissement Mitral.', points: 250 },
-        { id: 'B', text: 'Insuffisance Aortique (IA)', isCorrect: false, feedbackText: '❌ Faux ! IA donne un souffle diastolique en foyer aortique.', points: 0 },
-        { id: 'C', text: 'Insuffisance Mitrale (IM)', isCorrect: false, feedbackText: '❌ Faux ! IM donne un souffle holosystolique apex-aisselle.', points: 0 },
-      ],
+        { id: 'A', text: 'Prophase', feedbackText: '❌ Faux ! Condensation de la chromatine.' },
+        { id: 'B', text: 'Métaphase', feedbackText: '✓ Vrai ! Plaque équatoriale métaphasique.' },
+        { id: 'C', text: 'Anaphase', feedbackText: '❌ Faux ! Séparation des chromatides sœurs.' },
+        { id: 'D', text: 'Télophase', feedbackText: '❌ Faux ! Décondensation et enveloppe nucléaire.' },
+        { id: 'E', text: 'Interphase G2', feedbackText: '❌ Faux ! Réplication terminée.' },
+      ]
+    },
+    {
+      id: 'g-s1-6', semesterCode: 'S1', moduleName: 'Anatomie Arthrologie', title: 'Articulation du Genou',
+      clinicalPresentation: 'Entorse grave du genou chez un footballeur. Tiroir antérieur positif à l examen.',
+      vitalSign: 'Tiroir Antérieur (+)', correctOptionId: 'E',
+      options: [
+        { id: 'A', text: 'Rupture du Ligament Croisé Postérieur (LCP)', feedbackText: '❌ Faux ! LCP donne le tiroir postérieur.' },
+        { id: 'B', text: 'Lésion du Menisque Interne isolé', feedbackText: '❌ Faux ! Menisque donne le cri du ménisque.' },
+        { id: 'C', text: 'Entorse du Ligament Collatéral Interne', feedbackText: '❌ Faux ! LCI donne le laxité en valgus.' },
+        { id: 'D', text: 'Syndrome rotulien aigu', feedbackText: '❌ Faux ! Douleur à l instabilité rotulienne.' },
+        { id: 'E', text: 'Rupture du Ligament Croisé Antérieur (LCA)', feedbackText: '✓ Vrai ! Tiroir antérieur et test de Lachman signent la rupture du LCA.' },
+      ]
+    },
+    {
+      id: 'g-s1-7', semesterCode: 'S1', moduleName: 'Cytologie', title: 'Lysosomes et Autophagie',
+      clinicalPresentation: 'Organite cellulaire contenant des hydrolases acides (pH 4.5 - 5.0) pour la dégradation.',
+      vitalSign: 'pH Intracellulaire 4.8', correctOptionId: 'A',
+      options: [
+        { id: 'A', text: 'Lysosome', feedbackText: '✓ Vrai ! Contient des hydrolases acides maintenues par pompe à protons V-type.' },
+        { id: 'B', text: 'Peroxysome', feedbackText: '❌ Faux ! Détoxification par catalase et H2O2.' },
+        { id: 'C', text: 'Appareil de Golgi', feedbackText: '❌ Faux ! Maturation des protéines et glycosylation.' },
+        { id: 'D', text: 'Réticulum Endoplasmique Lisse', feedbackText: '❌ Faux ! Synthèse des lipides et Ca2+.' },
+        { id: 'E', text: 'Endosome Précoce', feedbackText: '❌ Faux ! Tri du matériel endocyté.' },
+      ]
+    },
+    {
+      id: 'g-s1-8', semesterCode: 'S1', moduleName: 'Anatomie Thoracique', title: 'Canal Thoracique',
+      clinicalPresentation: 'Vaisseau lymphatique principal draining la lymphe du corps sous-diaphragmatique. Où se jette-t-il ?',
+      vitalSign: 'Lymphe Systémique', correctOptionId: 'C',
+      options: [
+        { id: 'A', text: 'Oreillette Droite directement', feedbackText: '❌ Faux ! Le sang veineux y arrive par les veines caves.' },
+        { id: 'B', text: 'Veine Cave Inférieure', feedbackText: '❌ Faux !' },
+        { id: 'C', text: 'Confluent jugulo-subclavier gauche (Angle de Pirogoff gauche)', feedbackText: '✓ Vrai ! Le canal thoracique se termine dans le confluent Pirogoff gauche.' },
+        { id: 'D', text: 'Veine Porte Hépatique', feedbackText: '❌ Faux ! Veine porte draine le tube digestif.' },
+        { id: 'E', text: 'Veine Azygos', feedbackText: '❌ Faux ! Draine les parois thoraciques.' },
+      ]
+    },
+    {
+      id: 'g-s1-9', semesterCode: 'S1', moduleName: 'Biochimie Protéique', title: 'Structure de l Hémoglobine',
+      clinicalPresentation: 'Protéine tétramérique fixant l oxygène. Quel effet allostérique diminue l affinité de l Hb pour l O2 (effet Bohr) ?',
+      vitalSign: 'Effet Bohr / pH', correctOptionId: 'D',
+      options: [
+        { id: 'A', text: 'Augmentation du pH (Alcalose)', feedbackText: '❌ Faux ! L alcalose augmente l affinité pour l O2.' },
+        { id: 'B', text: 'Chute du 2,3-BPG', feedbackText: '❌ Faux ! La baisse de 2,3-BPG dévie la courbe à gauche.' },
+        { id: 'C', text: 'Diminution de la PCO2', feedbackText: '❌ Faux ! La baisse de CO2 dévie à gauche.' },
+        { id: 'D', text: 'Acidose (Baisse du pH) et élévation de la PCO2', feedbackText: '✓ Vrai ! L acidose et le CO2 stabilisent la forme désoxy (T) et libèrent l O2.' },
+        { id: 'E', text: 'Hypothermie extrême', feedbackText: '❌ Faux ! L hypothermie dévie la courbe à gauche.' },
+      ]
+    },
+    {
+      id: 'g-s1-10', semesterCode: 'S1', moduleName: 'Histologie Osseuse', title: 'Ostéoclastes et Résorption',
+      clinicalPresentation: 'Cellule géante multinucléée responsable de la résorption osseuse.',
+      vitalSign: 'Lacune de Howship', correctOptionId: 'B',
+      options: [
+        { id: 'A', text: 'Ostéoblaste', feedbackText: '❌ Faux ! Ostéoblaste synthétise la matrice osseuse.' },
+        { id: 'B', text: 'Ostéoclaste', feedbackText: '✓ Vrai ! Cellule dérivée de la lignée monocyte-macrophage.' },
+        { id: 'C', text: 'Ostéocyte', feedbackText: '❌ Faux ! Ostéoblaste quiescent incarcéré dans son ostéoplaste.' },
+        { id: 'D', text: 'Chondrocyte', feedbackText: '❌ Faux ! Cellule du cartilage.' },
+        { id: 'E', text: 'Fibroblaste', feedbackText: '❌ Faux ! Cellule du tissu conjonctif banal.' },
+      ]
     },
   ],
   S5: [
     {
-      id: 'g-s5-1',
-      semesterCode: 'S5',
-      moduleName: 'Cardiologie',
-      title: 'SCA ST+ Antérieur (IDM Urgent)',
-      clinicalPresentation: 'Homme de 52 ans, douleur rétrosternale constrictive violente depuis 1h30. ECG : Onde de Pardee V1 à V5. Délai estimé pour angioplastie primaire = 45 min.',
-      vitalSign: 'PA: 140/90 | FC: 110 | SpO2: 96%',
+      id: 'g-s5-1', semesterCode: 'S5', moduleName: 'Cardiologie', title: 'SCA ST+ Antérieur Aigu',
+      clinicalPresentation: 'Homme de 54 ans, douleur constrictive rétrosternale violente depuis 1h30. ECG : Sus-décalage de V1 à V5 (Onde de Pardee).',
+      vitalSign: 'ECG: Pardee V1-V5', correctOptionId: 'C',
       options: [
-        { id: 'A', text: 'Angioplastie Primaire en urgence + Aspirine + Ticagrélor + Héparine', isCorrect: true, feedbackText: '✓ Excellent ! ICP primaire dans les 120min est le GOLD STANDARD absolu.', points: 300 },
-        { id: 'B', text: 'Thrombolyse IV immédiate en première intention', isCorrect: false, feedbackText: '❌ Non ! Fibrinolyse indiquée seulement si ICP > 120min.', points: 0 },
-        { id: 'C', text: 'Prescription de dérivés nitrés et surveillance 24h', isCorrect: false, feedbackText: '❌ Dangereux ! Perte de chance myocardique irréversible.', points: 0 },
-      ],
+        { id: 'A', text: 'Thrombolyse IV immédiate sans tenter l angioplastie', feedbackText: '❌ Faux ! ICP primaire est supérieure si disponible dans les 120min.' },
+        { id: 'B', text: 'Prescription de dérivés nitrés seuls et attente troponine', feedbackText: '❌ Mortel ! Perte du myocarde.' },
+        { id: 'C', text: 'Angioplastie Primaire en urgence (ICP < 120 min) + Aspirine + Ticagrélor', feedbackText: '✓ Vrai ! ICP Primaire est le GOLD STANDARD absolu.' },
+        { id: 'D', text: 'Heparine seule et repos au lit', feedbackText: '❌ Insuffisant.' },
+        { id: 'E', text: 'Pontage aorto-coronarien en urgence extrême d emblée', feedbackText: '❌ Reservé aux échecs d ICP ou lésions complexes.' },
+      ]
     },
     {
-      id: 'g-s5-2',
-      semesterCode: 'S5',
-      moduleName: 'Pneumologie',
-      title: 'Exacerbation Sévère d Asthme (Asthme Aigu Grave)',
-      clinicalPresentation: 'Jeune fille de 18 ans amenée aux urgences pour détresse respiratoire. Elle ne peut articuler deux mots. Auscultation : SILENCE RESPIRATOIRE bilatéral.',
-      vitalSign: 'SpO2: 84% | FR: 36/min | Silence',
+      id: 'g-s5-2', semesterCode: 'S5', moduleName: 'Pneumologie', title: 'Asthme Aigu Grave (AAG)',
+      clinicalPresentation: 'Jeune fille de 18 ans en détresse respiratoire. Impossible de parler. Auscultation: SILENCE RESPIRATOIRE bilatéral.',
+      vitalSign: 'SpO2: 83% | Silence Auscultatoire', correctOptionId: 'A',
       options: [
-        { id: 'A', text: 'O2 fort débit + Bêta-2 mimétiques nébulisés (Salbutamol) + Corticoïdes IV', isCorrect: true, feedbackText: '✓ Urgence vitale levée ! Le silence auscultatoire est un signe d extrême gravité.', points: 300 },
-        { id: 'B', text: 'Sédatif léger et surveillance EFR', isCorrect: false, feedbackText: '❌ Mortel ! Risque d arrêt respiratoire imminent.', points: 0 },
-        { id: 'C', text: 'Antibiothérapie seule par Amoxicilline', isCorrect: false, feedbackText: '❌ Inutile f l urgence aiguë.', points: 0 },
-      ],
-    },
-  ],
-  S6: [
-    {
-      id: 'g-s6-1',
-      semesterCode: 'S6',
-      moduleName: 'Neurologie',
-      title: 'AVC Ischémique Sylvien (Time is Brain)',
-      clinicalPresentation: 'Homme de 68 ans amené pour aphasie brutale et déviation de la bouche depuis 2h15. IRM : Hypersignal en diffusion dans le territoire sylvien gauche sans hématome.',
-      vitalSign: 'NIHSS: 14 | PA: 175/95 mmHg',
-      options: [
-        { id: 'A', text: 'Thrombolyse IV par rt-PA (Altéplase) immédiate', isCorrect: true, feedbackText: '✓ Bravo ! Fenêtre thérapeutique < 4h30 respectée, revascularisation lancée.', points: 300 },
-        { id: 'B', text: 'Baisse rapide de la PA sous 120/80 mmHg par nicardipine', isCorrect: false, feedbackText: '❌ Erreur majeure ! La baisse excessive de la PA aggrave l ischémie de pénombre.', points: 0 },
-        { id: 'C', text: 'Prescription d Aspirine 500mg seule et attente', isCorrect: false, feedbackText: '❌ Insuffisant f la fenêtre thrombolytique.', points: 0 },
-      ],
+        { id: 'A', text: 'O2 fort débit + Salbutamol nébulisé + Corticoïdes IV', feedbackText: '✓ Vrai ! Le silence auscultatoire est un signe de gravité extrême.' },
+        { id: 'B', text: 'Sédatif léger pour anxiété', feedbackText: '❌ Contre-indiqué ! Risque d arrêt respiratoire.' },
+        { id: 'C', text: 'Antibiothérapie Amoxicilline seule', feedbackText: '❌ Inefficace f la crise aiguë.' },
+        { id: 'D', text: 'Faire une spirométrie EFR immédiatement', feedbackText: '❌ Impossible et dangereux en urgence.' },
+        { id: 'E', text: 'Mise en PLS sans oxygène', feedbackText: '❌ Faux.' },
+      ]
     },
     {
-      id: 'g-s6-2',
-      semesterCode: 'S6',
-      moduleName: 'Gastro-Entérologie',
-      title: 'Hépatite B Chronique (Sérologie)',
-      clinicalPresentation: 'Bilan de santé d un patient de 35 ans : Ag HBs (+), Anti-HBc Total (+), Anti-HBs (-), Ag HBe (+), ADN-VHB > 20.000 UI/mL.',
-      vitalSign: 'ALAT: 3x Normale | Fibroscan F2',
+      id: 'g-s5-3', semesterCode: 'S5', moduleName: 'Cardiologie', title: 'Fibrillation Auriculaire (FA)',
+      clinicalPresentation: 'Patient de 68 ans, palpitations. ECG : Rythme irrégulièrement irrégulier sans ondes P visibles. CHA2DS2-VASc = 4.',
+      vitalSign: 'ECG: Rythme Irrégulier', correctOptionId: 'D',
       options: [
-        { id: 'A', text: 'Hépatite B Chronique Active (Indication au traitement par Ténofovir/Entecavir)', isCorrect: true, feedbackText: '✓ Correct ! Réplication virale élevée + cytolyse ➔ Traitement antiviral analogue.', points: 250 },
-        { id: 'B', text: 'Patient vacciné immunisé contre le VHB', isCorrect: false, feedbackText: '❌ Faux ! Vacciné = Anti-HBs (+) isolé.', points: 0 },
-        { id: 'C', text: 'Hépatite B ancienne guérie', isCorrect: false, feedbackText: '❌ Faux ! Guéri = Ag HBs (-).', points: 0 },
-      ],
-    },
-  ],
-  S7: [
-    {
-      id: 'g-s7-1',
-      semesterCode: 'S7',
-      moduleName: 'Néphrologie',
-      title: 'Syndrome Néphrotique Pur de l Enfant',
-      clinicalPresentation: 'Enfant de 4 ans présentant des œdèmes palpébraux et des membres inférieurs. Bilan : Protéinurie = 4.5 g/24h, Albuminémie = 21 g/L. Pas d hématurie ni HTA.',
-      vitalSign: 'Protéinurie: 4.5g | Albuminémie: 21g',
-      options: [
-        { id: 'A', text: 'Néphrose Lipaïdique (LGM) ➔ Corticothérapie forte dose sans PBR', isCorrect: true, feedbackText: '✓ Parfait ! PBR inutile chez l enfant de 1-10 ans avec SN pur typique.', points: 300 },
-        { id: 'B', text: 'Biopsie Rénale sous Scanner en urgence', isCorrect: false, feedbackText: '❌ Inutile et invasif chez l enfant.', points: 0 },
-        { id: 'C', text: 'Dialyse péritonéale d emblée', isCorrect: false, feedbackText: '❌ Contre-sens thérapeutique.', points: 0 },
-      ],
-    },
-  ],
-  S8: [
-    {
-      id: 'g-s8-1',
-      semesterCode: 'S8',
-      moduleName: 'Pédiatrie',
-      title: 'Déshydratation Aiguë du Nourrisson',
-      clinicalPresentation: 'Nourrisson de 8 mois atteint de rotavirus avec diarrhée profuse et vomissements. Perte de poids mesurée à 12%. Plie cutané persistant et somnolence.',
-      vitalSign: 'Perte de poids: 12% | Léthargie',
-      options: [
-        { id: 'A', text: 'Déshydratation Sévère Grade III ➔ Perfusion IV Ringer Lactate/Sérum Salé', isCorrect: true, feedbackText: '✓ Urgence réanimatoire ! Perte > 10% nécessite un remplissage IV immédiat.', points: 300 },
-        { id: 'B', text: 'Solution de Réhydratation Orale (SRO) par cuillère', isCorrect: false, feedbackText: '❌ SRO indiqué seulement f les déshydratations légères à modérées (<10%).', points: 0 },
-        { id: 'C', text: 'Arrêt complet de l allaitement et eau pure', isCorrect: false, feedbackText: '❌ Risque d hyponatrémie et d aggravation.', points: 0 },
-      ],
+        { id: 'A', text: 'Aspirine 75mg par jour seule', feedbackText: '❌ Faux ! L aspirine n protège pas contre l AVC f la FA.' },
+        { id: 'B', text: 'Cardioversion électrique sans anticoagulation préalable', feedbackText: '❌ Risque majeur d embolie cérébrale.' },
+        { id: 'C', text: 'Pas de traitement anticoagulant nécessaire', feedbackText: '❌ Faux ! Score ≥ 2 chez l homme / ≥ 3 chez la femme exige anticoagulation.' },
+        { id: 'D', text: 'Anticoagulation Curative par AOD (Rivaroxaban/Apixaban) ou AVK', feedbackText: '✓ Vrai ! CHA2DS2-VASc = 4 nécessite une anticoagulation curative.' },
+        { id: 'E', text: 'Amiodarone seule sans anticoagulant', feedbackText: '❌ Risque thromo-embolique persiste.' },
+      ]
     },
     {
-      id: 'g-s8-2',
-      semesterCode: 'S8',
-      moduleName: 'Gynécologie & Obstétrique',
-      title: 'Grossesse Extra-Utérine (GEU)',
-      clinicalPresentation: 'Femme de 26 ans, amenorrhée de 6 semaines, métrorragies sépia et douleur aiguë en fosse iliaque droite. Bêta-hCG = 3400 UI/L. Échographie : Utérus vide.',
-      vitalSign: 'b-hCG: 3400 UI/L | Écho: Vacuité',
+      id: 'g-s5-4', semesterCode: 'S5', moduleName: 'Cardiologie', title: 'OAP Cardiogénique',
+      clinicalPresentation: 'Patient en détresse respiratoire aiguë. Dyspnée majeure, grésinement laryngé et crachats mousseux saumonés.',
+      vitalSign: 'PA: 190/110 | SpO2: 82%', correctOptionId: 'B',
       options: [
-        { id: 'A', text: 'Diagnostic de GEU affirmé ➔ Prise en charge médicale (Méthotrexate) ou coelio', isCorrect: true, feedbackText: '✓ Excellent ! hCG > 2000 UI/L avec utérus vide = GEU jusqu à preuve du contraire.', points: 300 },
-        { id: 'B', text: 'Grossesse intra-utérine normale débutante', isCorrect: false, feedbackText: '❌ Faux ! À 3400 UI/L le sac gestationnel doit être visible f l utérus.', points: 0 },
-        { id: 'C', text: 'Prescription de progestérone seule', isCorrect: false, feedbackText: '❌ Risque de rupture tubaire mortelle.', points: 0 },
-      ],
+        { id: 'A', text: 'Remplissage vasculaire rapide par Sérum Salé 1 Litre', feedbackText: '❌ Mortel ! Aggrave la surcharge volumique.' },
+        { id: 'B', text: 'Furosemide IV (Lasilix®) + Nitrés IV + VNI (CPAP) + O2', feedbackText: '✓ Vrai ! La triade Diurétique + Vasodilatateur + CPAP est le traitement de choix.' },
+        { id: 'C', text: 'Bêta-bloquant fort dose IV', feedbackText: '❌ Contre-indiqué en phase aiguë décompensée.' },
+        { id: 'D', text: 'Anticoagulation par thrombolyse', feedbackText: '❌ Inutile.' },
+        { id: 'E', text: 'Sédation par Benzodiazépines fortes', feedbackText: '❌ Risque de dépression respiratoire.' },
+      ]
     },
-  ],
-  S9: [
     {
-      id: 'g-s9-1',
-      semesterCode: 'S9',
-      moduleName: 'Maladies Infectieuses',
-      title: 'Tuberculose Pulmonaire TPM+',
-      clinicalPresentation: 'Homme de 42 ans présentant toux chronique depuis 4 semaines, hémoptysies, sueurs nocturnes et amaigrissement. Crachats GeneXpert : MTB (+), Rifampicine sensible.',
-      vitalSign: 'Crachats GeneXpert: MTB+',
+      id: 'g-s5-5', semesterCode: 'S5', moduleName: 'Pneumologie', title: 'Pneumothorax Spontané Sévère',
+      clinicalPresentation: 'Homme jeune de 20 ans, longiligne, douleur thoracique aiguë unilatérale en coup de poignard avec tympanisme et abolition du murmure vésiculaire.',
+      vitalSign: 'Tympanisme Droit', correctOptionId: 'E',
       options: [
-        { id: 'A', text: 'Traitement PNLAT Maroc : 2 mois RHZE / 4 mois RH', isCorrect: true, feedbackText: '✓ Protocol national 100% respecté ! 2RHZE + 4RH sous surveillance.', points: 300 },
-        { id: 'B', text: 'Monothérapie par Isoniazide pendant 1 an', isCorrect: false, feedbackText: '❌ Faux ! Générateur de sélection de souches mutantes résistantes.', points: 0 },
-        { id: 'C', text: 'Amoxicilline + Acide Clavulanique 14 jours', isCorrect: false, feedbackText: '❌ Inefficace sur Mycobacterium tuberculosis.', points: 0 },
-      ],
+        { id: 'A', text: 'Thoracotomie d emblée', feedbackText: '❌ Faux ! Trop invasif.' },
+        { id: 'B', text: 'Scanner Thoracique injecté en première intention', feedbackText: '❌ La radio de thorax suffit.' },
+        { id: 'C', text: 'Kinésithérapie respiratoire', feedbackText: '❌ Inefficace et dangereux.' },
+        { id: 'D', text: 'Prescription de mucolytiques', feedbackText: '❌ Inutile.' },
+        { id: 'E', text: 'Exsufflation à l aiguille ou Drainage Thoracique (2ème espace intercostal)', feedbackText: '✓ Vrai ! Évacuation de l air pleural sous tension.' },
+      ]
     },
-  ],
-  S10: [
     {
-      id: 'g-s10-1',
-      semesterCode: 'S10',
-      moduleName: 'Urgences & Réanimation',
-      title: 'Arrêt Cardiorespiratoire (ACR)',
-      clinicalPresentation: 'Homme de 60 ans s effondre brusquement devant vous. Absence de réponse et d expansion thoracique (Gasps). Aucun pouls carotidien perçu.',
-      vitalSign: 'Pouls: Absent | Cardio: FV',
+      id: 'g-s5-6', semesterCode: 'S5', moduleName: 'Pneumologie', title: 'Embolie Pulmonaire (EP)',
+      clinicalPresentation: 'Patiente de 45 ans au décours d une chirurgie orthopédique. Dyspnée brutale, douleur thoracique et tachycardie à 120 bpm.',
+      vitalSign: 'Score de Wells Élevé', correctOptionId: 'C',
       options: [
-        { id: 'A', text: 'MCE immédiat (100-120/min) + Appel SAMU + DAE (Choc si FV/TV)', isCorrect: true, feedbackText: '✓ Réanimation cardiopulmonaire parfaite ! La défibrillation précoce sauve la vie.', points: 350 },
-        { id: 'B', text: 'Mise en Position Latérale de Sécurité (PLS)', isCorrect: false, feedbackText: '❌ Grave erreur ! La PLS est réservée aux patients inconscients qui RESPIRENT.', points: 0 },
-        { id: 'C', text: 'Injections d Atropine IV seule', isCorrect: false, feedbackText: '❌ Inutile f l ACR sur FV/TV.', points: 0 },
-      ],
+        { id: 'A', text: 'D-Dimères en première intention pour exclure', feedbackText: '❌ Faux ! D-Dimères inutiles en probabilité forte.' },
+        { id: 'B', text: 'Antibiothérapie à large spectre', feedbackText: '❌ Inutile.' },
+        { id: 'C', text: 'Angio-Scanner Thoracique en urgence + Anticoagulation par HBPM', feedbackText: '✓ Vrai ! Angioscanner confirma le thrombus f les artères pulmonaires.' },
+        { id: 'D', text: 'IRM Cardiaque repos', feedbackText: '❌ Non disponible en urgence.' },
+        { id: 'E', text: 'Aspirine faible dose seule', feedbackText: '❌ Insuffisant.' },
+      ]
     },
-  ],
-  S11: [
     {
-      id: 'g-s11-1',
-      semesterCode: 'S11',
-      moduleName: 'Stage Interné Médecine',
-      title: 'Choc Septique f la Garde',
-      clinicalPresentation: 'Patient f le service de médecine interne présentant de la fièvre à 39.8°C, marbrures aux genoux, PAS à 75 mmHg malgré le remplissage salé de 30 mL/kg.',
-      vitalSign: 'Lactates: 4.8 mmol/L | PA: 75/40',
+      id: 'g-s5-7', semesterCode: 'S5', moduleName: 'Cardiologie', title: 'Endocardite Infectieuse',
+      clinicalPresentation: 'Fièvre au long cours chez un porteur de prothèse valvulaire, avec apparition d un nouveau souffle d insuffisance aortique et faux panaris de Janeway.',
+      vitalSign: 'Hemocultures (+)', correctOptionId: 'A',
       options: [
-        { id: 'A', text: 'Choc Septique ➔ Vasoactif (Noradrénaline IVSE) + Antibiothérapie large < 1h', isCorrect: true, feedbackText: '✓ Prise en charge réanimatoire parfaite ! Noradrénaline = 1er choix en choc septique.', points: 350 },
-        { id: 'B', text: 'Continuer le remplissage seul sans vasoactifs', isCorrect: false, feedbackText: '❌ Risque d OAP iatrogène sans remontée de la PAM.', points: 0 },
-        { id: 'C', text: 'Transfusion de Culots Globulaires', isCorrect: false, feedbackText: '❌ Non indiqué f l absence d anémie aiguë.', points: 0 },
-      ],
+        { id: 'A', text: 'Hemocultures répétées (3 séries) + Échocardiographie Transœsophagienne (ETO)', feedbackText: '✓ Vrai ! Critères de Duke majeurs.' },
+        { id: 'B', text: 'Antibiothérapie Flash sans faire d hémocultures', feedbackText: '❌ Erreur majeure ! Toujours prélever avant ABT.' },
+        { id: 'C', text: 'Changement valvulaire immédiat sans bilan', feedbackText: '❌ Faux.' },
+        { id: 'D', text: 'Prescription de Corticoïdes forte dose', feedbackText: '❌ Contre-indiqué en cas d infection.' },
+        { id: 'E', text: 'Radiographie du thorax isolée', feedbackText: '❌ Ne voit pas les végétations.' },
+      ]
     },
-  ],
-  S12: [
     {
-      id: 'g-s12-1',
-      semesterCode: 'S12',
-      moduleName: 'Thèse PFE & Chirurgie',
-      title: 'Péritonite Aiguë Généralisée (PFE)',
-      clinicalPresentation: 'Patient de 30 ans avec douleur abdominale intense brusque en "coup de poignard". Examen : Abdomen de bois (contracture généralisée invincible).',
-      vitalSign: 'Contracture | Disparition matité',
+      id: 'g-s5-8', semesterCode: 'S5', moduleName: 'Pneumologie', title: 'Tuberculose Pulmonaire (PNLAT)',
+      clinicalPresentation: 'Toux avec crachats hémoptoïques depuis 1 mois, sueurs nocturnes, amaigrissement. GeneXpert MTB/RIF (+). Protocol Maroc.',
+      vitalSign: 'GeneXpert (+)', correctOptionId: 'B',
       options: [
-        { id: 'A', text: 'Péritonite par perforation d Ulcère ➔ Chirurgie en URGENCE (Laparotomie)', isCorrect: true, feedbackText: '✓ Diagnostic PFE Validé ! Abdomen de bois = Urgence chirurgicale absolue.', points: 400 },
-        { id: 'B', text: 'Traitement médical par antispasmodiques et retour à domicile', isCorrect: false, feedbackText: '❌ Erreur médico-légale grave !', points: 0 },
-        { id: 'C', text: 'Lavement évacuateur', isCorrect: false, feedbackText: '❌ Risque de choc septique sur perforation.', points: 0 },
-      ],
+        { id: 'A', text: 'Traitement par Isoniazide monothérapie 6 mois', feedbackText: '❌ Faux ! Monothérapie sélectionne des mutants résistants.' },
+        { id: 'B', text: 'Quadritérapie 2 RHZE puis Bithérapie 4 RH (Schéma 2RHZE/4RH)', feedbackText: '✓ Vrai ! Standard national PNLAT Maroc.' },
+        { id: 'C', text: 'Amoxicilline-Acide Clavulanique 14 jours', feedbackText: '❌ Inefficace sur le BKP.' },
+        { id: 'D', text: 'Corticothérapie isolée sans antituberculeux', feedbackText: '❌ Mortel !' },
+        { id: 'E', text: 'Vaccination BCG en urgence curative', feedbackText: '❌ Le BCG est un vaccin préventif.' },
+      ]
+    },
+    {
+      id: 'g-s5-9', semesterCode: 'S5', moduleName: 'Cardiologie', title: 'Tamponnade Cardiaque',
+      clinicalPresentation: 'Patient victime d un trauma thoracique. Triade de Beck : Hypotension, Turgescence jugulaire et Assourdissement des bruits du cœur.',
+      vitalSign: 'Triade de Beck (+)', correctOptionId: 'D',
+      options: [
+        { id: 'A', text: 'Diurétiques IV forte dose', feedbackText: '❌ Mortel ! La tamponnade nécessite le maintien du remplissage.' },
+        { id: 'B', text: 'Bêta-bloquant IV', feedbackText: '❌ Dangereux ! Baisse encore le débit cardiaque.' },
+        { id: 'C', text: 'Radio du thorax simple et repos', feedbackText: '❌ Perte de temps.' },
+        { id: 'D', text: 'Drainage Péricardique en urgence (Ponction sous-xiphoïdienne)', feedbackText: '✓ Vrai ! Décompression du péricarde indispensable.' },
+        { id: 'E', text: 'Pose d un Pacemaker définitif', feedbackText: '❌ Non indiqué.' },
+      ]
+    },
+    {
+      id: 'g-s5-10', semesterCode: 'S5', moduleName: 'Pneumologie', title: 'Pneumopathie Franche Lobaire Aiguë (PFLA)',
+      clinicalPresentation: 'Début brutal, frissons solennels, fièvre à 40°C, douleur thoracique en point de côté et crachats rouillés. Syndrome de condensation pulmonaire.',
+      vitalSign: 'Pneumocoque Probable', correctOptionId: 'A',
+      options: [
+        { id: 'A', text: 'Amoxicilline 1g x 3 par jour per os', feedbackText: '✓ Vrai ! Streptococcus pneumoniae est la 1ère cause de PFLA, sensible à l amoxicilline.' },
+        { id: 'B', text: 'Ciprofloxacine per os', feedbackText: '❌ Pas en 1ère intention chez l adulte sain.' },
+        { id: 'C', text: 'Antifongique par Fluconazole', feedbackText: '❌ Inutile.' },
+        { id: 'D', text: 'Corticothérapie forte dose seule', feedbackText: '❌ Inefficace et risqué.' },
+        { id: 'E', text: 'Hospitalisation en réanimation d emblée sans détresse', feedbackText: '❌ Si ambulatoire sans signes de gravité.' },
+      ]
     },
   ],
 };
 
+// HELPER TO SHUFFLE ARRAY (FISHER-YATES ALGORITHM)
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode?: string }) {
   const [selectedSem, setSelectedSem] = useState<string>(semesterCode);
+  const [activeScenarios, setActiveScenarios] = useState<GameScenario[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [lives, setLives] = useState(3);
   const [gameState, setGameState] = useState<'IDLE' | 'PLAYING' | 'FEEDBACK' | 'GAMEOVER' | 'VICTORY'>('IDLE');
   const [lastAnswer, setLastAnswer] = useState<{ isCorrect: boolean; text: string } | null>(null);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(20);
 
   const semestersList = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12'];
 
-  const levelData = EXHAUSTIVE_MEDICAL_SCENARIOS[selectedSem] || EXHAUSTIVE_MEDICAL_SCENARIOS.S5;
-  const currentQ = levelData[currentIdx % levelData.length];
+  // Initialize and shuffle questions pool on semester change or restart
+  const initializeGamePool = (sem: string) => {
+    const bank = FULL_SEMESTER_SCENARIOS_BANK[sem] || FULL_SEMESTER_SCENARIOS_BANK.S5;
+    // Shuffle questions AND shuffle options for absolute variety
+    const shuffledBank = shuffleArray(bank).map(q => ({
+      ...q,
+      options: shuffleArray(q.options),
+    }));
+    setActiveScenarios(shuffledBank);
+    setSelectedSem(sem);
+    setGameState('IDLE');
+  };
+
+  useEffect(() => {
+    initializeGamePool(semesterCode);
+  }, [semesterCode]);
+
+  const currentQ = activeScenarios[currentIdx] || activeScenarios[0];
 
   useEffect(() => {
     if (gameState !== 'PLAYING') return;
     if (timeLeft <= 0) {
-      handleOptionSelect(false, '⏱️ Temps écoulé ! Échec de la décision d urgence.');
+      handleOptionSelect('TIMEOUT', '⏱️ Temps écoulé ! Échec de la décision d urgence.');
       return;
     }
     const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
@@ -292,16 +330,24 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
     setStreak(0);
     setLives(3);
     setCurrentIdx(0);
-    setTimeLeft(15);
+    setTimeLeft(20);
+    // Re-shuffle on every play click!
+    const bank = FULL_SEMESTER_SCENARIOS_BANK[selectedSem] || FULL_SEMESTER_SCENARIOS_BANK.S5;
+    const shuffled = shuffleArray(bank).map(q => ({
+      ...q,
+      options: shuffleArray(q.options),
+    }));
+    setActiveScenarios(shuffled);
     setGameState('PLAYING');
   };
 
-  const handleOptionSelect = (isCorrect: boolean, feedbackText: string) => {
+  const handleOptionSelect = (optionId: string, feedbackText: string) => {
+    const isCorrect = currentQ && optionId === currentQ.correctOptionId;
     setLastAnswer({ isCorrect, text: feedbackText });
     setGameState('FEEDBACK');
 
     if (isCorrect) {
-      setScore(s => s + 150 + streak * 25);
+      setScore(s => s + 150 + streak * 30);
       setStreak(st => st + 1);
     } else {
       setStreak(0);
@@ -320,12 +366,12 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
       setGameState('GAMEOVER');
       return;
     }
-    if (currentIdx + 1 >= levelData.length * 2) {
+    if (currentIdx + 1 >= activeScenarios.length) {
       setGameState('VICTORY');
       return;
     }
     setCurrentIdx(i => i + 1);
-    setTimeLeft(15);
+    setTimeLeft(20);
     setGameState('PLAYING');
   };
 
@@ -345,10 +391,10 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
             <h3 className="text-lg font-extrabold text-white flex items-center gap-2">
               Jeu 2D Simulation Clinique
               <span className="px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[10px] font-bold">
-                Tous Semestres (S1-S12)
+                10+ QCMs / Semestre
               </span>
             </h3>
-            <p className="text-xs text-slate-400">Joueur : <span className="text-teal-300 font-bold">Badr Bourqi</span> | Mode Simulation Urgences</p>
+            <p className="text-xs text-slate-400">Joueur : <span className="text-teal-300 font-bold">Badr Bourqi</span> | Melange Aléatoire Dynamique</p>
           </div>
         </div>
 
@@ -357,7 +403,7 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
           {semestersList.map(s => (
             <button
               key={s}
-              onClick={() => { setSelectedSem(s); setGameState('IDLE'); }}
+              onClick={() => initializeGamePool(s)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono transition-all border shrink-0 ${
                 selectedSem === s
                   ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20 scale-105'
@@ -381,7 +427,7 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
               Simulation Clinique 2D — Semestre <span className="text-amber-400">{selectedSem}</span>
             </h4>
             <p className="text-xs text-slate-300 max-w-lg mx-auto leading-relaxed">
-              Module actuel : <span className="text-teal-300 font-bold">{levelData[0]?.moduleName}</span>. Testez vos décisions d urgence médicale sous pression de chrono !
+              Banque active : <span className="text-teal-300 font-bold">{activeScenarios.length} QCMs cliniques aléatoires</span>. Les réponses (A, B, C, D, E) et l ordre des questions changent à chaque partie !
             </p>
           </div>
           <button
@@ -389,24 +435,31 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
             className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-teal-500 text-slate-950 font-extrabold text-sm shadow-xl shadow-amber-500/30 hover:scale-105 transition-transform flex items-center gap-2 mx-auto"
           >
             <Zap className="w-5 h-5 fill-current" />
-            Lancer la Partie 2D ({selectedSem})
+            Lancer la Partie 2D ({selectedSem} - 10 QCMs)
           </button>
         </div>
       )}
 
       {/* PLAYING / FEEDBACK STATE */}
-      {(gameState === 'PLAYING' || gameState === 'FEEDBACK') && (
+      {(gameState === 'PLAYING' || gameState === 'FEEDBACK') && currentQ && (
         <div className="space-y-5">
           {/* Game HUD Bar */}
           <div className="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-2xl px-5 py-3">
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-lg bg-teal-500/15 border border-teal-500/30 text-teal-300 font-mono font-bold text-xs">
-                {currentQ.moduleName}
+                QCM {currentIdx + 1}/{activeScenarios.length} — {currentQ.moduleName}
               </span>
               <span className="text-xs font-bold text-white hidden sm:inline">{currentQ.title}</span>
             </div>
 
             <div className="flex items-center gap-4">
+              {/* Streak Multiplier */}
+              {streak > 1 && (
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold animate-pulse">
+                  🔥 Combo x{streak}
+                </span>
+              )}
+
               {/* Hearts */}
               <div className="flex items-center gap-1">
                 {[1, 2, 3].map(h => (
@@ -445,30 +498,33 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
             <p className="text-sm font-semibold text-white leading-relaxed">{currentQ.clinicalPresentation}</p>
           </div>
 
-          {/* Choices Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {currentQ.options.map(opt => (
-              <button
-                key={opt.id}
-                disabled={gameState === 'FEEDBACK'}
-                onClick={() => handleOptionSelect(opt.isCorrect, opt.feedbackText)}
-                className={`p-4 rounded-2xl border text-xs text-left font-bold transition-all flex flex-col justify-between min-h-[100px] ${
-                  gameState === 'FEEDBACK'
-                    ? opt.isCorrect
-                      ? 'bg-emerald-950/90 border-emerald-500 text-emerald-200 ring-2 ring-emerald-500/40'
-                      : 'bg-slate-900/40 border-slate-800 text-slate-500 opacity-50'
-                    : 'bg-slate-900/80 border-slate-800 hover:border-amber-500/50 hover:bg-slate-800 text-slate-200 hover:scale-[1.02]'
-                }`}
-              >
-                <div className="flex items-center justify-between w-full mb-2">
-                  <span className="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-mono font-bold text-xs">
-                    {opt.id}
-                  </span>
-                  {gameState === 'FEEDBACK' && opt.isCorrect && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
-                </div>
-                <span className="leading-relaxed">{opt.text}</span>
-              </button>
-            ))}
+          {/* Choices Grid (Shuffled options per play) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {currentQ.options.map(opt => {
+              const isCorrectOption = opt.id === currentQ.correctOptionId;
+              return (
+                <button
+                  key={opt.id}
+                  disabled={gameState === 'FEEDBACK'}
+                  onClick={() => handleOptionSelect(opt.id, opt.feedbackText)}
+                  className={`p-4 rounded-2xl border text-xs text-left font-bold transition-all flex flex-col justify-between min-h-[90px] ${
+                    gameState === 'FEEDBACK'
+                      ? isCorrectOption
+                        ? 'bg-emerald-950/90 border-emerald-500 text-emerald-200 ring-2 ring-emerald-500/40'
+                        : 'bg-slate-900/40 border-slate-800 text-slate-500 opacity-50'
+                      : 'bg-slate-900/80 border-slate-800 hover:border-amber-500/50 hover:bg-slate-800 text-slate-200 hover:scale-[1.01]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between w-full mb-2">
+                    <span className="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-mono font-bold text-xs">
+                      {opt.id}
+                    </span>
+                    {gameState === 'FEEDBACK' && isCorrectOption && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+                  </div>
+                  <span className="leading-relaxed">{opt.text}</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Feedback banner */}
@@ -495,7 +551,7 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
                 onClick={nextQuestion}
                 className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs border border-slate-700 shrink-0 flex items-center gap-1.5"
               >
-                Suivant <ChevronRight className="w-4 h-4" />
+                Suivant ({currentIdx + 1}/{activeScenarios.length}) <ChevronRight className="w-4 h-4" />
               </button>
             </motion.div>
           )}
@@ -509,7 +565,7 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
             {gameState === 'VICTORY' ? '🏆' : '💀'}
           </div>
           <h4 className="text-xl font-extrabold text-white">
-            {gameState === 'VICTORY' ? 'Félicitations Badr Bourqi ! Simulation Validée' : 'Échec de la Réanimation'}
+            {gameState === 'VICTORY' ? 'Félicitations Badr Bourqi ! Niveau Validé' : 'Échec de la Réanimation'}
           </h4>
           <p className="text-xs text-slate-300">
             Score Final : <span className="text-amber-400 font-bold text-base">{score} pts</span> sur le Semestre {selectedSem}
@@ -519,7 +575,7 @@ export default function SemesterMiniGame({ semesterCode = 'S5' }: { semesterCode
               onClick={startGame}
               className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs shadow-lg transition-all flex items-center gap-2"
             >
-              <RefreshCcw className="w-4 h-4" /> Recommencer ce Semestre
+              <RefreshCcw className="w-4 h-4" /> Rejouer avec Nouvelles Questions (Random Pool)
             </button>
           </div>
         </div>

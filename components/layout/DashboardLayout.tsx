@@ -21,7 +21,8 @@ import {
   Menu,
   X,
   Gamepad2,
-  Building2
+  Building2,
+  Microscope
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -149,6 +150,19 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
             <div className="pt-3 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1">
               ENTRAÎNEMENT & OUTILS
             </div>
+
+            <button 
+              onClick={() => handleNavClick('PRACTICAL_CASES')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
+                activeSection === 'PRACTICAL_CASES'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-extrabold shadow-lg shadow-cyan-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <Microscope className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span className="font-bold">🔬 Cas Pratiques & ECOS (Radio/ECG)</span>
+              <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">ECOS</span>
+            </button>
 
             <button 
               onClick={() => handleNavClick('ANNALES_FACULTES')}

@@ -36,6 +36,8 @@ import {
   Building2
 } from 'lucide-react';
 
+import PracticalCasesSection from '../../components/PracticalCasesSection';
+
 export default function DashboardPage() {
   const [selectedCycle, setSelectedCycle] = useState<CycleType | 'ALL'>('ALL');
   const { activeSection, setActiveSection } = useViewStore();
@@ -69,6 +71,14 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <FacultyAnnalesSection />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'PRACTICAL_CASES') {
+    return (
+      <DashboardLayout>
+        <PracticalCasesSection />
       </DashboardLayout>
     );
   }
