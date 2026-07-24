@@ -7,16 +7,17 @@ import DashboardLayout from '../../../components/layout/DashboardLayout';
 import InteractiveDiagram from '../../../components/InteractiveDiagram';
 import { DETAILED_LESSONS, SAMPLE_QUIZ, CARDIOLOGY_DIAGRAM } from '../../../lib/mock-data';
 import SemesterMiniGame from '../../../components/SemesterMiniGame';
+import Anatomy3DSection from '../../../components/Anatomy3DSection';
 import {
   HeartPulse, BookOpen, Sparkles, Brain, CheckCircle2, AlertTriangle,
-  ArrowLeft, BookmarkCheck, Activity, Info, ChevronRight, Gamepad2
+  ArrowLeft, BookmarkCheck, Activity, Info, ChevronRight, Gamepad2, Box
 } from 'lucide-react';
 
 import { getRandomQuestions, getSessionSeed } from '../../../lib/quiz-engine';
 import { GLOBAL_QUESTION_BANK } from '../../../lib/question-bank';
 
 export default function DetailedModulePage({ params }: { params: { id: string } }) {
-  const [activeTab, setActiveTab] = useState<'COURS' | 'QCMS' | 'GAME'>('COURS');
+  const [activeTab, setActiveTab] = useState<'COURS' | 'QCMS' | 'ANATOMIE_3D' | 'GAME'>('COURS');
   const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
@@ -244,10 +245,11 @@ export default function DetailedModulePage({ params }: { params: { id: string } 
         </div>
 
         <div className="flex items-center space-x-2 border-t border-slate-800 mt-6 pt-6 overflow-x-auto">
-          {(['COURS', 'QCMS', 'GAME'] as const).map((tab) => {
+          {(['COURS', 'QCMS', 'ANATOMIE_3D', 'GAME'] as const).map((tab) => {
             const labels: Record<string, { icon: React.ReactNode; label: string }> = {
               COURS: { icon: <BookOpen className="w-4 h-4" />, label: `📖 SECTION COURS (${DETAILED_LESSONS.length} Chapitres)` },
               QCMS: { icon: <Brain className="w-4 h-4 text-purple-300" />, label: '🎯 SECTION QCMS & Examens' },
+              ANATOMIE_3D: { icon: <Box className="w-4 h-4 text-teal-400" />, label: '🎨 Anatomie & Schémas 3D' },
               GAME: { icon: <Gamepad2 className="w-4 h-4 text-amber-400" />, label: '🎮 SECTION GAME 2D Arcade' },
             };
             return (
@@ -468,6 +470,13 @@ export default function DetailedModulePage({ params }: { params: { id: string } 
               </button>
             )}
           </div>
+        </div>
+      )}
+
+      {/* TAB: ANATOMIE 3D & SCHEMAS */}
+      {activeTab === 'ANATOMIE_3D' && (
+        <div className="mt-4">
+          <Anatomy3DSection />
         </div>
       )}
 

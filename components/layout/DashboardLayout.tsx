@@ -24,7 +24,8 @@ import {
   Gamepad2,
   Building2,
   Microscope,
-  MessageCircle
+  MessageCircle,
+  Box
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -207,6 +208,19 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
               <Microscope className="w-4 h-4 text-cyan-400 shrink-0" />
               <span className="font-bold">🔬 Cas Pratiques & ECOS (Radio/ECG)</span>
               <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">ECOS</span>
+            </button>
+
+            <button 
+              onClick={() => handleNavClick('ANATOMIE_3D')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
+                activeSection === 'ANATOMIE_3D'
+                  ? 'bg-teal-500/20 text-teal-300 border border-teal-500/40 font-extrabold shadow-lg shadow-teal-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <Box className="w-4 h-4 text-teal-400 shrink-0" />
+              <span className="font-bold">🎨 Anatomie & Schémas 3D</span>
+              <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30">3D</span>
             </button>
 
             <button 

@@ -4,7 +4,7 @@
 import { create } from 'zustand';
 import { CycleType } from '../types';
 
-export type AppSection = 'DASHBOARD' | 'CHAPTER_READER' | 'FINAL_EXAM' | 'RANDOM_PRACTICE' | 'MINI_GAME' | 'ANNALES_FACULTES' | 'PRACTICAL_CASES' | 'COMMUNITY_CHAT';
+export type AppSection = 'DASHBOARD' | 'CHAPTER_READER' | 'FINAL_EXAM' | 'RANDOM_PRACTICE' | 'MINI_GAME' | 'ANNALES_FACULTES' | 'PRACTICAL_CASES' | 'COMMUNITY_CHAT' | 'ANATOMIE_3D';
 
 interface ViewState {
   activeSection: AppSection;

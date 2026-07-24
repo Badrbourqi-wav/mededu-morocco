@@ -38,6 +38,7 @@ import {
 
 import PracticalCasesSection from '../../components/PracticalCasesSection';
 import CommunityChat from '../../components/CommunityChat';
+import Anatomy3DSection from '../../components/Anatomy3DSection';
 
 export default function DashboardPage() {
   const { activeSection, setActiveSection, activeCycleFilter, setActiveCycleFilter } = useViewStore();
@@ -87,6 +88,14 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <CommunityChat />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'ANATOMIE_3D') {
+    return (
+      <DashboardLayout>
+        <Anatomy3DSection />
       </DashboardLayout>
     );
   }
