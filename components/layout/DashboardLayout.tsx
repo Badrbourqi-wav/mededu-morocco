@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useViewStore, AppSection } from '../../lib/view-store';
+import { CycleType } from '../../types';
 import { 
   Stethoscope, 
   BookOpen, 
@@ -34,12 +35,25 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children, activeCycle, onSectionChange }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { activeSection, setActiveSection } = useViewStore();
+
+
+  const { activeSection, setActiveSection, activeCycleFilter, setActiveCycleFilter } = useViewStore();
 
   const handleNavClick = (section: AppSection) => {
     setActiveSection(section);
     if (onSectionChange) onSectionChange(section);
     setSidebarOpen(false);
+  };
+
+  const handleCycleClick = (cycle: CycleType | 'ALL') => {
+    setActiveSection('DASHBOARD');
+    setActiveCycleFilter(cycle);
+    setSidebarOpen(false);
+    // Smooth scroll to semesters section after state update
+    setTimeout(() => {
+      const el = document.getElementById('semesters-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   return (
@@ -132,19 +146,49 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
               CYCLES D ÉTUDES (S1-S12)
             </div>
 
-            <button onClick={() => handleNavClick('DASHBOARD')} className="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors text-sm text-left">
-              <BookOpen className="w-4 h-4 text-cyan-400" />
+            <button 
+              onClick={() => handleCycleClick('PRECLINICAL')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl transition-all text-sm text-left ${
+                activeCycleFilter === 'PRECLINICAL' && activeSection === 'DASHBOARD'
+                  ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <BookOpen className="w-4 h-4 text-cyan-400 shrink-0" />
               <span>Cycle 1 (S1 - S4)</span>
+              {activeCycleFilter === 'PRECLINICAL' && activeSection === 'DASHBOARD' && (
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              )}
             </button>
 
-            <button onClick={() => handleNavClick('DASHBOARD')} className="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors text-sm text-left">
-              <Activity className="w-4 h-4 text-teal-400" />
+            <button 
+              onClick={() => handleCycleClick('CLINICAL')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl transition-all text-sm text-left ${
+                activeCycleFilter === 'CLINICAL' && activeSection === 'DASHBOARD'
+                  ? 'bg-teal-500/15 text-teal-300 border border-teal-500/30 font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <Activity className="w-4 h-4 text-teal-400 shrink-0" />
               <span>Cycle 2 (S5 - S10)</span>
+              {activeCycleFilter === 'CLINICAL' && activeSection === 'DASHBOARD' && (
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400" />
+              )}
             </button>
 
-            <button onClick={() => handleNavClick('DASHBOARD')} className="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors text-sm text-left">
-              <GraduationCap className="w-4 h-4 text-amber-400" />
+            <button 
+              onClick={() => handleCycleClick('INTERNSHIP')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl transition-all text-sm text-left ${
+                activeCycleFilter === 'INTERNSHIP' && activeSection === 'DASHBOARD'
+                  ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30 font-semibold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <GraduationCap className="w-4 h-4 text-amber-400 shrink-0" />
               <span>Cycle 3 (S11 - S12)</span>
+              {activeCycleFilter === 'INTERNSHIP' && activeSection === 'DASHBOARD' && (
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400" />
+              )}
             </button>
 
             <div className="pt-3 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1">

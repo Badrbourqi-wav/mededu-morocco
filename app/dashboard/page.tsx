@@ -1,10 +1,10 @@
 // app/dashboard/page.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import DashboardLayout from '../../components/layout/DashboardLayout';
-import { useViewStore, AppSection } from '../../lib/view-store';
+import { useViewStore } from '../../lib/view-store';
 import { SEMESTERS } from '../../lib/mock-data';
 import { CycleType } from '../../types';
 import ChapterPage from '../modules/[id]/chapters/[chapterId]/page';
@@ -39,12 +39,11 @@ import {
 import PracticalCasesSection from '../../components/PracticalCasesSection';
 
 export default function DashboardPage() {
-  const [selectedCycle, setSelectedCycle] = useState<CycleType | 'ALL'>('ALL');
-  const { activeSection, setActiveSection } = useViewStore();
+  const { activeSection, setActiveSection, activeCycleFilter, setActiveCycleFilter } = useViewStore();
 
   const filteredSemesters = SEMESTERS.filter(sem => {
-    if (selectedCycle === 'ALL') return true;
-    return sem.cycle === selectedCycle;
+    if (activeCycleFilter === 'ALL') return true;
+    return sem.cycle === activeCycleFilter;
   });
 
   if (activeSection === 'CHAPTER_READER') {
@@ -303,8 +302,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Cycle Selection Filter Tabs */}
-      <div className="mb-6">
+      <div id="semesters-section" className="mb-6 scroll-mt-8">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -318,9 +316,9 @@ export default function DashboardPage() {
         {/* Tab Buttons */}
         <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
           <button
-            onClick={() => setSelectedCycle('ALL')}
+            onClick={() => setActiveCycleFilter('ALL')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap border ${
-              selectedCycle === 'ALL'
+              activeCycleFilter === 'ALL'
                 ? 'bg-teal-600 text-white border-teal-400/50 shadow-lg shadow-teal-600/30'
                 : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800'
             }`}
@@ -329,10 +327,10 @@ export default function DashboardPage() {
           </button>
 
           <button
-            onClick={() => setSelectedCycle('PRECLINICAL')}
+            onClick={() => setActiveCycleFilter('PRECLINICAL')}
             aria-label="Cycle 1: Préclinique S1 à S4"
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center space-x-2 whitespace-nowrap border ${
-              selectedCycle === 'PRECLINICAL'
+              activeCycleFilter === 'PRECLINICAL'
                 ? 'bg-teal-600 text-white border-teal-400/50 shadow-lg shadow-teal-600/30'
                 : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800'
             }`}
@@ -342,10 +340,10 @@ export default function DashboardPage() {
           </button>
 
           <button
-            onClick={() => setSelectedCycle('CLINICAL')}
+            onClick={() => setActiveCycleFilter('CLINICAL')}
             aria-label="Cycle 2: Clinique S5 à S10"
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center space-x-2 whitespace-nowrap border ${
-              selectedCycle === 'CLINICAL'
+              activeCycleFilter === 'CLINICAL'
                 ? 'bg-teal-600 text-white border-teal-400/50 shadow-lg shadow-teal-600/30'
                 : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800'
             }`}
@@ -355,10 +353,10 @@ export default function DashboardPage() {
           </button>
 
           <button
-            onClick={() => setSelectedCycle('INTERNSHIP')}
+            onClick={() => setActiveCycleFilter('INTERNSHIP')}
             aria-label="Cycle 3: Internat et Thèse S11 à S12"
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center space-x-2 whitespace-nowrap border ${
-              selectedCycle === 'INTERNSHIP'
+              activeCycleFilter === 'INTERNSHIP'
                 ? 'bg-teal-600 text-white border-teal-400/50 shadow-lg shadow-teal-600/30'
                 : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:bg-slate-800'
             }`}
