@@ -3,7 +3,7 @@
 
 import { create } from 'zustand';
 
-export type AppSection = 'DASHBOARD' | 'CHAPTER_READER' | 'FINAL_EXAM' | 'RANDOM_PRACTICE';
+export type AppSection = 'DASHBOARD' | 'CHAPTER_READER' | 'FINAL_EXAM' | 'RANDOM_PRACTICE' | 'MINI_GAME';
 
 interface ViewState {
   activeSection: AppSection;

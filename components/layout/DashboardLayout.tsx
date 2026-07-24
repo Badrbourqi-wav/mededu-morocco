@@ -19,7 +19,8 @@ import {
   Layers,
   Award,
   Menu,
-  X
+  X,
+  Gamepad2
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -147,6 +148,19 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
             <div className="pt-3 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1">
               ENTRAÎNEMENT & OUTILS
             </div>
+
+            <button 
+              onClick={() => handleNavClick('MINI_GAME')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
+                activeSection === 'MINI_GAME'
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-extrabold shadow-lg shadow-amber-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <Gamepad2 className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="font-bold">🎮 Jeu 2D Simulation Clinique</span>
+              <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ARCADE</span>
+            </button>
 
             <button 
               onClick={() => handleNavClick('RANDOM_PRACTICE')}

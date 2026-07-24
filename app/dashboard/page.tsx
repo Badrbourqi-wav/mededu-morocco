@@ -10,6 +10,7 @@ import { CycleType } from '../../types';
 import ChapterPage from '../modules/[id]/chapters/[chapterId]/page';
 import FinalExamPage from '../modules/[id]/final-exam/page';
 import RandomPracticePage from '../practice/random/page';
+import SemesterMiniGame from '../../components/SemesterMiniGame';
 import { 
   BookOpen, 
   Activity, 
@@ -28,7 +29,9 @@ import {
   Wind,
   Microscope,
   Stethoscope,
-  BarChart3
+  BarChart3,
+  Gamepad2,
+  Zap
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -50,6 +53,14 @@ export default function DashboardPage() {
 
   if (activeSection === 'RANDOM_PRACTICE') {
     return <RandomPracticePage />;
+  }
+
+  if (activeSection === 'MINI_GAME') {
+    return (
+      <DashboardLayout>
+        <SemesterMiniGame semesterCode="S5" />
+      </DashboardLayout>
+    );
   }
 
   return (
@@ -197,6 +208,36 @@ export default function DashboardPage() {
                 <div className="text-[10px] text-slate-500 leading-tight">{s.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ════ 2D MEDICAL ARCADE GAME HERO CARD ════ */}
+      <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 mb-8 shadow-2xl shadow-amber-950/30"
+        style={{ background: 'linear-gradient(135deg, rgba(120,53,15,0.25) 0%, rgba(245,158,11,0.12) 50%, rgba(15,23,42,0.98) 100%)' }}
+      >
+        <div className="relative z-10 p-6 sm:p-8 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+          <div className="flex-1 max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold mb-3">
+              <Gamepad2 className="w-3.5 h-3.5" />
+              <span>Nouveau — Arcade Médical 2D</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-tight mb-2">
+              🎮 Jeu 2D Simulation Clinique
+            </h2>
+            <p className="text-xs text-slate-300 leading-relaxed mb-4">
+              Relevez les défis d urgence vitale en 2D ! Gériez le temps, sauvez les constantes biologiques et testez vos réflexes de médecin en situation réelle.
+            </p>
+            <button
+              onClick={() => setActiveSection('MINI_GAME')}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-teal-500 text-slate-950 font-extrabold text-sm shadow-xl shadow-amber-500/20 hover:scale-105 transition-transform"
+            >
+              <Zap className="w-4 h-4 fill-current" />
+              Lancer le Jeu 2D (Arcade Médical)
+            </button>
+          </div>
+          <div className="w-20 h-20 rounded-3xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mx-auto md:mx-0">
+            <Gamepad2 className="w-10 h-10" />
           </div>
         </div>
       </div>
