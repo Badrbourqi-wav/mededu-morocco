@@ -37,6 +37,7 @@ import {
 } from 'lucide-react';
 
 import PracticalCasesSection from '../../components/PracticalCasesSection';
+import CommunityChat from '../../components/CommunityChat';
 
 export default function DashboardPage() {
   const { activeSection, setActiveSection, activeCycleFilter, setActiveCycleFilter } = useViewStore();
@@ -78,6 +79,14 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <PracticalCasesSection />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'COMMUNITY_CHAT') {
+    return (
+      <DashboardLayout>
+        <CommunityChat />
       </DashboardLayout>
     );
   }

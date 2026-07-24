@@ -23,7 +23,8 @@ import {
   X,
   Gamepad2,
   Building2,
-  Microscope
+  Microscope,
+  MessageCircle
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -232,6 +233,19 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
               <Gamepad2 className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="font-bold">🎮 Jeu 2D Simulation Clinique</span>
               <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">ARCADE</span>
+            </button>
+
+            <button 
+              onClick={() => handleNavClick('COMMUNITY_CHAT')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
+                activeSection === 'COMMUNITY_CHAT'
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 font-extrabold shadow-lg shadow-rose-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <MessageCircle className="w-4 h-4 text-rose-400 shrink-0" />
+              <span className="font-bold">💬 Communauté & Chat</span>
+              <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">LIVE</span>
             </button>
 
             <button 

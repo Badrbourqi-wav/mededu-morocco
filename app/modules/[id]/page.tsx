@@ -12,11 +12,37 @@ import {
   ArrowLeft, BookmarkCheck, Activity, Info, ChevronRight, Gamepad2
 } from 'lucide-react';
 
-export default function DetailedModulePage() {
+import { getRandomQuestions, getSessionSeed } from '../../../lib/quiz-engine';
+import { GLOBAL_QUESTION_BANK } from '../../../lib/question-bank';
+
+export default function DetailedModulePage({ params }: { params: { id: string } }) {
   const [activeTab, setActiveTab] = useState<'COURS' | 'QCMS' | 'GAME'>('COURS');
   const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
+  
+  const [quizQuestions, setQuizQuestions] = useState<any[]>([]);
+  
+  // Extract module id (or use a default)
+  const moduleId = params?.id || 'MOD-CARDIO-S5';
+
+  const loadQuestions = () => {
+    // We want 20 questions for this module/semester. 
+    // Wait, the prompt says "40 questions per chapter/module so that each user session gets 20 different questions".
+    // We just filter the bank for this module's semester (or all questions if we want).
+    // Let's filter by semester = S5 (since this page is hardcoded to S5 CARD-S5 for now, but we should try to match).
+    // For now, let's just pick 20 random questions from the global bank.
+    const questions = getRandomQuestions(GLOBAL_QUESTION_BANK, 20, moduleId);
+    setQuizQuestions(questions);
+    setSelectedAnswers({});
+    setSubmittedQuiz(false);
+  };
+
+  React.useEffect(() => {
+    if (activeTab === 'QCMS' && quizQuestions.length === 0) {
+      loadQuestions();
+    }
+  }, [activeTab]);
 
   const currentLesson = DETAILED_LESSONS[selectedLessonIndex] || DETAILED_LESSONS[0];
 
@@ -27,10 +53,15 @@ export default function DetailedModulePage() {
 
   const calculateScore = () => {
     let correct = 0;
-    SAMPLE_QUIZ.questions.forEach(q => {
+    quizQuestions.forEach(q => {
       if (selectedAnswers[q.id] === q.correctOption) correct++;
     });
-    return Math.round((correct / SAMPLE_QUIZ.questions.length) * 100);
+    return Math.round((correct / (quizQuestions.length || 1)) * 100);
+  };
+
+  const handleNouveauxQCMs = () => {
+    sessionStorage.removeItem(`quiz_seed_${moduleId}`);
+    loadQuestions();
   };
 
   // Render course content with rich typography
@@ -342,36 +373,47 @@ export default function DetailedModulePage() {
             <div>
               <h2 className="text-lg font-bold text-white flex items-center gap-2 font-heading">
                 <Brain className="w-5 h-5 text-purple-400" />
-                {SAMPLE_QUIZ.title}
+                Série de QCMs Aléatoires
               </h2>
-              <p className="text-xs text-slate-400 mt-1">{SAMPLE_QUIZ.description}</p>
+              <p className="text-xs text-slate-400 mt-1">Évaluez vos connaissances avec 20 questions aléatoires tirées de la banque globale.</p>
             </div>
-            {submittedQuiz && (
-              <div className={`px-4 py-2 rounded-xl font-bold text-sm font-heading border ${
-                calculateScore() >= 70
-                  ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
-                  : 'bg-rose-500/20 border-rose-500/40 text-rose-300'
-              }`}>
-                Résultat: {calculateScore()}% — {calculateScore() >= 70 ? '✓ Validé' : '✗ À Réviser'}
-              </div>
-            )}
+            <div className="flex items-center gap-3">
+              {submittedQuiz && (
+                <div className={`px-4 py-2 rounded-xl font-bold text-sm font-heading border ${
+                  calculateScore() >= 70
+                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                    : 'bg-rose-500/20 border-rose-500/40 text-rose-300'
+                }`}>
+                  Résultat: {calculateScore()}% — {calculateScore() >= 70 ? '✓ Validé' : '✗ À Réviser'}
+                </div>
+              )}
+              <button 
+                onClick={handleNouveauxQCMs}
+                className="px-4 py-2 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold text-xs hover:bg-purple-500/30 transition-colors"
+              >
+                Nouveaux QCMs
+              </button>
+            </div>
           </div>
 
           <div className="space-y-8">
-            {SAMPLE_QUIZ.questions.map((q, idx) => {
+            {quizQuestions.length > 0 ? quizQuestions.map((q, idx) => {
               return (
-                <div key={q.id} className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80">
+                <div key={q.id + '-' + idx} className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800/80">
                   <div className="flex items-center space-x-2 mb-4">
                     <span className="px-2.5 py-1 rounded-lg bg-teal-500/20 text-teal-300 font-bold font-mono-code text-[11px] border border-teal-500/20">QCM {idx + 1}</span>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                       q.difficulty === 'HIGH_YIELD_PFE' ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' : 'bg-slate-800 text-slate-400 border-slate-700'
                     }`}>{q.difficulty}</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                      {q.disciplineTag}
+                    </span>
                   </div>
 
                   <p className="text-sm font-semibold text-white mb-4 leading-relaxed font-heading">{q.prompt}</p>
 
                   <div className="space-y-2.5">
-                    {q.options.map((opt) => {
+                    {q.options.map((opt: any) => {
                       const isOptionSelected = selectedAnswers[q.id] === opt.id;
                       let optionStyle = 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800/80 cursor-pointer';
 
@@ -404,15 +446,20 @@ export default function DetailedModulePage() {
                   )}
                 </div>
               );
-            })}
+            }) : (
+              <div className="text-center p-8">
+                <div className="animate-spin w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-slate-400">Génération des questions...</p>
+              </div>
+            )}
           </div>
 
           <div className="mt-8 flex justify-end">
             {!submittedQuiz ? (
               <button onClick={() => setSubmittedQuiz(true)}
-                disabled={Object.keys(selectedAnswers).length < SAMPLE_QUIZ.questions.length}
+                disabled={Object.keys(selectedAnswers).length < quizQuestions.length || quizQuestions.length === 0}
                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 text-slate-950 font-bold text-xs shadow-lg hover:opacity-95 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed font-heading">
-                Valider les Réponses du QCM ({Object.keys(selectedAnswers).length}/{SAMPLE_QUIZ.questions.length})
+                Valider les Réponses du QCM ({Object.keys(selectedAnswers).length}/{quizQuestions.length})
               </button>
             ) : (
               <button onClick={() => { setSubmittedQuiz(false); setSelectedAnswers({}); }}

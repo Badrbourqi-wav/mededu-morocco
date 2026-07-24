@@ -1,4 +1,4 @@
-// lib/question-bank.ts
+﻿// lib/question-bank.ts
 // MedEdu Morocco — Global Centralized QCM Bank
 // 60+ questions across all medical disciplines S1-S12
 
@@ -615,6 +615,219 @@ export const GLOBAL_QUESTION_BANK: BankQuestion[] = [
     difficulty: 'HARD',
     clinicalPearl: 'Traitement ARV au Maroc (PNAM) : ténofovir + lamivudine + dolutégravir (TLD) = schéma préférentiel 1ère ligne. Prophylaxie primaire de la pneumocystose : cotrimoxazole si CD4 < 200/mm³.',
   },
+  // ═══════════════════════════════════════════════════════════
+  // ADDITIONAL QUESTIONS — QCM RANDOMIZATION BANK (gqb-100+)
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: 'gqb-100', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Thorax',
+    prompt: 'Quelle artère naît directement de l\'aorte thoracique descendante ?',
+    options: [{id:'A',text:'Artères mammaires internes'}, {id:'B',text:'Artères intercostales postérieures'}, {id:'C',text:'Artère subclavière'}, {id:'D',text:'Tronc cœliaque'}],
+    correctOption: 'B', explanation: 'Les artères intercostales postérieures naissent de l\'aorte thoracique.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-101', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Abdomen',
+    prompt: 'Le foie est divisé en combien de segments hépatiques selon la classification de Couinaud ?',
+    options: [{id:'A',text:'4'}, {id:'B',text:'6'}, {id:'C',text:'8'}, {id:'D',text:'9'}],
+    correctOption: 'C', explanation: 'Le foie possède 8 segments fonctionnels indépendants.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-102', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Pelvis',
+    prompt: 'Quel muscle forme le plancher pelvien principal ?',
+    options: [{id:'A',text:'Muscle releveur de l\'anus'}, {id:'B',text:'Muscle piriforme'}, {id:'C',text:'Muscle obturateur interne'}, {id:'D',text:'Muscle grand fessier'}],
+    correctOption: 'A', explanation: 'Le releveur de l\'anus est le principal constituant du plancher pelvien.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-103', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Cerveau',
+    prompt: 'Dans quel lobe cérébral se trouve l\'aire motrice primaire (aire 4) ?',
+    options: [{id:'A',text:'Lobe frontal'}, {id:'B',text:'Lobe pariétal'}, {id:'C',text:'Lobe temporal'}, {id:'D',text:'Lobe occipital'}],
+    correctOption: 'A', explanation: 'Le lobe frontal abrite l\'aire motrice primaire (circonvolution frontale ascendante).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-104', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Membres',
+    prompt: 'Le nerf médian passe à travers quelle structure au niveau du poignet ?',
+    options: [{id:'A',text:'Canal de Guyon'}, {id:'B',text:'Canal carpien'}, {id:'C',text:'Gouttière épitrochléo-olécrânienne'}, {id:'D',text:'Tabatière anatomique'}],
+    correctOption: 'B', explanation: 'Le nerf médian traverse le canal carpien.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-105', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Rénal',
+    prompt: 'Où se fait la réabsorption obligatoire du glucose dans le néphron ?',
+    options: [{id:'A',text:'Tube contourné proximal'}, {id:'B',text:'Anse de Henle'}, {id:'C',text:'Tube contourné distal'}, {id:'D',text:'Tube collecteur'}],
+    correctOption: 'A', explanation: '100% du glucose est réabsorbé dans le TCP via SGLT2/SGLT1.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-106', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Respiratoire',
+    prompt: 'Qu\'est-ce qui représente le volume de réserve expiratoire (VRE) + le volume résiduel (VR) ?',
+    options: [{id:'A',text:'Capacité vitale'}, {id:'B',text:'Capacité pulmonaire totale'}, {id:'C',text:'Capacité résiduelle fonctionnelle (CRF)'}, {id:'D',text:'Capacité inspiratoire'}],
+    correctOption: 'C', explanation: 'La CRF = VRE + VR. C\'est le volume d\'air restant après une expiration normale.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-107', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Endocrinien',
+    prompt: 'Quelle hormone est sécrétée par la post-hypophyse ?',
+    options: [{id:'A',text:'ACTH'}, {id:'B',text:'TSH'}, {id:'C',text:'ADH (vasopressine)'}, {id:'D',text:'FSH'}],
+    correctOption: 'C', explanation: 'La neurohypophyse libère l\'ADH et l\'ocytocine (synthétisées dans l\'hypothalamus).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-108', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Digestif',
+    prompt: 'La vitamine B12 nécessite quel facteur pour son absorption iléale ?',
+    options: [{id:'A',text:'Facteur intrinsèque'}, {id:'B',text:'Pepsine'}, {id:'C',text:'Lipase pancréatique'}, {id:'D',text:'Sels biliaires'}],
+    correctOption: 'A', explanation: 'Le facteur intrinsèque sécrété par l\'estomac est indispensable à l\'absorption de B12.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-109', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Cardio',
+    prompt: 'L\'onde P de l\'ECG correspond à :',
+    options: [{id:'A',text:'Dépolarisation ventriculaire'}, {id:'B',text:'Repolarisation ventriculaire'}, {id:'C',text:'Dépolarisation auriculaire'}, {id:'D',text:'Repolarisation auriculaire'}],
+    correctOption: 'C', explanation: 'L\'onde P marque la dépolarisation des oreillettes.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-110', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Antidotes',
+    prompt: 'Quel est l\'antidote spécifique en cas d\'intoxication au paracétamol ?',
+    options: [{id:'A',text:'Naloxone'}, {id:'B',text:'N-acétylcystéine (NAC)'}, {id:'C',text:'Flumazénil'}, {id:'D',text:'Atropine'}],
+    correctOption: 'B', explanation: 'La NAC restaure le glutathion hépatique.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-111', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Anticoagulants',
+    prompt: 'Quel examen surveille l\'efficacité des Anti-Vitamines K (AVK) ?',
+    options: [{id:'A',text:'TCA'}, {id:'B',text:'Temps de saignement'}, {id:'C',text:'INR'}, {id:'D',text:'Numération plaquettaire'}],
+    correctOption: 'C', explanation: 'L\'INR (International Normalized Ratio) surveille les AVK.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-112', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Diurétiques',
+    prompt: 'Lequel de ces diurétiques est hypokaliémiant ?',
+    options: [{id:'A',text:'Spironolactone'}, {id:'B',text:'Furosémide'}, {id:'C',text:'Amiloride'}, {id:'D',text:'Éplérénone'}],
+    correctOption: 'B', explanation: 'Le furosémide (diurétique de l\'anse) fait fuir le potassium.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-113', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Antibiotiques',
+    prompt: 'Quelle classe d\'antibiotiques peut causer une tendinopathie (ex: rupture du tendon d\'Achille) ?',
+    options: [{id:'A',text:'Macrolides'}, {id:'B',text:'Aminosides'}, {id:'C',text:'Fluoroquinolones'}, {id:'D',text:'Bêta-lactamines'}],
+    correctOption: 'C', explanation: 'Les fluoroquinolones ont une toxicité tendineuse reconnue.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-114', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Antalgiques',
+    prompt: 'Les AINS inhibent principalement quelle enzyme ?',
+    options: [{id:'A',text:'Lipoxygénase'}, {id:'B',text:'Cyclooxygénase (COX)'}, {id:'C',text:'Phospholipase A2'}, {id:'D',text:'Xanthine oxydase'}],
+    correctOption: 'B', explanation: 'Les AINS inhibent les COX-1 et COX-2.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-115', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Respiratoire',
+    prompt: 'Le syndrome de condensation pulmonaire (ex: pneumonie) se traduit à l\'auscultation par :',
+    options: [{id:'A',text:'Abolition du murmure vésiculaire'}, {id:'B',text:'Souffle tubaire et crépitants'}, {id:'C',text:'Sibilants diffus'}, {id:'D',text:'Frottement pleural'}],
+    correctOption: 'B', explanation: 'Condensation = transmission augmentée du son (souffle tubaire) + exsudat alvéolaire (crépitants).', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-116', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Cardiaque',
+    prompt: 'Quel souffle est caractéristique de l\'insuffisance mitrale ?',
+    options: [{id:'A',text:'Souffle systolique éjectionnel au foyer aortique'}, {id:'B',text:'Roulement diastolique apexien'}, {id:'C',text:'Souffle holosystolique apexien irradiant à l\'aisselle'}, {id:'D',text:'Souffle diastolique au foyer aortique'}],
+    correctOption: 'C', explanation: 'L\'IM donne un souffle holosystolique de régurgitation à l\'apex.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-117', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Digestif',
+    prompt: 'Le signe de Murphy positif est évocateur de :',
+    options: [{id:'A',text:'Appendicite aiguë'}, {id:'B',text:'Cholécystite aiguë'}, {id:'C',text:'Péritonite'}, {id:'D',text:'Sigmoïdite'}],
+    correctOption: 'B', explanation: 'Douleur bloquant l\'inspiration à la palpation de l\'hypocondre droit = Murphy (vésicule biliaire).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-118', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Neuro',
+    prompt: 'Le syndrome méningé comprend tous les signes suivants SAUF :',
+    options: [{id:'A',text:'Céphalées intenses'}, {id:'B',text:'Raideur de la nuque'}, {id:'C',text:'Hémiplégie'}, {id:'D',text:'Photophobie'}],
+    correctOption: 'C', explanation: 'L\'hémiplégie est un signe de localisation encéphalique, pas méningé.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-119', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Général',
+    prompt: 'Un ictère à bilirubine libre (non conjuguée) isolée évoque :',
+    options: [{id:'A',text:'Obstruction des voies biliaires'}, {id:'B',text:'Hémolyse'}, {id:'C',text:'Cirrhose hépatique'}, {id:'D',text:'Hépatite virale'}],
+    correctOption: 'B', explanation: 'L\'hémolyse entraîne une surproduction de bilirubine libre.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-120', semesterCode: 'S5', moduleCode: 'MOD-CARDIO-S5', disciplineTag: 'Cardiologie', topicTag: 'Péricardite',
+    prompt: 'L\'ECG d\'une péricardite aiguë non compliquée montre typiquement :',
+    options: [{id:'A',text:'Sus-décalage ST convexe, englobant une seule artère'}, {id:'B',text:'Sus-décalage ST concave, diffus, avec sous-décalage PQ'}, {id:'C',text:'Ondes Q de nécrose'}, {id:'D',text:'Bloc de branche gauche complet'}],
+    correctOption: 'B', explanation: 'La péricardite donne un sus-décalage ST diffus, concave en haut, sans miroir.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-121', semesterCode: 'S5', moduleCode: 'MOD-CARDIO-S5', disciplineTag: 'Cardiologie', topicTag: 'Insuffisance Cardiaque',
+    prompt: 'Quel signe clinique est spécifique de l\'insuffisance cardiaque DROITE ?',
+    options: [{id:'A',text:'Orthopnée'}, {id:'B',text:'Râles crépitants pulmonaires'}, {id:'C',text:'Turgescence jugulaire et hépatomégalie'}, {id:'D',text:'Toux nocturne'}],
+    correctOption: 'C', explanation: 'Signes droits = stase veineuse systémique (turgescence jugulaire, reflux hépato-jugulaire, OMI).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-122', semesterCode: 'S5', moduleCode: 'MOD-CARDIO-S5', disciplineTag: 'Cardiologie', topicTag: 'Valvulopathie',
+    prompt: 'Quelle est l\'étiologie la plus fréquente du rétrécissement aortique chez le sujet âgé ?',
+    options: [{id:'A',text:'Rhumatisme articulaire aigu (RAA)'}, {id:'B',text:'Bicuspidie aortique'}, {id:'C',text:'Dégénérescence calcifiante (maladie de Mönckeberg)'}, {id:'D',text:'Endocardite infectieuse'}],
+    correctOption: 'C', explanation: 'Le RA serré calcifié dégénératif est l\'étiologie principale après 70 ans.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-123', semesterCode: 'S5', moduleCode: 'MOD-PNEUMO-S5', disciplineTag: 'Pneumologie', topicTag: 'Asthme',
+    prompt: 'Dans l\'asthme, le trouble ventilatoire obstructif aux EFR est :',
+    options: [{id:'A',text:'Totalement irréversible'}, {id:'B',text:'Réversible sous bronchodilatateurs'}, {id:'C',text:'Restrictif pur'}, {id:'D',text:'Mixte sans réversibilité'}],
+    correctOption: 'B', explanation: 'L\'asthme se caractérise par un TVO réversible (gain VEMS > 200mL et 12%).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-124', semesterCode: 'S5', moduleCode: 'MOD-PNEUMO-S5', disciplineTag: 'Pneumologie', topicTag: 'Pneumonie',
+    prompt: 'Le germe le plus fréquemment responsable de pneumonie aiguë communautaire (PAC) est :',
+    options: [{id:'A',text:'Staphylococcus aureus'}, {id:'B',text:'Mycoplasma pneumoniae'}, {id:'C',text:'Streptococcus pneumoniae (Pneumocoque)'}, {id:'D',text:'Pseudomonas aeruginosa'}],
+    correctOption: 'C', explanation: 'Le pneumocoque est le premier agent des PAC bactériennes typiques.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-125', semesterCode: 'S5', moduleCode: 'MOD-PNEUMO-S5', disciplineTag: 'Pneumologie', topicTag: 'Embolie',
+    prompt: 'L\'examen de référence pour confirmer une embolie pulmonaire est :',
+    options: [{id:'A',text:'Radiographie thoracique'}, {id:'B',text:'D-dimères'}, {id:'C',text:'Angioscanner thoracique'}, {id:'D',text:'Gaz du sang'}],
+    correctOption: 'C', explanation: 'L\'angio-TDM est le gold standard pour voir le thrombus dans l\'artère pulmonaire.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-126', semesterCode: 'S6', moduleCode: 'MOD-NEURO-S6', disciplineTag: 'Neurologie', topicTag: 'Parkinson',
+    prompt: 'La triade symptomatique de la maladie de Parkinson comprend :',
+    options: [{id:'A',text:'Tremblement de repos, rigidité, akinésie'}, {id:'B',text:'Tremblement d\'action, spasticité, aphasie'}, {id:'C',text:'Démence, ataxie, incontinence'}, {id:'D',text:'Amnésie, apraxie, agnosie'}],
+    correctOption: 'A', explanation: 'C\'est le syndrome parkinsonien typique.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-127', semesterCode: 'S6', moduleCode: 'MOD-NEURO-S6', disciplineTag: 'Neurologie', topicTag: 'SEP',
+    prompt: 'La sclérose en plaques (SEP) est une maladie :',
+    options: [{id:'A',text:'Dégénérative des neurones moteurs'}, {id:'B',text:'Inflammatoire démyélinisante du SNC'}, {id:'C',text:'Infectieuse virale chronique'}, {id:'D',text:'Démyélinisante du SNP (nerfs périphériques)'}],
+    correctOption: 'B', explanation: 'La SEP atteint la myéline du système nerveux central.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-128', semesterCode: 'S6', moduleCode: 'MOD-NEURO-S6', disciplineTag: 'Neurologie', topicTag: 'Céphalées',
+    prompt: 'La migraine avec aura classique se manifeste souvent par :',
+    options: [{id:'A',text:'Aura visuelle (scotome scintillant)'}, {id:'B',text:'Perte de connaissance brève'}, {id:'C',text:'Crises comitiales généralisées'}, {id:'D',text:'Paralysie faciale périphérique'}],
+    correctOption: 'A', explanation: 'L\'aura visuelle est la forme la plus courante (ophtalmique).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-129', semesterCode: 'S6', moduleCode: 'MOD-NEURO-S6', disciplineTag: 'Neurologie', topicTag: 'Neuro musculaire',
+    prompt: 'La myasthénie est due à des auto-anticorps dirigés contre :',
+    options: [{id:'A',text:'Les canaux calciques présynaptiques'}, {id:'B',text:'La myéline périphérique'}, {id:'C',text:'Les récepteurs à l\'acétylcholine (plaque motrice)'}, {id:'D',text:'La dystrophine'}],
+    correctOption: 'C', explanation: 'Anticorps anti-RACh bloquant la jonction neuromusculaire.', difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-130', semesterCode: 'S1', moduleCode: 'MOD-ANAT-S1', disciplineTag: 'Anatomie', topicTag: 'Cou',
+    prompt: 'Quel muscle divise le cou en triangles antérieur et postérieur ?',
+    options: [{id:'A',text:'Muscle platysma'}, {id:'B',text:'Muscle sterno-cléido-mastoïdien (SCM)'}, {id:'C',text:'Muscle trapèze'}, {id:'D',text:'Muscle omo-hyoïdien'}],
+    correctOption: 'B', explanation: 'Le SCM est le repère principal du cou.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-131', semesterCode: 'S2', moduleCode: 'MOD-PHYSIO-S2', disciplineTag: 'Physiologie', topicTag: 'Sang',
+    prompt: 'L\'hormone stimulant l\'érythropoïèse (EPO) est principalement produite par :',
+    options: [{id:'A',text:'Le foie'}, {id:'B',text:'La moelle osseuse'}, {id:'C',text:'Le rein'}, {id:'D',text:'La rate'}],
+    correctOption: 'C', explanation: 'Le rein produit 90% de l\'EPO en réponse à l\'hypoxie.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-132', semesterCode: 'S3', moduleCode: 'MOD-PHARMA-S3', disciplineTag: 'Pharmacologie', topicTag: 'Asthme',
+    prompt: 'Quel médicament est un bronchodilatateur bêta-2 mimétique de courte durée d\'action ?',
+    options: [{id:'A',text:'Salbutamol'}, {id:'B',text:'Ipratropium'}, {id:'C',text:'Béclométasone'}, {id:'D',text:'Théophylline'}],
+    correctOption: 'A', explanation: 'Le salbutamol (Ventoline) est un B2-mimétique d\'action rapide.', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-133', semesterCode: 'S4', moduleCode: 'MOD-SEMIO-S4', disciplineTag: 'Sémiologie', topicTag: 'Digestif',
+    prompt: 'Une splénomégalie associée à une hépatomégalie et une circulation veineuse collatérale évoque :',
+    options: [{id:'A',text:'Hypertension portale'}, {id:'B',text:'Insuffisance cardiaque gauche'}, {id:'C',text:'Angiocholite'}, {id:'D',text:'Pancréatite aiguë'}],
+    correctOption: 'A', explanation: 'C\'est le syndrome d\'hypertension portale (souvent cirrhotique).', difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-134', semesterCode: 'S5', moduleCode: 'MOD-CARDIO-S5', disciplineTag: 'Cardiologie', topicTag: 'Rythme',
+    prompt: 'Quel traitement est indiqué en urgence devant une fibrillation ventriculaire ?',
+    options: [{id:'A',text:'Amiodarone IV'}, {id:'B',text:'Défibrillation immédiate (choc électrique externe)'}, {id:'C',text:'Massage sinocarotidien'}, {id:'D',text:'Atropine IV'}],
+    correctOption: 'B', explanation: 'La FV nécessite une défibrillation sans délai.', difficulty: 'EASY'
+  }
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
