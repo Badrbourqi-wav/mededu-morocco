@@ -20,7 +20,8 @@ import {
   Award,
   Menu,
   X,
-  Gamepad2
+  Gamepad2,
+  Building2
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
