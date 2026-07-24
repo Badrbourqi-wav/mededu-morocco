@@ -11,6 +11,7 @@ import ChapterPage from '../modules/[id]/chapters/[chapterId]/page';
 import FinalExamPage from '../modules/[id]/final-exam/page';
 import RandomPracticePage from '../practice/random/page';
 import SemesterMiniGame from '../../components/SemesterMiniGame';
+import FacultyAnnalesSection from '../../components/FacultyAnnalesSection';
 import { 
   BookOpen, 
   Activity, 
@@ -31,7 +32,8 @@ import {
   Stethoscope,
   BarChart3,
   Gamepad2,
-  Zap
+  Zap,
+  Building2
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -59,6 +61,14 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <SemesterMiniGame semesterCode="S5" />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'ANNALES_FACULTES') {
+    return (
+      <DashboardLayout>
+        <FacultyAnnalesSection />
       </DashboardLayout>
     );
   }

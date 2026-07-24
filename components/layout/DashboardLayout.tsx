@@ -150,6 +150,19 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
             </div>
 
             <button 
+              onClick={() => handleNavClick('ANNALES_FACULTES')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
+                activeSection === 'ANNALES_FACULTES'
+                  ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40 font-extrabold shadow-lg shadow-purple-500/20'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
+              }`}
+            >
+              <Building2 className="w-4 h-4 text-purple-400 shrink-0" />
+              <span className="font-bold">🏛️ Annales & Épreuves (FMP Maroc)</span>
+              <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">PFE</span>
+            </button>
+
+            <button 
               onClick={() => handleNavClick('MINI_GAME')}
               className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl transition-all text-xs text-left group ${
                 activeSection === 'MINI_GAME'

@@ -78,7 +78,7 @@ export default function InteractiveDiagram({ diagram }: InteractiveDiagramProps)
           {/* Background Grid Pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
 
-          {/* SVG Organ Illustration (Cardiac Chamber Representation) */}
+          {/* Dynamic Organ Vector Illustration */}
           <svg viewBox="0 0 400 340" className="w-full max-w-[360px] h-auto filter drop-shadow-[0_0_25px_rgba(13,148,136,0.15)]">
             <defs>
               <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -86,37 +86,48 @@ export default function InteractiveDiagram({ diagram }: InteractiveDiagramProps)
                 <stop offset="50%" stopColor="#0f172a" />
                 <stop offset="100%" stopColor="#0d9488" stopOpacity="0.4" />
               </linearGradient>
-              <linearGradient id="aortaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f43f5e" />
-                <stop offset="100%" stopColor="#9f1239" />
+              <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b0764" />
+                <stop offset="100%" stopColor="#6b21a8" stopOpacity="0.5" />
               </linearGradient>
-              <linearGradient id="atriumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="kidneyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#881337" />
+                <stop offset="100%" stopColor="#e11d48" stopOpacity="0.4" />
+              </linearGradient>
+              <linearGradient id="lungsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#0284c7" />
-                <stop offset="100%" stopColor="#0369a1" />
+                <stop offset="100%" stopColor="#0369a1" stopOpacity="0.4" />
               </linearGradient>
             </defs>
 
-            {/* Aortic Arch */}
-            <path 
-              d="M 180 120 C 180 50, 240 40, 250 90 L 230 130 Z" 
-              fill="url(#aortaGrad)" 
-              stroke="#fb7185" 
-              strokeWidth="2"
-              className="transition-all duration-300 hover:opacity-90"
-            />
-            {/* Heart Muscle Body */}
-            <path 
-              d="M 200 100 Q 280 90 290 170 Q 300 250 200 300 Q 100 250 110 170 Q 120 90 200 100 Z" 
-              fill="url(#heartGrad)" 
-              stroke="#0d9488" 
-              strokeWidth="3"
-            />
-            {/* Interventricular Septum line */}
-            <path d="M 200 130 L 195 285" stroke="#334155" strokeWidth="4" strokeDasharray="4 4" />
-            {/* Left Ventricle chamber fill highlight */}
-            <path d="M 200 135 Q 260 145 270 210 Q 260 260 198 280 Z" fill="#0d9488" fillOpacity="0.15" />
-            {/* Right Atrium chamber fill highlight */}
-            <path d="M 125 150 Q 180 145 185 190 Q 170 220 130 210 Z" fill="url(#atriumGrad)" fillOpacity="0.3" />
+            {diagram.imageOrSvgType === 'BRAIN' ? (
+              <g>
+                <path d="M 120 180 C 80 120, 140 60, 220 70 C 290 50, 340 120, 310 190 C 330 250, 240 280, 190 270 C 130 270, 100 220, 120 180 Z" fill="url(#brainGrad)" stroke="#a855f7" strokeWidth="3" />
+                <path d="M 160 120 Q 220 100 280 130" stroke="#c084fc" strokeWidth="2" strokeDasharray="3 3" />
+                <path d="M 140 180 Q 220 160 290 190" stroke="#c084fc" strokeWidth="2" strokeDasharray="3 3" />
+                <path d="M 190 270 Q 220 310 240 330" stroke="#e879f9" strokeWidth="4" />
+              </g>
+            ) : diagram.imageOrSvgType === 'KIDNEY' ? (
+              <g>
+                <path d="M 210 60 C 320 60, 340 270, 220 280 C 170 280, 180 200, 140 170 C 180 140, 170 60, 210 60 Z" fill="url(#kidneyGrad)" stroke="#f43f5e" strokeWidth="3" />
+                <path d="M 140 170 C 90 175, 70 220, 50 250" stroke="#f43f5e" strokeWidth="5" />
+                <path d="M 150 160 C 110 150, 90 120, 70 100" stroke="#0284c7" strokeWidth="4" />
+              </g>
+            ) : diagram.imageOrSvgType === 'LUNGS' ? (
+              <g>
+                <path d="M 200 40 L 200 140" stroke="#38bdf8" strokeWidth="6" />
+                <path d="M 200 140 L 130 190" stroke="#38bdf8" strokeWidth="5" />
+                <path d="M 200 140 L 270 190" stroke="#38bdf8" strokeWidth="5" />
+                <path d="M 130 190 C 60 180, 50 290, 150 300 C 180 300, 180 230, 130 190 Z" fill="url(#lungsGrad)" stroke="#0284c7" strokeWidth="3" />
+                <path d="M 270 190 C 340 180, 350 290, 250 300 C 220 300, 220 230, 270 190 Z" fill="url(#lungsGrad)" stroke="#0284c7" strokeWidth="3" />
+              </g>
+            ) : (
+              <g>
+                <path d="M 180 120 C 180 50, 240 40, 250 90 L 230 130 Z" fill="#9f1239" stroke="#fb7185" strokeWidth="2" />
+                <path d="M 200 100 Q 280 90 290 170 Q 300 250 200 300 Q 100 250 110 170 Q 120 90 200 100 Z" fill="url(#heartGrad)" stroke="#0d9488" strokeWidth="3" />
+                <path d="M 200 130 L 195 285" stroke="#334155" strokeWidth="4" strokeDasharray="4 4" />
+              </g>
+            )}
           </svg>
 
           {/* Render Interactive Hotspots & Pins */}
