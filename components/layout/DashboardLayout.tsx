@@ -201,13 +201,13 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center font-bold text-slate-900 text-sm ring-2 ring-teal-500/30">
-                  AY
+                  BB
                 </div>
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-slate-900"></span>
               </div>
               <div className="text-left">
-                <p className="text-xs font-semibold text-slate-200">Dr. Aymane Y.</p>
-                <p className="text-[10px] text-slate-400">Étudiant 3ème Année (S5)</p>
+                <p className="text-xs font-semibold text-slate-200">Badr Bourqi</p>
+                <p className="text-[10px] text-slate-400">Étudiant en Médecine (6 Ans)</p>
               </div>
             </div>
             <ShieldCheck className="w-5 h-5 text-teal-400/80" />
@@ -233,8 +233,8 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
           <div className="flex items-center space-x-4 ml-auto">
             <div className="hidden md:flex items-center space-x-2 bg-slate-950/60 border border-slate-800 px-3 py-1.5 rounded-xl text-xs">
               <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
-              <span className="text-slate-400">Semestre en cours:</span>
-              <span className="font-semibold text-teal-300">S5 Cardiologie</span>
+              <span className="text-slate-400">Étudiant:</span>
+              <span className="font-semibold text-teal-300">Badr Bourqi (FMPR)</span>
             </div>
 
             <button className="relative p-2 rounded-xl bg-slate-800/60 text-slate-300 hover:text-white border border-slate-700/50 transition-colors">

@@ -6,13 +6,14 @@ import Link from 'next/link';
 import DashboardLayout from '../../../components/layout/DashboardLayout';
 import InteractiveDiagram from '../../../components/InteractiveDiagram';
 import { DETAILED_LESSONS, SAMPLE_QUIZ, CARDIOLOGY_DIAGRAM } from '../../../lib/mock-data';
+import SemesterMiniGame from '../../../components/SemesterMiniGame';
 import {
   HeartPulse, BookOpen, Sparkles, Brain, CheckCircle2, AlertTriangle,
-  ArrowLeft, BookmarkCheck, Activity, Info, ChevronRight
+  ArrowLeft, BookmarkCheck, Activity, Info, ChevronRight, Gamepad2
 } from 'lucide-react';
 
 export default function DetailedModulePage() {
-  const [activeTab, setActiveTab] = useState<'COURS' | 'DIAGRAMS' | 'QCMS'>('COURS');
+  const [activeTab, setActiveTab] = useState<'COURS' | 'QCMS' | 'GAME'>('COURS');
   const [selectedLessonIndex, setSelectedLessonIndex] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submittedQuiz, setSubmittedQuiz] = useState(false);
@@ -212,11 +213,11 @@ export default function DetailedModulePage() {
         </div>
 
         <div className="flex items-center space-x-2 border-t border-slate-800 mt-6 pt-6 overflow-x-auto">
-          {(['COURS', 'DIAGRAMS', 'QCMS'] as const).map((tab) => {
+          {(['COURS', 'QCMS', 'GAME'] as const).map((tab) => {
             const labels: Record<string, { icon: React.ReactNode; label: string }> = {
-              COURS: { icon: <BookOpen className="w-4 h-4" />, label: `Cours Complets & Détaillés (${DETAILED_LESSONS.length} Chapitres)` },
-              DIAGRAMS: { icon: <Sparkles className="w-4 h-4 text-cyan-300" />, label: 'Schémas & Anatomie 3D' },
-              QCMS: { icon: <Brain className="w-4 h-4 text-purple-300" />, label: 'QCMs d Entraînement PFE' },
+              COURS: { icon: <BookOpen className="w-4 h-4" />, label: `📖 SECTION COURS (${DETAILED_LESSONS.length} Chapitres)` },
+              QCMS: { icon: <Brain className="w-4 h-4 text-purple-300" />, label: '🎯 SECTION QCMS & Examens' },
+              GAME: { icon: <Gamepad2 className="w-4 h-4 text-amber-400" />, label: '🎮 SECTION GAME 2D Arcade' },
             };
             return (
               <button key={tab} onClick={() => setActiveTab(tab)}
@@ -427,6 +428,13 @@ export default function DetailedModulePage() {
               </button>
             )}
           </div>
+        </div>
+      )}
+
+      {/* TAB: SECTION GAME 2D ARCADE */}
+      {activeTab === 'GAME' && (
+        <div className="mt-4">
+          <SemesterMiniGame semesterCode="S5" />
         </div>
       )}
     </DashboardLayout>
