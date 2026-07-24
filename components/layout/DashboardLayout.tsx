@@ -300,11 +300,18 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
             </button>
 
             <button 
-              onClick={() => handleNavClick('CHAPTER_READER')}
-              className="w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors text-sm text-left"
+              onClick={() => handleNavClick('ANATOMIE_3D')}
+              className={`w-full flex items-center space-x-3 px-3.5 py-2 rounded-xl text-sm text-left transition-all ${
+                activeSection === 'ANATOMIE_3D'
+                  ? 'bg-teal-500/15 text-teal-300 border border-teal-500/30 font-bold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
             >
-              <Sparkles className="w-4 h-4 text-rose-400" />
+              <Box className="w-4 h-4 text-teal-400" />
               <span>Anatomie & Schémas 3D</span>
+              {activeSection === 'ANATOMIE_3D' && (
+                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400" />
+              )}
             </button>
           </nav>
         </div>
