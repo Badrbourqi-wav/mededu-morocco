@@ -10,9 +10,9 @@ import {
 interface Hotspot3D {
   id: string;
   label: string;
-  x: number; // -100 to 100
-  y: number; // -100 to 100
-  z: number; // -100 to 100 (depth)
+  x: number; // -120 to 120 (3D X px)
+  y: number; // -120 to 120 (3D Y px)
+  z: number; // -80 to 80 (3D Z px depth)
   info: string;
   pfeTip?: string;
 }
@@ -42,11 +42,11 @@ const STRUCTURES_3D: AnatomicalStructure3D[] = [
     description: 'Structure tridimensionnelle du cœur humain montrant les 4 cavités, la crosse aortique, le tronc pulmonaire et le réseau coronaire.',
     clinicalImportance: 'Permet d\'étudier en 360° les sites d\'occlusion des coronaires (IVA, Circonflexe, Coronaire droite) et la propagation des blocages électrophysiologiques (BAV).',
     hotspots: [
-      { id: 'h1', label: '1. Oreillette Droite (OD)', x: 45, y: -25, z: 35, info: 'Reçoit le sang veineux des veines caves. Contient le nœud sinusal sinu-atrial de Keith & Flack à la jonction VCS-OD.', pfeTip: 'Fosse ovale à la face septale interauriculaire, vestige du foramen ovale.' },
-      { id: 'h2', label: '2. Ventricule Gauche (VG)', x: -35, y: 40, z: 45, info: 'Paroi musculaire très développée (8-12 mm). Propulse le sang oxygéné vers l\'aorte sous haute pression.', pfeTip: 'FEVG normale ≥ 55%. Épaississement > 15 mm = HVG sur HTA.' },
-      { id: 'h3', label: '3. Crosse de l\'Aorte (3D Arc)', x: 0, y: -80, z: 0, info: 'Crosse de 3 cm de diamètre. Donne le TBC, la carotide commune gauche et la sous-clavière gauche.', pfeTip: 'Lieu d\'élection de la dissection aortique type A de Stanford (urgence chirurgicale).' },
-      { id: 'h4', label: '4. Artère Interventriculaire Antérieure (IVA)', x: 5, y: 30, z: 70, info: 'Branche directe du tronc commun gauche descendant dans le sillon interventriculaire antérieur.', pfeTip: 'L\'occlusion de l\'IVA entraîne un STEMI antérieur/apical grave.' },
-      { id: 'h5', label: '5. Face Postérieure & Sillon Coronaire', x: 20, y: 5, z: -60, info: 'Vue postérieure montrant le sinus coronaire drainant le sang veineux du myocarde dans l\'OD.', pfeTip: 'L\'artère coronaire droite chemine à la face postérieure du sillon AV.' }
+      { id: 'h1', label: '1. Oreillette Droite (OD)', x: 65, y: -40, z: 30, info: 'Reçoit le sang veineux des veines caves. Contient le nœud sinusal sinu-atrial de Keith & Flack à la jonction VCS-OD.', pfeTip: 'Fosse ovale à la face septale interauriculaire, vestige du foramen ovale.' },
+      { id: 'h2', label: '2. Ventricule Gauche (VG)', x: -55, y: 50, z: 40, info: 'Paroi musculaire très développée (8-12 mm). Propulse le sang oxygéné vers l\'aorte sous haute pression.', pfeTip: 'FEVG normale ≥ 55%. Épaississement > 15 mm = HVG sur HTA.' },
+      { id: 'h3', label: '3. Crosse de l\'Aorte (Arc 3D)', x: -10, y: -110, z: 0, info: 'Crosse de 3 cm de diamètre. Donne le TBC, la carotide commune gauche et la sous-clavière gauche.', pfeTip: 'Lieu d\'élection de la dissection aortique type A de Stanford (urgence chirurgicale).' },
+      { id: 'h4', label: '4. Artère Interventriculaire Antérieure (IVA)', x: 0, y: 35, z: 65, info: 'Branche directe du tronc commun gauche descendant dans le sillon interventriculaire antérieur.', pfeTip: 'L\'occlusion de l\'IVA entraîne un STEMI antérieur/apical grave.' },
+      { id: 'h5', label: '5. Sinus Coronaire (Face Postérieure)', x: 30, y: 15, z: -65, info: 'Vue postérieure montrant le sinus coronaire drainant le sang veineux du myocarde dans l\'OD.', pfeTip: 'L\'artère coronaire droite chemine à la face postérieure du sillon AV.' }
     ]
   },
   {
@@ -60,11 +60,11 @@ const STRUCTURES_3D: AnatomicalStructure3D[] = [
     description: 'Modèle 3D complet du cerveau incluant le cortex cérébral, la scissure de Sylvius, le cervelet, le tronc cérébral et le polygone de Willis.',
     clinicalImportance: 'Visualisation 3D essentielle pour localiser les territoires vasculaires (AVC sylvien, cérébral antérieur, vertébro-basilaire) et les zones fonctionnelles.',
     hotspots: [
-      { id: 'b1', label: '1. Lobe Frontal & Aire de Broca', x: -60, y: -30, z: 40, info: 'Aire motrice du langage (Aires 44/45 de Brodmann). Contrôle la production verbale.', pfeTip: 'AVC sylvien gauche superficiel → Aphasie de Broca d\'expression.' },
-      { id: 'b2', label: '2. Lobe Temporal & Aire de Wernicke', x: -50, y: 30, z: 30, info: 'Aire de compréhension du langage parlé et écrit (Aire 22 de Brodmann).', pfeTip: 'Aphasie de Wernicke : jargonaphasie avec compréhension altérée.' },
-      { id: 'b3', label: '3. Cervelet (Vue Postéro-Inférieure)', x: 50, y: 65, z: -40, info: 'Coordination motrice et équilibre. Divisé en vermis central et 2 hémisphères cérébelleux.', pfeTip: 'Syndrome cérébelleux : ataxie, hypotonie, dysmétrie au test index-nez.' },
-      { id: 'b4', label: '4. Tronc Cérébral (Pédoncules & Bulbe)', x: 0, y: 75, z: 0, info: 'Contient la substance réticulée activatrice (sommeil/éveil) et les noyaux des nerfs crâniens III à XII.', pfeTip: 'Atteinte du tronc → Syndromes alternés (hémiplégie croisée).' },
-      { id: 'b5', label: '5. Polygone de Willis (Face Basale)', x: 0, y: 20, z: -50, info: 'Cercle artériel anastomotique réorientant la circulation encéphalique entre carotides et vertébrales.', pfeTip: 'Siège préférentiel des anévrismes intracrâniens (rupture → Hémorragie méningée).' }
+      { id: 'b1', label: '1. Lobe Frontal & Aire de Broca', x: -75, y: -45, z: 35, info: 'Aire motrice du langage (Aires 44/45 de Brodmann). Contrôle la production verbale.', pfeTip: 'AVC sylvien gauche superficiel → Aphasie de Broca d\'expression.' },
+      { id: 'b2', label: '2. Lobe Temporal & Aire de Wernicke', x: -60, y: 25, z: 30, info: 'Aire de compréhension du langage parlé et écrit (Aire 22 de Brodmann).', pfeTip: 'Aphasie de Wernicke : jargonaphasie avec compréhension altérée.' },
+      { id: 'b3', label: '3. Cervelet (Vue Postérieure)', x: 65, y: 70, z: -45, info: 'Coordination motrice et équilibre. Divisé en vermis central et 2 hémisphères cérébelleux.', pfeTip: 'Syndrome cérébelleux : ataxie, hypotonie, dysmétrie au test index-nez.' },
+      { id: 'b4', label: '4. Tronc Cérébral (Pédoncules & Bulbe)', x: 0, y: 85, z: 0, info: 'Contient la substance réticulée activatrice (sommeil/éveil) et les noyaux des nerfs crâniens III à XII.', pfeTip: 'Atteinte du tronc → Syndromes alternés (hémiplégie croisée).' },
+      { id: 'b5', label: '5. Polygone de Willis (Base du Cerveau)', x: 0, y: 15, z: -55, info: 'Cercle artériel anastomotique réorientant la circulation encéphalique entre carotides et vertébrales.', pfeTip: 'Siège préférentiel des anévrismes intracrâniens (rupture → Hémorragie méningée).' }
     ]
   },
   {
@@ -78,10 +78,10 @@ const STRUCTURES_3D: AnatomicalStructure3D[] = [
     description: 'Volume 3D des deux poumons avec la trachée, la carène, les bronches souches et les plèvres.',
     clinicalImportance: 'Démontre la déclivité des cul-de-sacs pleuraux, la verticalité de la bronche souche droite et la topographie des cavernes tuberculeuses.',
     hotspots: [
-      { id: 'l1', label: '1. Apex Pulmonaire Droit', x: -45, y: -75, z: 15, info: 'Sommet pulmonaire dépassant la 1ère côte. Zone fortement oxygénée.', pfeTip: 'Zone de prédilection de la tuberculose pulmonaire secondaire (cavernes).' },
-      { id: 'l2', label: '2. Carène & Bronche Souche Droite', x: 0, y: -20, z: -20, info: 'Bifurcation trachéale à T5. La bronche droite est plus verticale (angle 25°).', pfeTip: 'Les corps étrangers inhalés tombent quasi toujours dans la bronche droite.' },
-      { id: 'l3', label: '3. Lobes Supérieur, Moyen et Inférieur', x: -65, y: 30, z: 30, info: 'Poumon droit trilobé séparé par la grande scissure et la petite scissure horizontale.', pfeTip: 'Pneumopathie franche lobaire aiguë (PFLA) à pneumocoque.' },
-      { id: 'l4', label: '4. Sinus Pleural Costo-Diaphragmatique', x: 60, y: 80, z: 10, info: 'Cul-de-sac pleural le plus déclive où s\'accumule l\'épanchement liquide (pleurésie).', pfeTip: 'Épanchement pleural visible à la radio si V > 250 mL.' }
+      { id: 'l1', label: '1. Apex Pulmonaire Droit', x: -65, y: -95, z: 20, info: 'Sommet pulmonaire dépassant la 1ère côte. Zone fortement oxygénée.', pfeTip: 'Zone de prédilection de la tuberculose pulmonaire secondaire (cavernes).' },
+      { id: 'l2', label: '2. Carène & Bronche Souche Droite', x: 0, y: -25, z: -15, info: 'Bifurcation trachéale à T5. La bronche droite est plus verticale (angle 25°).', pfeTip: 'Les corps étrangers inhalés tombent quasi toujours dans la bronche droite.' },
+      { id: 'l3', label: '3. Lobe Moyen Droit & Scissure', x: -80, y: 35, z: 35, info: 'Poumon droit trilobé séparé par la grande scissure et la petite scissure horizontale.', pfeTip: 'Pneumopathie franche lobaire aiguë (PFLA) à pneumocoque.' },
+      { id: 'l4', label: '4. Sinus Pleural Costo-Diaphragmatique', x: 75, y: 95, z: 15, info: 'Cul-de-sac pleural le plus déclive où s\'accumule l\'épanchement liquide (pleurésie).', pfeTip: 'Épanchement pleural visible à la radio si V > 250 mL.' }
     ]
   },
   {
@@ -95,10 +95,10 @@ const STRUCTURES_3D: AnatomicalStructure3D[] = [
     description: 'Glande hépatique volumétrique 3D découpée selon la segmentation chirurgicale de Couinaud (8 segments).',
     clinicalImportance: 'Déterminant pour le repérage des tumeurs CHC cirrhotiques et le guidage des lobectomies hépatiques.',
     hotspots: [
-      { id: 'li1', label: '1. Lobe Caudé (Segment I - Postérieur)', x: 0, y: -40, z: -60, info: 'Segment autonome adjacent à la veine cave inférieure. Vascularisation propre.', pfeTip: 'Hypertrophié de façon compensatrice dans la cirrhose hépatique.' },
-      { id: 'li2', label: '2. Lobe Gauche (Segments II & III)', x: -60, y: -10, z: 25, info: 'Secteur latéral gauche s\'étendant vers l\'épigastre.', pfeTip: 'Accessible à la résection segmentaire gauche.' },
-      { id: 'li3', label: '3. Vésicule Biliaire (Face Inférieure)', x: 30, y: 60, z: 45, info: 'Réservoir de bile sous la face viscérale du foie. Reliée au canal cystique.', pfeTip: 'Point de Murphy sous-costal droit. Lithiase biliaire → Cholécystite.' },
-      { id: 'li4', label: '4. Hile Hépatique & Tronc Porte', x: 0, y: 20, z: 10, info: 'Arrivée de la veine porte (80% du débit sanguin hépatique) et de l\'artère hépatique.', pfeTip: 'Hypertension Portale (HTP) si pression portale > 10 mmHg → Varices œsophagiennes.' }
+      { id: 'li1', label: '1. Lobe Caudé (Segment I - Postérieur)', x: 0, y: -50, z: -65, info: 'Segment autonome adjacent à la veine cave inférieure. Vascularisation propre.', pfeTip: 'Hypertrophié de façon compensatrice dans la cirrhose hépatique.' },
+      { id: 'li2', label: '2. Lobe Gauche (Segments II & III)', x: -75, y: -15, z: 30, info: 'Secteur latéral gauche s\'étendant vers l\'épigastre.', pfeTip: 'Accessible à la résection segmentaire gauche.' },
+      { id: 'li3', label: '3. Vésicule Biliaire (Face Inférieure)', x: 45, y: 70, z: 50, info: 'Réservoir de bile sous la face viscérale du foie. Reliée au canal cystique.', pfeTip: 'Point de Murphy sous-costal droit. Lithiase biliaire → Cholécystite.' },
+      { id: 'li4', label: '4. Hile Hépatique & Tronc Porte', x: 0, y: 25, z: 15, info: 'Arrivée de la veine porte (80% du débit sanguin hépatique) et de l\'artère hépatique.', pfeTip: 'Hypertension Portale (HTP) si pression portale > 10 mmHg → Varices œsophagiennes.' }
     ]
   }
 ];
@@ -118,13 +118,12 @@ export default function Anatomy3DSection() {
   const [viewMode, setViewMode] = useState<'FRONT' | 'BACK' | 'SIDE'>('FRONT');
 
   const canvasContainerRef = useRef<HTMLDivElement>(null);
-  const animFrameRef = useRef<number | null>(null);
 
-  // Auto-rotation 360° animation loop
+  // Auto-rotation 360° loop
   useEffect(() => {
     if (autoRotate && !isDragging) {
       const interval = setInterval(() => {
-        setYaw(prev => (prev + 0.8) % 360);
+        setYaw(prev => (prev + 0.6) % 360);
       }, 30);
       return () => clearInterval(interval);
     }
@@ -146,8 +145,8 @@ export default function Anatomy3DSection() {
     const deltaX = clientX - dragStart.x;
     const deltaY = clientY - dragStart.y;
     
-    setYaw(prev => (prev + deltaX * 0.6) % 360);
-    setPitch(prev => Math.max(-60, Math.min(60, prev - deltaY * 0.4)));
+    setYaw(prev => (prev + deltaX * 0.5) % 360);
+    setPitch(prev => Math.max(-55, Math.min(55, prev - deltaY * 0.4)));
     setDragStart({ x: clientX, y: clientY });
   };
 
@@ -174,25 +173,9 @@ export default function Anatomy3DSection() {
 
   const hotspotDetails = selectedStructure.hotspots.find(h => h.id === activeHotspot) || selectedStructure.hotspots[0];
 
-  // Helper to project 3D point (x,y,z) given current yaw & pitch angles
-  const getProjectedPoint = (hs: Hotspot3D) => {
-    const radY = (yaw * Math.PI) / 180;
-    const radX = (pitch * Math.PI) / 180;
-    
-    // Rotate around Y axis (Yaw)
-    const x1 = hs.x * Math.cos(radY) + hs.z * Math.sin(radY);
-    const z1 = -hs.x * Math.sin(radY) + hs.z * Math.cos(radY);
-    
-    // Rotate around X axis (Pitch)
-    const y2 = hs.y * Math.cos(radX) - z1 * Math.sin(radX);
-    const z2 = hs.y * Math.sin(radX) + z1 * Math.cos(radX);
-    
-    // Map to canvas percent (center is 50%, 50%)
-    const canvasX = 50 + (x1 / 2.4) * zoom;
-    const canvasY = 50 + (y2 / 2.4) * zoom;
-    
-    return { x: canvasX, y: canvasY, depthZ: z2 };
-  };
+  // Normalized yaw angle to determine if showing back
+  const normYaw = (Math.abs(yaw) % 360);
+  const isViewingBack = normYaw > 90 && normYaw < 270;
 
   return (
     <div className="space-y-6 p-4 sm:p-6 bg-[#050507] min-h-screen text-white select-none"
@@ -217,7 +200,7 @@ export default function Anatomy3DSection() {
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl leading-relaxed">
               Faites glisser la souris ou le doigt pour **pivoter l'organe sous tous les angles (Face, Dos, Profil)**. 
-              Explorez la profondeur 3D, la pulsation cardiaque en temps réel et les repères d'examen PFE.
+              Les repères anatomiques numérotés tournent en synchronisation 3D exacte avec l'organe !
             </p>
           </div>
 
@@ -285,7 +268,7 @@ export default function Anatomy3DSection() {
           <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5">
             <span className="text-[11px] font-mono font-bold text-teal-400 bg-teal-950/80 border border-teal-500/30 px-3 py-1 rounded-full flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5 text-teal-400 animate-spin" style={{ animationDuration: '8s' }} />
-              {Math.abs(Math.round(yaw)) % 360 > 135 && Math.abs(Math.round(yaw)) % 360 < 225 ? 'VUE POSTÉRIEURE (DOS 🔄)' : 'VUE ANTÉRIEURE (FACE 👁️)'}
+              {isViewingBack ? 'VUE POSTÉRIEURE (DOS 🔄)' : 'VUE ANTÉRIEURE (FACE 👁️)'}
             </span>
             <span className="text-[10px] text-slate-400 font-mono pl-1">
               Yaw: {Math.round(yaw)}° | Pitch: {Math.round(pitch)}° | Zoom: {Math.round(zoom * 100)}%
@@ -320,22 +303,23 @@ export default function Anatomy3DSection() {
             </span>
           </div>
 
-          {/* ─── 3D VOLUMETRIC MESH CONTAINER ─── */}
+          {/* ─── 3D PERSPECTIVE STAGE ─── */}
           <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center pointer-events-none"
             style={{
               perspective: '1000px',
               perspectiveOrigin: '50% 50%',
             }}>
             
-            {/* 3D Transform wrapper */}
-            <div className="w-full h-full relative transition-transform duration-75"
+            {/* 3D Transform Mesh & Hotspots Wrapper */}
+            <div className="w-full h-full relative"
               style={{
                 transformStyle: 'preserve-3d',
                 transform: `scale(${zoom}) rotateX(${pitch}deg) rotateY(${yaw}deg)`,
                 animation: pulseAnim ? 'pulse-3d 1.2s ease-in-out infinite' : 'none',
+                transition: isDragging ? 'none' : 'transform 0.1s cubic-bezier(0.2,0.8,0.2,1)',
               }}>
 
-              {/* 3D HEART MODEL */}
+              {/* 3D HEART MODEL MESH */}
               {selectedStructure.type === 'heart' && (
                 <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
                   {/* Outer glowing volumetric sphere */}
@@ -354,7 +338,7 @@ export default function Anatomy3DSection() {
                       filter: 'blur(2px)',
                     }} />
 
-                  {/* Aorta 3D Arc (front to back curve) */}
+                  {/* Aorta 3D Arc */}
                   <svg viewBox="0 0 300 300" className="absolute inset-0 w-full h-full overflow-visible" style={{ transform: 'translateZ(30px)' }}>
                     <path d="M140 100 Q150 20 190 30 T180 120" fill="none" stroke="#f43f5e" strokeWidth="18" strokeLinecap="round" />
                     <path d="M140 100 Q150 20 190 30 T180 120" fill="none" stroke="#fda4af" strokeWidth="6" strokeLinecap="round" opacity="0.6" />
@@ -368,7 +352,7 @@ export default function Anatomy3DSection() {
                 </div>
               )}
 
-              {/* 3D BRAIN MODEL */}
+              {/* 3D BRAIN MODEL MESH */}
               {selectedStructure.type === 'brain' && (
                 <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
                   <div className="absolute inset-10 rounded-[40%]"
@@ -396,7 +380,7 @@ export default function Anatomy3DSection() {
                 </div>
               )}
 
-              {/* 3D LUNGS MODEL */}
+              {/* 3D LUNGS MODEL MESH */}
               {selectedStructure.type === 'lungs' && (
                 <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
                   {/* Left Lung 3D volume */}
@@ -422,7 +406,7 @@ export default function Anatomy3DSection() {
                 </div>
               )}
 
-              {/* 3D LIVER MODEL */}
+              {/* 3D LIVER MODEL MESH */}
               {selectedStructure.type === 'liver' && (
                 <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
                   <div className="absolute inset-10 rounded-[35%]"
@@ -431,7 +415,7 @@ export default function Anatomy3DSection() {
                       boxShadow: `0 0 50px ${selectedStructure.glowColor}`,
                       transform: 'translateZ(0px) rotate(-15deg)',
                     }} />
-                  {/* Gallbladder 3D 3D volume */}
+                  {/* Gallbladder 3D volume */}
                   <div className="absolute bottom-16 right-20 w-10 h-16 rounded-full"
                     style={{
                       background: 'radial-gradient(circle at 30% 30%, #4ade80 0%, #15803d 80%)',
@@ -441,39 +425,41 @@ export default function Anatomy3DSection() {
                 </div>
               )}
 
+              {/* ─── 3D HOTSPOT PINS ATTACHED DIRECTLY IN 3D MESH SPACE ─── */}
+              {selectedStructure.hotspots.map(hs => {
+                const isActive = hs.id === activeHotspot;
+                
+                return (
+                  <div key={hs.id}
+                    className="absolute pointer-events-auto z-30"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      transformStyle: 'preserve-3d',
+                      transform: `translate3d(${hs.x}px, ${hs.y}px, ${hs.z}px)`,
+                    }}>
+                    
+                    {/* Billboarding Counter-Rotation (keeps numbers facing camera flat and upright) */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setActiveHotspot(hs.id); }}
+                      style={{
+                        transform: `rotateY(${-yaw}deg) rotateX(${-pitch}deg)`,
+                        transformStyle: 'preserve-3d',
+                        transition: 'transform 0.05s linear',
+                      }}
+                      className={`-translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full font-mono text-[11px] font-bold shadow-2xl transition-all ${
+                        isActive
+                          ? 'w-8 h-8 bg-teal-400 text-black ring-4 ring-teal-500/50 border-2 border-white scale-110 animate-pulse'
+                          : 'w-7 h-7 bg-[#18181B] text-teal-300 border border-teal-500/40 hover:scale-110 hover:border-teal-400'
+                      }`}>
+                      {hs.id.replace(/^[a-z]+/, '')}
+                    </button>
+                  </div>
+                );
+              })}
+
             </div>
           </div>
-
-          {/* Dynamic 3D projected Hotspots */}
-          {selectedStructure.hotspots.map(hs => {
-            const projected = getProjectedPoint(hs);
-            const isActive = hs.id === activeHotspot;
-            const isBack = projected.depthZ < -20;
-
-            return (
-              <button key={hs.id} onClick={(e) => { e.stopPropagation(); setActiveHotspot(hs.id); }}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-150 z-30 ${
-                  isActive ? 'scale-125' : 'hover:scale-110'
-                }`}
-                style={{
-                  left: `${projected.x}%`,
-                  top: `${projected.y}%`,
-                  opacity: isBack ? 0.35 : 1,
-                  filter: isBack ? 'blur(1px)' : 'none',
-                }}>
-                <span className={`flex items-center justify-center w-7 h-7 rounded-full font-mono text-[11px] font-bold shadow-2xl transition-all ${
-                  isActive
-                    ? 'bg-teal-400 text-black ring-4 ring-teal-500/50 border-2 border-white animate-pulse'
-                    : 'bg-[#18181B] text-teal-300 border border-teal-500/40'
-                }`}>
-                  {hs.id.replace(/^[a-z]+/, '')}
-                </span>
-                <span className={`absolute left-1/2 -bottom-6 -translate-x-1/2 text-[10px] font-bold whitespace-nowrap px-2 py-0.5 rounded-full bg-black/90 text-white border border-white/10 pointer-events-none opacity-0 hover:opacity-100`}>
-                  {hs.label}
-                </span>
-              </button>
-            );
-          })}
         </div>
 
         {/* ─── DETAILS & PFE PEARLS SIDEBAR (Col 5) ─── */}
