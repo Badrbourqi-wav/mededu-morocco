@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import * as THREE from 'three';
 import { 
   Heart, Brain, Wind, Activity, Eye, EyeOff, Sparkles, ZoomIn, ZoomOut, 
   RotateCcw, Layers, Info, CheckCircle2, ChevronRight, Stethoscope, Search,
@@ -10,14 +11,12 @@ import {
 interface Hotspot3D {
   id: string;
   label: string;
-  x: number; // -120 to 120 (3D X px)
-  y: number; // -120 to 120 (3D Y px)
-  z: number; // -80 to 80 (3D Z px depth)
+  pos: [number, number, number]; // [x, y, z] in Three.js world space
   info: string;
   pfeTip?: string;
 }
 
-interface AnatomicalStructure3D {
+interface Organ3DData {
   id: string;
   name: string;
   latinName: string;
@@ -26,181 +25,448 @@ interface AnatomicalStructure3D {
   clinicalImportance: string;
   hotspots: Hotspot3D[];
   type: 'heart' | 'brain' | 'lungs' | 'liver';
-  primaryColor: string;
-  glowColor: string;
+  color: number;
 }
 
-const STRUCTURES_3D: AnatomicalStructure3D[] = [
+const ORGANS_DATA: Organ3DData[] = [
   {
-    id: 'heart-3d-real',
-    name: 'Cœur & Arbre Coronaire 3D',
+    id: 'heart-three',
+    name: 'Cœur & Arbre Coronaire 3D (WebGL)',
     latinName: 'Cor 3D - Systema cardiovasculare',
     system: 'Cardiovasculaire',
-    primaryColor: '#ef4444',
-    glowColor: 'rgba(239, 68, 68, 0.4)',
+    color: 0xef4444,
     type: 'heart',
-    description: 'Structure tridimensionnelle du cœur humain montrant les 4 cavités, la crosse aortique, le tronc pulmonaire et le réseau coronaire.',
-    clinicalImportance: 'Permet d\'étudier en 360° les sites d\'occlusion des coronaires (IVA, Circonflexe, Coronaire droite) et la propagation des blocages électrophysiologiques (BAV).',
+    description: 'Modèle tridimensionnel WebGL du cœur montrant le ventricule gauche, l\'oreillette droite, la crosse aortique et l\'artère interventriculaire antérieure.',
+    clinicalImportance: 'Visualisation 3D dynamique pour localiser les infarctus du myocarde (STEMI antérieur sur occlusion de l\'IVA) et les blocs de branche.',
     hotspots: [
-      { id: 'h1', label: '1. Oreillette Droite (OD)', x: 65, y: -40, z: 30, info: 'Reçoit le sang veineux des veines caves. Contient le nœud sinusal sinu-atrial de Keith & Flack à la jonction VCS-OD.', pfeTip: 'Fosse ovale à la face septale interauriculaire, vestige du foramen ovale.' },
-      { id: 'h2', label: '2. Ventricule Gauche (VG)', x: -55, y: 50, z: 40, info: 'Paroi musculaire très développée (8-12 mm). Propulse le sang oxygéné vers l\'aorte sous haute pression.', pfeTip: 'FEVG normale ≥ 55%. Épaississement > 15 mm = HVG sur HTA.' },
-      { id: 'h3', label: '3. Crosse de l\'Aorte (Arc 3D)', x: -10, y: -110, z: 0, info: 'Crosse de 3 cm de diamètre. Donne le TBC, la carotide commune gauche et la sous-clavière gauche.', pfeTip: 'Lieu d\'élection de la dissection aortique type A de Stanford (urgence chirurgicale).' },
-      { id: 'h4', label: '4. Artère Interventriculaire Antérieure (IVA)', x: 0, y: 35, z: 65, info: 'Branche directe du tronc commun gauche descendant dans le sillon interventriculaire antérieur.', pfeTip: 'L\'occlusion de l\'IVA entraîne un STEMI antérieur/apical grave.' },
-      { id: 'h5', label: '5. Sinus Coronaire (Face Postérieure)', x: 30, y: 15, z: -65, info: 'Vue postérieure montrant le sinus coronaire drainant le sang veineux du myocarde dans l\'OD.', pfeTip: 'L\'artère coronaire droite chemine à la face postérieure du sillon AV.' }
+      { id: 'h1', label: '1. Oreillette Droite (OD)', pos: [1.2, 0.4, 0.6], info: 'Reçoit le sang veineux des veines caves. Contient le nœud sinusal de Keith & Flack.', pfeTip: 'Fosse ovale à la face septale interauriculaire (vestige du foramen ovale).' },
+      { id: 'h2', label: '2. Ventricule Gauche (VG)', pos: [-0.9, -0.6, 0.9], info: 'Paroi musculaire épaisse (8-12 mm). Éjecte le sang dans l\'aorte sous haute pression.', pfeTip: 'FEVG normale ≥ 55%. Épaississement > 15 mm = HVG sur HTA.' },
+      { id: 'h3', label: '3. Crosse de l\'Aorte (Arc 3D)', pos: [-0.2, 1.8, 0.1], info: 'Tronc artériel majeur de 3 cm. Donne le TBC, la carotide commune G et la sous-clavière G.', pfeTip: 'Lieu de la dissection aortique type A de Stanford (urgence absolue).' },
+      { id: 'h4', label: '4. Artère Interventriculaire Antérieure (IVA)', pos: [0.1, -0.2, 1.4], info: 'Branche majeure du tronc commun gauche descendant dans le sillon IV antérieur.', pfeTip: 'L\'occlusion de l\'IVA cause les infarctus antérieurs et apicaux graves.' },
+      { id: 'h5', label: '5. Face Postérieure & Sinus Coronaire', pos: [0.3, -0.3, -1.3], info: 'Face postérieure du cœur drainant le réseau veineux coronarien dans l\'OD.', pfeTip: 'L\'artère coronaire droite chemine à la face postérieure dans le sillon AV.' }
     ]
   },
   {
-    id: 'brain-3d-real',
+    id: 'brain-three',
     name: 'Encéphale & Polygone de Willis 3D',
     latinName: 'Encephalon 3D - Systema nervosum',
     system: 'Nerveux',
-    primaryColor: '#a855f7',
-    glowColor: 'rgba(168, 85, 247, 0.4)',
+    color: 0xa855f7,
     type: 'brain',
-    description: 'Modèle 3D complet du cerveau incluant le cortex cérébral, la scissure de Sylvius, le cervelet, le tronc cérébral et le polygone de Willis.',
-    clinicalImportance: 'Visualisation 3D essentielle pour localiser les territoires vasculaires (AVC sylvien, cérébral antérieur, vertébro-basilaire) et les zones fonctionnelles.',
+    description: 'Structure encéphalique 3D avec cortex cérébral bilatéral, cervelet, tronc cérébral et polygone de Willis à la base.',
+    clinicalImportance: 'Repérage 3D des territoires d\'AVC ischémique (Sylvien, Cérébral antérieur, Tronc basilaire) et des aires du langage (Broca, Wernicke).',
     hotspots: [
-      { id: 'b1', label: '1. Lobe Frontal & Aire de Broca', x: -75, y: -45, z: 35, info: 'Aire motrice du langage (Aires 44/45 de Brodmann). Contrôle la production verbale.', pfeTip: 'AVC sylvien gauche superficiel → Aphasie de Broca d\'expression.' },
-      { id: 'b2', label: '2. Lobe Temporal & Aire de Wernicke', x: -60, y: 25, z: 30, info: 'Aire de compréhension du langage parlé et écrit (Aire 22 de Brodmann).', pfeTip: 'Aphasie de Wernicke : jargonaphasie avec compréhension altérée.' },
-      { id: 'b3', label: '3. Cervelet (Vue Postérieure)', x: 65, y: 70, z: -45, info: 'Coordination motrice et équilibre. Divisé en vermis central et 2 hémisphères cérébelleux.', pfeTip: 'Syndrome cérébelleux : ataxie, hypotonie, dysmétrie au test index-nez.' },
-      { id: 'b4', label: '4. Tronc Cérébral (Pédoncules & Bulbe)', x: 0, y: 85, z: 0, info: 'Contient la substance réticulée activatrice (sommeil/éveil) et les noyaux des nerfs crâniens III à XII.', pfeTip: 'Atteinte du tronc → Syndromes alternés (hémiplégie croisée).' },
-      { id: 'b5', label: '5. Polygone de Willis (Base du Cerveau)', x: 0, y: 15, z: -55, info: 'Cercle artériel anastomotique réorientant la circulation encéphalique entre carotides et vertébrales.', pfeTip: 'Siège préférentiel des anévrismes intracrâniens (rupture → Hémorragie méningée).' }
+      { id: 'b1', label: '1. Lobe Frontal & Aire de Broca', pos: [-1.2, 0.5, 0.8], info: 'Aire motrice du langage (Aires 44/45 de Brodmann). Contrôle la production verbale.', pfeTip: 'AVC sylvien gauche superficiel → Aphasie de Broca d\'expression.' },
+      { id: 'b2', label: '2. Lobe Temporal & Aire de Wernicke', pos: [-1.4, -0.4, 0.3], info: 'Aire de compréhension du langage parlé et écrit (Aire 22 de Brodmann).', pfeTip: 'Aphasie de Wernicke : jargonaphasie avec compréhension altérée.' },
+      { id: 'b3', label: '3. Cervelet (Vue Postérieure)', pos: [0.8, -1.1, -1.0], info: 'Coordination motrice et équilibre. Divisé en vermis et 2 hémisphères.', pfeTip: 'Syndrome cérébelleux : ataxie, hypotonie, dysmétrie au test index-nez.' },
+      { id: 'b4', label: '4. Tronc Cérébral (Pédoncules & Bulbe)', pos: [0.0, -1.3, 0.1], info: 'Contient la substance réticulée activatrice et les noyaux des nerfs crâniens III à XII.', pfeTip: 'Atteinte du tronc → Syndromes alternés (hémiplégie croisée).' },
+      { id: 'b5', label: '5. Polygone de Willis (Base)', pos: [0.0, -0.4, -0.8], info: 'Cercle artériel anastomotique réorientant la circulation entre carotides et vertébrales.', pfeTip: 'Siège des anévrismes intracrâniens (rupture → Hémorragie méningée).' }
     ]
   },
   {
-    id: 'lungs-3d-real',
+    id: 'lungs-three',
     name: 'Poumons & Arbre Bronchique 3D',
     latinName: 'Pulmones 3D - Systema respiratorium',
     system: 'Respiratoire',
-    primaryColor: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.4)',
+    color: 0x0284c7,
     type: 'lungs',
-    description: 'Volume 3D des deux poumons avec la trachée, la carène, les bronches souches et les plèvres.',
-    clinicalImportance: 'Démontre la déclivité des cul-de-sacs pleuraux, la verticalité de la bronche souche droite et la topographie des cavernes tuberculeuses.',
+    description: 'Volume 3D des poumons droit et gauche avec la trachée centrale et l\'arbre bronchique.',
+    clinicalImportance: 'Visualisation de l\'asymétrie bronchique, de la déclivité des culs-de-sac pleuraux et des sommets pulmonaires.',
     hotspots: [
-      { id: 'l1', label: '1. Apex Pulmonaire Droit', x: -65, y: -95, z: 20, info: 'Sommet pulmonaire dépassant la 1ère côte. Zone fortement oxygénée.', pfeTip: 'Zone de prédilection de la tuberculose pulmonaire secondaire (cavernes).' },
-      { id: 'l2', label: '2. Carène & Bronche Souche Droite', x: 0, y: -25, z: -15, info: 'Bifurcation trachéale à T5. La bronche droite est plus verticale (angle 25°).', pfeTip: 'Les corps étrangers inhalés tombent quasi toujours dans la bronche droite.' },
-      { id: 'l3', label: '3. Lobe Moyen Droit & Scissure', x: -80, y: 35, z: 35, info: 'Poumon droit trilobé séparé par la grande scissure et la petite scissure horizontale.', pfeTip: 'Pneumopathie franche lobaire aiguë (PFLA) à pneumocoque.' },
-      { id: 'l4', label: '4. Sinus Pleural Costo-Diaphragmatique', x: 75, y: 95, z: 15, info: 'Cul-de-sac pleural le plus déclive où s\'accumule l\'épanchement liquide (pleurésie).', pfeTip: 'Épanchement pleural visible à la radio si V > 250 mL.' }
+      { id: 'l1', label: '1. Apex Pulmonaire Droit', pos: [-0.9, 1.6, 0.3], info: 'Sommet pulmonaire dépassant la 1ère côte. Zone fortement oxygénée.', pfeTip: 'Zone de prédilection de la tuberculose pulmonaire secondaire (cavernes).' },
+      { id: 'l2', label: '2. Carène & Bronche Souche Droite', pos: [0.0, 0.5, -0.2], info: 'Bifurcation trachéale à T5. La bronche droite est plus verticale (angle 25°).', pfeTip: 'Les corps étrangers inhalés tombent quasi toujours dans la bronche droite.' },
+      { id: 'l3', label: '3. Lobe Moyen Droit', pos: [-1.4, -0.3, 0.7], info: 'Poumon droit trilobé séparé par la grande scissure et la petite scissure horizontale.', pfeTip: 'Pneumopathie franche lobaire aiguë (PFLA) à pneumocoque.' },
+      { id: 'l4', label: '4. Sinus Pleural Costo-Diaphragmatique', pos: [1.3, -1.6, 0.3], info: 'Cul-de-sac pleural le plus déclive où s\'accumule l\'épanchement liquide (pleurésie).', pfeTip: 'Épanchement pleural visible à la radio si V > 250 mL.' }
     ]
   },
   {
-    id: 'liver-3d-real',
+    id: 'liver-three',
     name: 'Foie & Segmentation de Couinaud 3D',
     latinName: 'Hepar 3D - Systema digestorium',
     system: 'Digestif',
-    primaryColor: '#f59e0b',
-    glowColor: 'rgba(245, 158, 11, 0.4)',
+    color: 0xd97706,
     type: 'liver',
-    description: 'Glande hépatique volumétrique 3D découpée selon la segmentation chirurgicale de Couinaud (8 segments).',
-    clinicalImportance: 'Déterminant pour le repérage des tumeurs CHC cirrhotiques et le guidage des lobectomies hépatiques.',
+    description: 'Glande hépatique volumétrique 3D avec sa vascularisation portale et la vésicule biliaire.',
+    clinicalImportance: 'Essentiel pour repérer la cirrhose, les nœuds de régénération, le CHC et le hile hépatique.',
     hotspots: [
-      { id: 'li1', label: '1. Lobe Caudé (Segment I - Postérieur)', x: 0, y: -50, z: -65, info: 'Segment autonome adjacent à la veine cave inférieure. Vascularisation propre.', pfeTip: 'Hypertrophié de façon compensatrice dans la cirrhose hépatique.' },
-      { id: 'li2', label: '2. Lobe Gauche (Segments II & III)', x: -75, y: -15, z: 30, info: 'Secteur latéral gauche s\'étendant vers l\'épigastre.', pfeTip: 'Accessible à la résection segmentaire gauche.' },
-      { id: 'li3', label: '3. Vésicule Biliaire (Face Inférieure)', x: 45, y: 70, z: 50, info: 'Réservoir de bile sous la face viscérale du foie. Reliée au canal cystique.', pfeTip: 'Point de Murphy sous-costal droit. Lithiase biliaire → Cholécystite.' },
-      { id: 'li4', label: '4. Hile Hépatique & Tronc Porte', x: 0, y: 25, z: 15, info: 'Arrivée de la veine porte (80% du débit sanguin hépatique) et de l\'artère hépatique.', pfeTip: 'Hypertension Portale (HTP) si pression portale > 10 mmHg → Varices œsophagiennes.' }
+      { id: 'li1', label: '1. Lobe Caudé (Segment I - Postérieur)', pos: [0.0, 0.6, -1.0], info: 'Segment autonome adjacent à la veine cave inférieure. Vascularisation propre.', pfeTip: 'Hypertrophié de façon compensatrice dans la cirrhose hépatique.' },
+      { id: 'li2', label: '2. Lobe Gauche (Segments II & III)', pos: [-1.5, 0.2, 0.5], info: 'Secteur latéral gauche s\'étendant vers l\'épigastre.', pfeTip: 'Accessible à la résection segmentaire gauche.' },
+      { id: 'li3', label: '3. Vésicule Biliaire (Face Inférieure)', pos: [0.8, -1.0, 0.9], info: 'Réservoir de bile sous la face viscérale du foie. Reliée au canal cystique.', pfeTip: 'Point de Murphy sous-costal droit. Lithiase biliaire → Cholécystite.' },
+      { id: 'li4', label: '4. Hile Hépatique & Tronc Porte', pos: [0.1, -0.3, 0.2], info: 'Arrivée de la veine porte (80% du débit) et de l\'artère hépatique.', pfeTip: 'Hypertension Portale (HTP) si pression portale > 10 mmHg → Varices œsophagiennes.' }
     ]
   }
 ];
 
 export default function Anatomy3DSection() {
-  const [selectedStructure, setSelectedStructure] = useState<AnatomicalStructure3D>(STRUCTURES_3D[0]);
-  const [activeHotspot, setActiveHotspot] = useState<string>(STRUCTURES_3D[0].hotspots[0].id);
-  
-  // 3D Orbit State (Yaw = Y rotation, Pitch = X rotation)
-  const [yaw, setYaw] = useState<number>(20);
-  const [pitch, setPitch] = useState<number>(10);
-  const [zoom, setZoom] = useState<number>(1);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [selectedOrgan, setSelectedOrgan] = useState<Organ3DData>(ORGANS_DATA[0]);
+  const [activeHotspotId, setActiveHotspotId] = useState<string>(ORGANS_DATA[0].hotspots[0].id);
+
+  // Controls state
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [pulseAnim, setPulseAnim] = useState<boolean>(true);
-  const [viewMode, setViewMode] = useState<'FRONT' | 'BACK' | 'SIDE'>('FRONT');
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [viewAngle, setViewAngle] = useState<'FRONT' | 'BACK' | 'SIDE'>('FRONT');
 
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  // Canvas & WebGL Refs
+  const mountRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const organMeshGroupRef = useRef<THREE.Group | null>(null);
 
-  // Auto-rotation 360° loop
+  // Hotspot Screen Positions Map (id -> { x, y, isVisible })
+  const [screenHotspots, setScreenHotspots] = useState<Record<string, { x: number; y: number; isBack: boolean }>>({});
+
+  // Mouse Drag Tracking
+  const isDraggingRef = useRef(false);
+  const previousMousePosition = useRef({ x: 0, y: 0 });
+  const rotationGroupRef = useRef({ x: 0, y: 0 });
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // THREE.JS SCENE INITIALIZATION & ANIMATION LOOP
+  // ───────────────────────────────────────────────────────────────────────────
   useEffect(() => {
-    if (autoRotate && !isDragging) {
-      const interval = setInterval(() => {
-        setYaw(prev => (prev + 0.6) % 360);
-      }, 30);
-      return () => clearInterval(interval);
-    }
-  }, [autoRotate, isDragging]);
+    const mountElem = mountRef.current;
+    if (!mountElem) return;
 
+    const width = mountElem.clientWidth;
+    const height = mountElem.clientHeight;
+
+    // 1. Scene
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
+
+    // 2. Camera
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(0, 0, 7.5);
+    cameraRef.current = camera;
+
+    // 3. Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    rendererRef.current = renderer;
+
+    mountElem.appendChild(renderer.domElement);
+
+    // 4. Lighting (Studio Volumetric Setup)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5);
+    dirLight1.position.set(5, 8, 5);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0x0d9488, 2.0); // Teal rim light
+    dirLight2.position.set(-5, -4, -5);
+    scene.add(dirLight2);
+
+    const pointLight = new THREE.PointLight(selectedOrgan.color, 3, 10);
+    pointLight.position.set(0, 0, 2);
+    scene.add(pointLight);
+
+    // 5. Build Organ 3D Mesh Group
+    const group = buildOrganMeshGroup(selectedOrgan);
+    scene.add(group);
+    organMeshGroupRef.current = group;
+
+    // 6. Animation Loop
+    let animationFrameId: number;
+    let clock = new THREE.Clock();
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      if (group) {
+        // Auto-rotation
+        if (autoRotate && !isDraggingRef.current) {
+          group.rotation.y += 0.008;
+          rotationGroupRef.current.y = group.rotation.y;
+        } else {
+          group.rotation.y = rotationGroupRef.current.y;
+          group.rotation.x = rotationGroupRef.current.x;
+        }
+
+        // Pulse Expansion Animation (Cardiac/Respiratory)
+        if (pulseAnim) {
+          const scaleOffset = Math.sin(elapsedTime * 3) * 0.04;
+          const currentZoomScale = zoomLevel;
+          group.scale.set(
+            currentZoomScale + scaleOffset,
+            currentZoomScale + scaleOffset,
+            currentZoomScale + scaleOffset
+          );
+        } else {
+          group.scale.set(zoomLevel, zoomLevel, zoomLevel);
+        }
+
+        // Project 3D Hotspot Coordinates to 2D Screen Canvas
+        const newHotspotScreenMap: Record<string, { x: number; y: number; isBack: boolean }> = {};
+        
+        selectedOrgan.hotspots.forEach(hs => {
+          const worldVec = new THREE.Vector3(...hs.pos);
+          worldVec.applyMatrix4(group.matrixWorld);
+
+          // Check if point is on back side facing away from camera
+          const camDir = new THREE.Vector3(0, 0, 1).applyQuaternion(camera.quaternion);
+          const isBack = worldVec.z < 0;
+
+          // Project to Normalized Device Coordinates (-1 to +1)
+          const projectedVec = worldVec.clone().project(camera);
+
+          // Convert to Pixel Coordinates (0 to width/height)
+          const px = ((projectedVec.x + 1) * width) / 2;
+          const py = ((-projectedVec.y + 1) * height) / 2;
+
+          newHotspotScreenMap[hs.id] = { x: px, y: py, isBack };
+        });
+
+        setScreenHotspots(newHotspotScreenMap);
+      }
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Resize Handler
+    const handleResize = () => {
+      if (!mountElem || !renderer || !camera) return;
+      const w = mountElem.clientWidth;
+      const h = mountElem.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+      if (mountElem.contains(renderer.domElement)) {
+        mountElem.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+    };
+  }, [selectedOrgan, autoRotate, pulseAnim, zoomLevel]);
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // THREE.JS MESH GEOMETRY BUILDERS FOR EACH ORGAN
+  // ───────────────────────────────────────────────────────────────────────────
+  const buildOrganMeshGroup = (organ: Organ3DData): THREE.Group => {
+    const group = new THREE.Group();
+
+    if (organ.type === 'heart') {
+      // Main Heart Body (Deformed Sphere/Torus composite)
+      const heartGeo = new THREE.SphereGeometry(1.4, 32, 32);
+      // Deform sphere to heart shape
+      const posAttr = heartGeo.attributes.position;
+      for (let i = 0; i < posAttr.count; i++) {
+        let y = posAttr.getY(i);
+        let x = posAttr.getX(i);
+        let z = posAttr.getZ(i);
+        if (y < 0) {
+          x *= (1 + y * 0.3);
+          z *= (1 + y * 0.3);
+        }
+        posAttr.setXYZ(i, x, y, z);
+      }
+      heartGeo.computeVertexNormals();
+
+      const heartMat = new THREE.MeshStandardMaterial({
+        color: 0xef4444,
+        roughness: 0.3,
+        metalness: 0.2,
+        bumpScale: 0.05,
+      });
+      const heartMesh = new THREE.Mesh(heartGeo, heartMat);
+      group.add(heartMesh);
+
+      // Aorta Arc (Torus Geometry)
+      const aortaGeo = new THREE.TorusGeometry(0.8, 0.22, 16, 32, Math.PI * 1.2);
+      const aortaMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.2 });
+      const aortaMesh = new THREE.Mesh(aortaGeo, aortaMat);
+      aortaMesh.position.set(-0.2, 1.0, 0);
+      aortaMesh.rotation.z = Math.PI / 4;
+      group.add(aortaMesh);
+
+      // Pulmonary Trunk (Cylinder)
+      const pulmGeo = new THREE.CylinderGeometry(0.2, 0.25, 1.2, 16);
+      const pulmMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.3 });
+      const pulmMesh = new THREE.Mesh(pulmGeo, pulmMat);
+      pulmMesh.position.set(0.5, 0.9, 0.3);
+      pulmMesh.rotation.z = -Math.PI / 6;
+      group.add(pulmMesh);
+
+      // Coronary Arteries (Tube Geometry curves)
+      const curve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0, 0.8, 0.8),
+        new THREE.Vector3(-0.4, 0.2, 1.2),
+        new THREE.Vector3(0, -0.6, 1.3),
+        new THREE.Vector3(0.2, -1.2, 0.7),
+      ]);
+      const tubeGeo = new THREE.TubeGeometry(curve, 20, 0.06, 8, false);
+      const tubeMat = new THREE.MeshStandardMaterial({ color: 0xfecdd3, emissive: 0xe11d48, emissiveIntensity: 0.3 });
+      const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+      group.add(tubeMesh);
+    } else if (organ.type === 'brain') {
+      // Cerebral Hemispheres (Left & Right Spheres)
+      const leftGeo = new THREE.SphereGeometry(1.2, 32, 32);
+      leftGeo.scale(1, 0.85, 1.3);
+      const brainMat = new THREE.MeshStandardMaterial({
+        color: 0xa855f7,
+        roughness: 0.4,
+        metalness: 0.1,
+      });
+
+      const leftMesh = new THREE.Mesh(leftGeo, brainMat);
+      leftMesh.position.set(-0.55, 0.2, 0);
+      group.add(leftMesh);
+
+      const rightMesh = new THREE.Mesh(leftGeo, brainMat);
+      rightMesh.position.set(0.55, 0.2, 0);
+      group.add(rightMesh);
+
+      // Cerebellum (Posterior Sphere)
+      const cerebGeo = new THREE.SphereGeometry(0.7, 24, 24);
+      const cerebMat = new THREE.MeshStandardMaterial({ color: 0x7e22ce, roughness: 0.5 });
+      const cerebMesh = new THREE.Mesh(cerebGeo, cerebMat);
+      cerebMesh.position.set(0, -0.7, -0.7);
+      group.add(cerebMesh);
+
+      // Brainstem (Cylinder)
+      const stemGeo = new THREE.CylinderGeometry(0.25, 0.2, 1.2, 16);
+      const stemMat = new THREE.MeshStandardMaterial({ color: 0x581c87 });
+      const stemMesh = new THREE.Mesh(stemGeo, stemMat);
+      stemMesh.position.set(0, -1.0, -0.1);
+      group.add(stemMesh);
+    } else if (organ.type === 'lungs') {
+      // Left & Right Lung Lobes
+      const lungGeo = new THREE.ConeGeometry(1.0, 2.6, 24);
+      const lungMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.3 });
+
+      const leftLung = new THREE.Mesh(lungGeo, lungMat);
+      leftLung.position.set(-1.1, -0.2, 0);
+      leftLung.rotation.z = -0.15;
+      group.add(leftLung);
+
+      const rightLung = new THREE.Mesh(lungGeo, lungMat);
+      rightLung.position.set(1.1, -0.2, 0);
+      rightLung.rotation.z = 0.15;
+      group.add(rightLung);
+
+      // Trachea
+      const trachGeo = new THREE.CylinderGeometry(0.2, 0.2, 1.8, 16);
+      const trachMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2 });
+      const trachMesh = new THREE.Mesh(trachGeo, trachMat);
+      trachMesh.position.set(0, 0.8, 0);
+      group.add(trachMesh);
+    } else if (organ.type === 'liver') {
+      // Triangular volumetric hepatic lobe
+      const liverGeo = new THREE.DodecahedronGeometry(1.5, 2);
+      const posAttr = liverGeo.attributes.position;
+      for (let i = 0; i < posAttr.count; i++) {
+        let x = posAttr.getX(i);
+        let y = posAttr.getY(i);
+        let z = posAttr.getZ(i);
+        if (x < 0) y *= 0.6;
+        posAttr.setXYZ(i, x * 1.3, y * 0.8, z * 0.9);
+      }
+      liverGeo.computeVertexNormals();
+
+      const liverMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4 });
+      const liverMesh = new THREE.Mesh(liverGeo, liverMat);
+      group.add(liverMesh);
+
+      // Gallbladder
+      const gallGeo = new THREE.SphereGeometry(0.35, 16, 16);
+      gallGeo.scale(1, 1.5, 0.8);
+      const gallMat = new THREE.MeshStandardMaterial({ color: 0x16a34a, roughness: 0.2 });
+      const gallMesh = new THREE.Mesh(gallGeo, gallMat);
+      gallMesh.position.set(0.6, -0.8, 0.7);
+      group.add(gallMesh);
+    }
+
+    return group;
+  };
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // MOUSE & TOUCH ORBIT DRAG HANDLERS
+  // ───────────────────────────────────────────────────────────────────────────
   const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-    setIsDragging(true);
+    isDraggingRef.current = true;
     setAutoRotate(false);
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    setDragStart({ x: clientX, y: clientY });
+    previousMousePosition.current = { x: clientX, y: clientY };
   };
 
   const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    const deltaX = clientX - dragStart.x;
-    const deltaY = clientY - dragStart.y;
-    
-    setYaw(prev => (prev + deltaX * 0.5) % 360);
-    setPitch(prev => Math.max(-55, Math.min(55, prev - deltaY * 0.4)));
-    setDragStart({ x: clientX, y: clientY });
+
+    const deltaX = clientX - previousMousePosition.current.x;
+    const deltaY = clientY - previousMousePosition.current.y;
+
+    rotationGroupRef.current.y += deltaX * 0.015;
+    rotationGroupRef.current.x += deltaY * 0.01;
+
+    // Clamp pitch (rotation.x) to prevent flipping upside down
+    rotationGroupRef.current.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, rotationGroupRef.current.x));
+
+    previousMousePosition.current = { x: clientX, y: clientY };
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
+    isDraggingRef.current = false;
   };
 
-  const handleSelectStructure = (struct: AnatomicalStructure3D) => {
-    setSelectedStructure(struct);
-    setActiveHotspot(struct.hotspots[0].id);
-    setYaw(20);
-    setPitch(10);
-    setZoom(1);
-    setViewMode('FRONT');
+  const handleSelectOrgan = (organ: Organ3DData) => {
+    setSelectedOrgan(organ);
+    setActiveHotspotId(organ.hotspots[0].id);
+    rotationGroupRef.current = { x: 0, y: 0 };
+    setViewAngle('FRONT');
   };
 
-  const setViewOrientation = (mode: 'FRONT' | 'BACK' | 'SIDE') => {
-    setViewMode(mode);
+  const setViewPreset = (angle: 'FRONT' | 'BACK' | 'SIDE') => {
+    setViewAngle(angle);
     setAutoRotate(false);
-    if (mode === 'FRONT') { setYaw(0); setPitch(5); }
-    if (mode === 'BACK')  { setYaw(180); setPitch(5); }
-    if (mode === 'SIDE')  { setYaw(90); setPitch(10); }
+    if (angle === 'FRONT') rotationGroupRef.current = { x: 0, y: 0 };
+    if (angle === 'BACK')  rotationGroupRef.current = { x: 0, y: Math.PI };
+    if (angle === 'SIDE')  rotationGroupRef.current = { x: 0, y: Math.PI / 2 };
   };
 
-  const hotspotDetails = selectedStructure.hotspots.find(h => h.id === activeHotspot) || selectedStructure.hotspots[0];
-
-  // Normalized yaw angle to determine if showing back
-  const normYaw = (Math.abs(yaw) % 360);
-  const isViewingBack = normYaw > 90 && normYaw < 270;
+  const hotspotDetails = selectedOrgan.hotspots.find(h => h.id === activeHotspotId) || selectedOrgan.hotspots[0];
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 bg-[#050507] min-h-screen text-white select-none"
+    <div className="space-y-6 p-4 sm:p-6 bg-[#030305] min-h-screen text-white select-none"
       style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif' }}>
       
-      {/* ─── 3D ATLAS HEADER ─── */}
+      {/* ─── 3D WEBGL ENGINE HERO HEADER ─── */}
       <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 border border-teal-500/20"
-        style={{ background: 'linear-gradient(135deg, #0d211d 0%, #040d0a 100%)', boxShadow: '0 0 40px rgba(20,184,166,0.15)' }}>
+        style={{ background: 'linear-gradient(135deg, #091a16 0%, #020705 100%)', boxShadow: '0 0 45px rgba(20,184,166,0.15)' }}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40 tracking-wide">
-                ORBIT 360° WEBGL & VOLUMETRIC ENGINE
+                MOTEUR 3D WEBGL REALTIME (THREE.JS)
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                RÉALISME 4K
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                PROJECTION ANATOMIQUE 1:1
               </span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              <Box className="w-8 h-8 text-teal-400 animate-spin" style={{ animationDuration: '12s' }} />
-              Atlas d'Anatomie 3D Interactif 360°
+              <Box className="w-8 h-8 text-teal-400 animate-spin" style={{ animationDuration: '14s' }} />
+              Atlas d'Anatomie 3D WebGL Réaliste
             </h1>
             <p className="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl leading-relaxed">
-              Faites glisser la souris ou le doigt pour **pivoter l'organe sous tous les angles (Face, Dos, Profil)**. 
-              Les repères anatomiques numérotés tournent en synchronisation 3D exacte avec l'organe !
+              Glissez la souris ou le doigt pour **faire tourner le volume 3D sous tous les angles à 360°**. 
+              Les pastilles numérotées sont projetées en temps réel sur la surface 3D exacte de l'organe !
             </p>
           </div>
 
@@ -211,7 +477,7 @@ export default function Anatomy3DSection() {
                 autoRotate ? 'bg-teal-500 text-black shadow-lg' : 'text-slate-400 hover:text-white bg-white/5'
               }`}>
               {autoRotate ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-              <span>360° Auto</span>
+              <span>Rotation Auto 360°</span>
             </button>
             
             <button onClick={() => setPulseAnim(!pulseAnim)}
@@ -219,7 +485,7 @@ export default function Anatomy3DSection() {
                 pulseAnim ? 'bg-rose-500 text-white shadow-lg' : 'text-slate-400 hover:text-white bg-white/5'
               }`}>
               <Heart className="w-3.5 h-3.5" />
-              <span>Pulsation</span>
+              <span>Pulsation 3D</span>
             </button>
           </div>
         </div>
@@ -227,31 +493,30 @@ export default function Anatomy3DSection() {
 
       {/* ─── ORGAN SELECTOR TABS ─── */}
       <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
-        {STRUCTURES_3D.map(struct => {
-          const isSelected = selectedStructure.id === struct.id;
+        {ORGANS_DATA.map(organ => {
+          const isSelected = selectedOrgan.id === organ.id;
           return (
-            <button key={struct.id} onClick={() => handleSelectStructure(struct)}
+            <button key={organ.id} onClick={() => handleSelectOrgan(organ)}
               className={`px-4 py-3 rounded-2xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2.5 border shrink-0 ${
                 isSelected
                   ? 'bg-teal-500/20 text-teal-300 border-teal-500/50 shadow-lg shadow-teal-500/10'
-                  : 'bg-[#18181B] text-slate-400 border-white/5 hover:border-white/20 hover:text-white'
+                  : 'bg-[#141417] text-slate-400 border-white/5 hover:border-white/20 hover:text-white'
               }`}>
-              {struct.type === 'heart' && <Heart className="w-4 h-4 text-rose-400" />}
-              {struct.type === 'brain' && <Brain className="w-4 h-4 text-purple-400" />}
-              {struct.type === 'lungs' && <Wind className="w-4 h-4 text-cyan-400" />}
-              {struct.type === 'liver' && <Activity className="w-4 h-4 text-amber-400" />}
-              <span>{struct.name}</span>
+              {organ.type === 'heart' && <Heart className="w-4 h-4 text-rose-400" />}
+              {organ.type === 'brain' && <Brain className="w-4 h-4 text-purple-400" />}
+              {organ.type === 'lungs' && <Wind className="w-4 h-4 text-cyan-400" />}
+              {organ.type === 'liver' && <Activity className="w-4 h-4 text-amber-400" />}
+              <span>{organ.name}</span>
             </button>
           );
         })}
       </div>
 
-      {/* ─── MAIN 3D VIEW & DETAILS ─── */}
+      {/* ─── MAIN 3D CANVAS & DETAILS ─── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* ─── 3D INTERACTIVE CANVAS CONTAINER (Col 7) ─── */}
-        <div className="lg:col-span-7 bg-[#0a0a0d] rounded-3xl border border-white/10 p-6 relative overflow-hidden flex flex-col items-center justify-center min-h-[500px] shadow-2xl"
-          ref={canvasContainerRef}
+        {/* ─── THREE.JS WEBGL CANVAS STAGE (Col 7) ─── */}
+        <div className="lg:col-span-7 bg-[#070709] rounded-3xl border border-white/10 relative overflow-hidden flex flex-col items-center justify-center min-h-[520px] shadow-2xl"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -259,214 +524,85 @@ export default function Anatomy3DSection() {
           onTouchStart={handleMouseDown}
           onTouchMove={handleMouseMove}
           onTouchEnd={handleMouseUp}
-          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}>
+          style={{ cursor: isDraggingRef.current ? 'grabbing' : 'grab' }}>
 
-          {/* Grid Background Effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:28px_28px] opacity-10 pointer-events-none" />
+          {/* Background Radial Grid */}
+          <div className="absolute inset-0 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:32px_32px] opacity-15 pointer-events-none" />
 
           {/* Top Left Orientation Badge */}
-          <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5">
-            <span className="text-[11px] font-mono font-bold text-teal-400 bg-teal-950/80 border border-teal-500/30 px-3 py-1 rounded-full flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-teal-400 animate-spin" style={{ animationDuration: '8s' }} />
-              {isViewingBack ? 'VUE POSTÉRIEURE (DOS 🔄)' : 'VUE ANTÉRIEURE (FACE 👁️)'}
-            </span>
-            <span className="text-[10px] text-slate-400 font-mono pl-1">
-              Yaw: {Math.round(yaw)}° | Pitch: {Math.round(pitch)}° | Zoom: {Math.round(zoom * 100)}%
+          <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5 pointer-events-none">
+            <span className="text-[11px] font-mono font-bold text-teal-400 bg-teal-950/90 border border-teal-500/30 px-3 py-1 rounded-full flex items-center gap-1.5 backdrop-blur-md">
+              <Compass className="w-3.5 h-3.5 text-teal-400 animate-spin" style={{ animationDuration: '10s' }} />
+              {selectedOrgan.latinName}
             </span>
           </div>
 
-          {/* Top Right View Presets & Zoom */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-[#18181B]/90 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10"
+          {/* Top Right View Angle Presets & Zoom */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-[#141417]/90 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10"
             onClick={e => e.stopPropagation()}>
-            <button onClick={() => setViewOrientation('FRONT')}
-              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewMode === 'FRONT' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
+            <button onClick={() => setViewPreset('FRONT')}
+              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewAngle === 'FRONT' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
               Face
             </button>
-            <button onClick={() => setViewOrientation('BACK')}
-              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewMode === 'BACK' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
+            <button onClick={() => setViewPreset('BACK')}
+              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewAngle === 'BACK' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
               Dos
             </button>
-            <button onClick={() => setViewOrientation('SIDE')}
-              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewMode === 'SIDE' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
+            <button onClick={() => setViewPreset('SIDE')}
+              className={`px-2.5 py-1 rounded-xl text-[11px] font-bold ${viewAngle === 'SIDE' ? 'bg-teal-500 text-black' : 'text-slate-400 hover:text-white'}`}>
               Profil
             </button>
             <div className="w-px h-4 bg-white/10" />
-            <button onClick={() => setZoom(z => Math.min(z + 0.2, 1.8))} className="p-1.5 text-slate-300 hover:text-white"><ZoomIn className="w-4 h-4" /></button>
-            <button onClick={() => setZoom(z => Math.max(z - 0.2, 0.6))} className="p-1.5 text-slate-300 hover:text-white"><ZoomOut className="w-4 h-4" /></button>
+            <button onClick={() => setZoomLevel(z => Math.min(z + 0.2, 1.8))} className="p-1.5 text-slate-300 hover:text-white"><ZoomIn className="w-4 h-4" /></button>
+            <button onClick={() => setZoomLevel(z => Math.max(z - 0.2, 0.6))} className="p-1.5 text-slate-300 hover:text-white"><ZoomOut className="w-4 h-4" /></button>
           </div>
 
-          {/* Instructions Overlay */}
+          {/* Bottom Drag Instruction */}
           <div className="absolute bottom-4 left-4 z-20 pointer-events-none">
-            <span className="text-[11px] text-slate-400 bg-black/70 px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
+            <span className="text-[11px] text-slate-400 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
               <Move className="w-3.5 h-3.5 text-teal-400" />
-              Glissez la souris/doigt pour pivoter à 360°
+              Glissez la souris/doigt pour tourner l'organe 3D à 360°
             </span>
           </div>
 
-          {/* ─── 3D PERSPECTIVE STAGE ─── */}
-          <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center pointer-events-none"
-            style={{
-              perspective: '1000px',
-              perspectiveOrigin: '50% 50%',
-            }}>
-            
-            {/* 3D Transform Mesh & Hotspots Wrapper */}
-            <div className="w-full h-full relative"
-              style={{
-                transformStyle: 'preserve-3d',
-                transform: `scale(${zoom}) rotateX(${pitch}deg) rotateY(${yaw}deg)`,
-                animation: pulseAnim ? 'pulse-3d 1.2s ease-in-out infinite' : 'none',
-                transition: isDragging ? 'none' : 'transform 0.1s cubic-bezier(0.2,0.8,0.2,1)',
-              }}>
+          {/* THREE.JS WEBGL RENDER CANVAS CONTAINER */}
+          <div className="w-full h-full min-h-[520px] relative" ref={mountRef} />
 
-              {/* 3D HEART MODEL MESH */}
-              {selectedStructure.type === 'heart' && (
-                <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
-                  {/* Outer glowing volumetric sphere */}
-                  <div className="absolute inset-8 rounded-full"
-                    style={{
-                      background: 'radial-gradient(circle at 35% 35%, #ef4444 0%, #991b1b 50%, #450a0a 90%)',
-                      boxShadow: `0 0 60px ${selectedStructure.glowColor}, inset 0 -20px 40px rgba(0,0,0,0.8)`,
-                      transform: 'translateZ(0px)',
-                    }} />
+          {/* ─── DYNAMICALLY PROJECTED 2D HOTSPOT PINS ─── */}
+          {selectedOrgan.hotspots.map(hs => {
+            const screenPos = screenHotspots[hs.id];
+            if (!screenPos) return null;
 
-                  {/* Left Ventricle volume bulge */}
-                  <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 30%, #f87171 0%, #dc2626 70%, transparent 100%)',
-                      transform: 'translateZ(45px)',
-                      filter: 'blur(2px)',
-                    }} />
+            const isActive = hs.id === activeHotspotId;
 
-                  {/* Aorta 3D Arc */}
-                  <svg viewBox="0 0 300 300" className="absolute inset-0 w-full h-full overflow-visible" style={{ transform: 'translateZ(30px)' }}>
-                    <path d="M140 100 Q150 20 190 30 T180 120" fill="none" stroke="#f43f5e" strokeWidth="18" strokeLinecap="round" />
-                    <path d="M140 100 Q150 20 190 30 T180 120" fill="none" stroke="#fda4af" strokeWidth="6" strokeLinecap="round" opacity="0.6" />
-                  </svg>
-
-                  {/* Coronary arteries network 3D */}
-                  <svg viewBox="0 0 300 300" className="absolute inset-0 w-full h-full overflow-visible" style={{ transform: 'translateZ(60px)' }}>
-                    <path d="M150 90 Q120 150 140 240" fill="none" stroke="#fecdd3" strokeWidth="4" strokeDasharray="6 3" />
-                    <path d="M150 90 Q190 140 180 220" fill="none" stroke="#38bdf8" strokeWidth="4" />
-                  </svg>
-                </div>
-              )}
-
-              {/* 3D BRAIN MODEL MESH */}
-              {selectedStructure.type === 'brain' && (
-                <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
-                  <div className="absolute inset-10 rounded-[40%]"
-                    style={{
-                      background: 'radial-gradient(circle at 40% 30%, #c084fc 0%, #7e22ce 60%, #3b0764 95%)',
-                      boxShadow: `0 0 50px ${selectedStructure.glowColor}, inset 0 -15px 30px rgba(0,0,0,0.8)`,
-                      transform: 'translateZ(0px)',
-                    }} />
-
-                  {/* Frontal Lobe Depth Layer */}
-                  <div className="absolute top-12 left-12 w-2/5 h-2/5 rounded-full"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 30%, #e9d5ff 0%, #a855f7 70%, transparent 100%)',
-                      transform: 'translateZ(40px)',
-                      filter: 'blur(3px)',
-                    }} />
-
-                  {/* Cerebellum rear volume */}
-                  <div className="absolute bottom-12 right-12 w-1/3 h-1/3 rounded-full"
-                    style={{
-                      background: 'radial-gradient(circle at 40% 40%, #9333ea 0%, #581c87 80%)',
-                      transform: 'translateZ(-30px)',
-                      boxShadow: '0 0 20px rgba(147,51,234,0.5)',
-                    }} />
-                </div>
-              )}
-
-              {/* 3D LUNGS MODEL MESH */}
-              {selectedStructure.type === 'lungs' && (
-                <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
-                  {/* Left Lung 3D volume */}
-                  <div className="absolute top-10 left-6 w-2/5 h-3/4 rounded-[45%]"
-                    style={{
-                      background: 'radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 60%, #0c4a6e 95%)',
-                      boxShadow: `0 0 45px ${selectedStructure.glowColor}`,
-                      transform: 'translateZ(20px) rotate(-10deg)',
-                    }} />
-                  {/* Right Lung 3D volume */}
-                  <div className="absolute top-10 right-6 w-2/5 h-3/4 rounded-[45%]"
-                    style={{
-                      background: 'radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 60%, #0c4a6e 95%)',
-                      boxShadow: `0 0 45px ${selectedStructure.glowColor}`,
-                      transform: 'translateZ(20px) rotate(10deg)',
-                    }} />
-                  {/* Trachea 3D pipe */}
-                  <div className="absolute top-4 left-1/2 -translate-x-1/2 w-8 h-28 rounded-xl"
-                    style={{
-                      background: 'linear-gradient(90deg, #7dd3fc 0%, #0284c7 50%, #075985 100%)',
-                      transform: 'translateZ(35px)',
-                    }} />
-                </div>
-              )}
-
-              {/* 3D LIVER MODEL MESH */}
-              {selectedStructure.type === 'liver' && (
-                <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
-                  <div className="absolute inset-10 rounded-[35%]"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 60%, #451a03 95%)',
-                      boxShadow: `0 0 50px ${selectedStructure.glowColor}`,
-                      transform: 'translateZ(0px) rotate(-15deg)',
-                    }} />
-                  {/* Gallbladder 3D volume */}
-                  <div className="absolute bottom-16 right-20 w-10 h-16 rounded-full"
-                    style={{
-                      background: 'radial-gradient(circle at 30% 30%, #4ade80 0%, #15803d 80%)',
-                      transform: 'translateZ(40px)',
-                      boxShadow: '0 0 20px rgba(74,222,128,0.5)',
-                    }} />
-                </div>
-              )}
-
-              {/* ─── 3D HOTSPOT PINS ATTACHED DIRECTLY IN 3D MESH SPACE ─── */}
-              {selectedStructure.hotspots.map(hs => {
-                const isActive = hs.id === activeHotspot;
-                
-                return (
-                  <div key={hs.id}
-                    className="absolute pointer-events-auto z-30"
-                    style={{
-                      top: '50%',
-                      left: '50%',
-                      transformStyle: 'preserve-3d',
-                      transform: `translate3d(${hs.x}px, ${hs.y}px, ${hs.z}px)`,
-                    }}>
-                    
-                    {/* Billboarding Counter-Rotation (keeps numbers facing camera flat and upright) */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setActiveHotspot(hs.id); }}
-                      style={{
-                        transform: `rotateY(${-yaw}deg) rotateX(${-pitch}deg)`,
-                        transformStyle: 'preserve-3d',
-                        transition: 'transform 0.05s linear',
-                      }}
-                      className={`-translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full font-mono text-[11px] font-bold shadow-2xl transition-all ${
-                        isActive
-                          ? 'w-8 h-8 bg-teal-400 text-black ring-4 ring-teal-500/50 border-2 border-white scale-110 animate-pulse'
-                          : 'w-7 h-7 bg-[#18181B] text-teal-300 border border-teal-500/40 hover:scale-110 hover:border-teal-400'
-                      }`}>
-                      {hs.id.replace(/^[a-z]+/, '')}
-                    </button>
-                  </div>
-                );
-              })}
-
-            </div>
-          </div>
+            return (
+              <button key={hs.id} onClick={(e) => { e.stopPropagation(); setActiveHotspotId(hs.id); }}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-75 z-30 ${
+                  isActive ? 'scale-125' : 'hover:scale-110'
+                }`}
+                style={{
+                  left: `${screenPos.x}px`,
+                  top: `${screenPos.y}px`,
+                  opacity: screenPos.isBack ? 0.35 : 1,
+                  filter: screenPos.isBack ? 'blur(1px)' : 'none',
+                }}>
+                <span className={`flex items-center justify-center w-7 h-7 rounded-full font-mono text-[11px] font-bold shadow-2xl transition-all ${
+                  isActive
+                    ? 'bg-teal-400 text-black ring-4 ring-teal-500/50 border-2 border-white animate-pulse'
+                    : 'bg-[#141417] text-teal-300 border border-teal-500/40'
+                }`}>
+                  {hs.id.replace(/^[a-z]+/, '')}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* ─── DETAILS & PFE PEARLS SIDEBAR (Col 5) ─── */}
         <div className="lg:col-span-5 space-y-4">
           
           {/* Active Hotspot Card */}
-          <div className="bg-[#141417] rounded-3xl border border-teal-500/30 p-6 shadow-2xl relative overflow-hidden">
+          <div className="bg-[#121215] rounded-3xl border border-teal-500/30 p-6 shadow-2xl relative overflow-hidden">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">
                 {hotspotDetails.label}
@@ -495,22 +631,22 @@ export default function Anatomy3DSection() {
           </div>
 
           {/* Organ Clinical Summary & Hotspot List */}
-          <div className="bg-[#101013] rounded-3xl border border-white/8 p-6 space-y-4">
+          <div className="bg-[#0f0f12] rounded-3xl border border-white/8 p-6 space-y-4">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
               <Info className="w-4 h-4 text-teal-400" />
               Intérêt Pathologique & Chirurgical
             </h4>
             <p className="text-slate-300 text-xs leading-relaxed">
-              {selectedStructure.clinicalImportance}
+              {selectedOrgan.clinicalImportance}
             </p>
 
             <div className="pt-2 border-t border-white/5">
-              <span className="text-[11px] font-bold text-slate-500 block mb-2">SÉLECTIONNER UN REPÈRE (1 - {selectedStructure.hotspots.length}) :</span>
+              <span className="text-[11px] font-bold text-slate-500 block mb-2">SÉLECTIONNER UN REPÈRE (1 - {selectedOrgan.hotspots.length}) :</span>
               <div className="space-y-1.5">
-                {selectedStructure.hotspots.map(hs => (
-                  <button key={hs.id} onClick={() => setActiveHotspot(hs.id)}
+                {selectedOrgan.hotspots.map(hs => (
+                  <button key={hs.id} onClick={() => setActiveHotspotId(hs.id)}
                     className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors ${
-                      hs.id === activeHotspot
+                      hs.id === activeHotspotId
                         ? 'bg-teal-500/20 text-teal-300 font-bold border border-teal-500/30'
                         : 'text-slate-400 hover:text-white hover:bg-white/5'
                     }`}>
@@ -525,13 +661,6 @@ export default function Anatomy3DSection() {
         </div>
 
       </div>
-
-      <style>{`
-        @keyframes pulse-3d {
-          0%, 100% { transform: scale(1); }
-          50%       { transform: scale(1.04); }
-        }
-      `}</style>
     </div>
   );
 }
