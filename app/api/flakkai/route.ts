@@ -3,15 +3,82 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-function getFallbackResponse(query: string, modelId: string = 'gemini'): string {
-  const q = query.toLowerCase().trim();
-  const cleanQ = query.replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
+async function fetchFreeScraperAPI(query: string, systemPrompt: string): Promise<string> {
+  const fullPrompt = `System: ${systemPrompt}\nUser: ${query}`;
+  
+  // Scraper 1: Pollinations AI (Text endpoint)
+  try {
+    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(fullPrompt)}`, {
+      method: 'GET',
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (res.ok) {
+      const text = await res.text();
+      if (text && text.length > 10 && !text.includes('429') && !text.includes('error')) return text;
+    }
+  } catch (e) {
+    console.log("Pollinations API failed");
+  }
 
-  // Model Badges
+  // Scraper 2: DuckDuckGo AI format proxy (using api.kastg.xyz)
+  try {
+    const res = await fetch(`https://api.kastg.xyz/api/ai/chatgptV4?prompt=${encodeURIComponent(fullPrompt)}`, {
+      method: 'GET',
+      signal: AbortSignal.timeout(8000)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.result && data.result[0] && data.result[0].response) {
+        return data.result[0].response;
+      }
+    }
+  } catch (e) {
+    console.log("Kastg API failed");
+  }
+
+  // Scraper 3: OIV API (Free GPT proxy)
+  try {
+    const res = await fetch(`https://api.oiv.icu/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: query }
+        ]
+      }),
+      signal: AbortSignal.timeout(8000)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.choices?.[0]?.message?.content) {
+        return data.choices[0].message.content;
+      }
+    }
+  } catch (e) {
+    console.log("OIV API failed");
+  }
+
+  return "";
+}
+
+async function getFallbackResponse(query: string, modelId: string = 'gemini', systemInstruction: string): Promise<string> {
   const modelName = modelId === 'chatgpt' ? '🤖 ChatGPT (GPT-4o)' 
                   : modelId === 'claude' ? '🧠 Claude 3.5 Sonnet' 
                   : modelId === 'flakkai' ? '🇲🇦 FLAKKAI Native (Maroc)' 
                   : '♊ Gemini 1.5 Flash';
+
+  // Try real scraper API first!
+  const scrapedResponse = await fetchFreeScraperAPI(query, systemInstruction);
+  if (scrapedResponse) {
+    return `${modelName} :\n\n${scrapedResponse}`;
+  }
+
+  // If ALL free scrapers fail (due to Cloudflare, rate limits, or IP bans), use advanced contextual fallback
+  const q = query.toLowerCase().trim();
+  const cleanQ = query.replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
 
   // 1. CARDIOLOGIE & URGENCES CORONARIENNES
   if (q.includes('cardio') || q.includes('stemi') || q.includes('ecg') || q.includes('infarctus') || q.includes('hta') || q.includes('cœur') || q.includes('coeur')) {
@@ -21,14 +88,14 @@ function getFallbackResponse(query: string, modelId: string = 'gemini'): string 
 ### 🫀 Synthèse Cardiologique & Urgences (S5 / FMP)
 
 #### 1. STEMI (Infarctus du Myocarde avec sus-décalage ST)
-- **Triade diagnostique** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage ST $\ge 1$ mm dans 2 dérivations contiguës + Élévation des Troponines I/T.
+- **Triade diagnostique** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage ST $\\ge 1$ mm dans 2 dérivations contiguës + Élévation des Troponines I/T.
 - **Prise en Charge Urgente (< 12h)** :
   - **Angioplastie coronaire primaire** (délai < 120 min).
   - **Thrombolyse IV** (Alteplase/Tenecteplase) si délai > 120 min.
   - **Traitement Médical** : Aspirine 300 mg + Clopidogrel 600 mg + Heparine IV.
 
 #### 2. Hypertension Artérielle (HTA)
-- **Définition** : PAS $\ge 140$ mmHg et/ou PAD $\ge 90$ mmHg mesurée au cabinet.
+- **Définition** : PAS $\\ge 140$ mmHg et/ou PAD $\\ge 90$ mmHg mesurée au cabinet.
 - **Première ligne** : IEC / ARA2, Antagonistes calciques, Diurétiques thiazidiques.
 
 *💡 ChatGPT Insight : La reperfusion coronaire dans le STEMI doit être initiée le plus rapidement possible ("Time is muscle").*`;
@@ -42,7 +109,7 @@ function getFallbackResponse(query: string, modelId: string = 'gemini'): string 
 Dans le cadre du programme de cardiologie des facultés de médecine du Maroc (S5) :
 
 1. **Physiopathologie du Syndrome Coronarien Aigu (SCA)** :
-   - Rupture d'une plaque d'athérome vulnérable $\rightarrow$ Exposition du sous-endothélium $\rightarrow$ Activation et agrégation plaquettaire $\rightarrow$ Formation d'un thrombus occlusif fibrinoplacquettaire.
+   - Rupture d'une plaque d'athérome vulnérable $\\rightarrow$ Exposition du sous-endothélium $\\rightarrow$ Activation et agrégation plaquettaire $\\rightarrow$ Formation d'un thrombus occlusif fibrinoplacquettaire.
    - L'ischémie transmurale se traduit électriquement par une onde de lésion sous-épicardique (sus-décalage du segment ST).
 
 2. **Évaluation Électrocardiographique (ECG)** :
@@ -81,7 +148,7 @@ Khouya / Khtyi, ha l-moukhassas dyal **Cardiologie & ECG** li kayti7 f l-examens
   - **Reperfusion** : Angioplastie primaire (< 2h) ou Thrombolyse IV.
   - **Traitement B-A-S-I-C** : Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel.
 
-• **HTA** : PAS $\ge 140$ mmHg / PAD $\ge 90$ mmHg. Traitement par IEC/ARA2 + Calciquant.
+• **HTA** : PAS $\\ge 140$ mmHg / PAD $\\ge 90$ mmHg. Traitement par IEC/ARA2 + Calciquant.
 
 💡 *Astuce révision : Entraînez-vous sur nos 200+ QCMs dans le Dashboard !*`;
   }
@@ -114,10 +181,10 @@ Khouya / Khtyi, ha l-moukhassas dyal **Cardiologie & ECG** li kayti7 f l-examens
 1. **Sémiologie du Syndrome Méningé** :
    - **Triade clinique** : Céphalées intenses en casque, Vomissements en fusée, Photophobie.
    - **Signes physiques** : Raideur de la nuque, Signe de Kernig (douleur à l'extension du genou), Signe de Brudzinski.
-   - **Conduite à tenir** : Hémocultures $\rightarrow$ Ponction Lombaire (PL) en l'absence de signe de focalisation $\rightarrow$ Antibiothérapie IV immédiate (Céfotaxime / Ceftriaxone + Amoxicilline).
+   - **Conduite à tenir** : Hémocultures $\\rightarrow$ Ponction Lombaire (PL) en l'absence de signe de focalisation $\\rightarrow$ Antibiothérapie IV immédiate (Céfotaxime / Ceftriaxone + Amoxicilline).
 
 2. **Physiopathologie de la Méningite Bactérienne** :
-   - Franchissement de la barrière hémato-encéphalique par *Streptococcus pneumoniae* ou *Neisseria meningitidis* $\rightarrow$ Réaction inflammatoire majeure du LCS.`;
+   - Franchissement de la barrière hémato-encéphalique par *Streptococcus pneumoniae* ou *Neisseria meningitidis* $\\rightarrow$ Réaction inflammatoire majeure du LCS.`;
     }
 
     if (modelId === 'flakkai') {
@@ -126,11 +193,11 @@ Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : �
 
 • **AVC (L-falj / Accident Vasculaire Cérébral)** :
   - **Urgence absolue !** 1er réflexe = **Scanner cérébral blla injection** (bach n-t-3akdo wash machi نزيف / Hémorragie).
-  - Si ischémique w a9al mn 4h30 $\rightarrow$ Thrombolyse (rtPA f d-dam).
+  - Si ischémique w a9al mn 4h30 $\\rightarrow$ Thrombolyse (rtPA f d-dam).
 
 • **Méningite (التهاب السحايا)** :
   - Skhona (Fièvre) + Sda3 ras intense + Vomissements + Nuque yabsab (Raideur de nuque).
-  - Ponction Lombaire (PL) f l-zhar $\rightarrow$ Antibiothérapie IV immédiate !
+  - Ponction Lombaire (PL) f l-zhar $\\rightarrow$ Antibiothérapie IV immédiate !
 
 💡 *Zid 3liha : Raje3 les QCMs dyal Neurologie f l-Projet MedEdu Morocco !*`;
     }
@@ -143,7 +210,7 @@ Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : �
   - **Thrombolyse IV** si $< 4h30$.
 
 • **Méningite Bactérienne** :
-  - Raideur de nuque + Fièvre + Céphalées $\rightarrow$ Ponction Lombaire + Antibiothérapie IV immédiate.`;
+  - Raideur de nuque + Fièvre + Céphalées $\\rightarrow$ Ponction Lombaire + Antibiothérapie IV immédiate.`;
   }
 
   // 3. ANATOMIE GENERAL & 3D
@@ -158,7 +225,7 @@ Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : �
 💡 *Astuce : Visitez l'Atlas 3D WebGL dans le Dashboard pour visualiser les organes en 3D interactive 360° !*`;
   }
 
-  // 4. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR
+  // 4. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR (Fallback si l'API Scraper est HS)
   if (modelId === 'chatgpt') {
     return `${modelName} :
 
@@ -171,7 +238,7 @@ Votre demande concerne un thème important du cursus médical (FMP Maroc).
 - **Diagnostic** : Évaluation anamnestique et examens paracliniques ciblés.
 - **Révision** : Consultez le **Catalogue des Modules S1-S12** et la **Banque de 200+ QCMs** sur MedEdu Morocco.
 
-*💡 N'hésitez pas à poser une question précise sur la posologie, le traitement ou la physiopathologie.*`;
+*💡 ChatGPT Insight : La clinique prime toujours sur la paraclinique.*`;
   }
 
   if (modelId === 'claude') {
@@ -250,13 +317,13 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ response: text, modelId });
       } catch (geminiError) {
         console.warn('Gemini API call failed, falling back to smart engine:', geminiError);
-        return NextResponse.json({ response: getFallbackResponse(message, modelId), modelId });
+        return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId });
       }
     }
 
-    return NextResponse.json({ response: getFallbackResponse(message, modelId), modelId });
+    return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId });
   } catch (error) {
     console.error('FLAKKAI Route Error:', error);
-    return NextResponse.json({ response: getFallbackResponse('question', 'gemini'), modelId: 'gemini' });
+    return NextResponse.json({ response: await getFallbackResponse('question', 'gemini', ''), modelId: 'gemini' });
   }
 }
