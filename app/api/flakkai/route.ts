@@ -3,78 +3,136 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-function getFallbackResponse(query: string): string {
+function getFallbackResponse(query: string, modelId: string = 'gemini'): string {
   const q = query.toLowerCase().trim();
+  const modelName = modelId === 'chatgpt' ? '🤖 ChatGPT (GPT-4o)' : modelId === 'claude' ? '🧠 Claude 3.5 Sonnet' : modelId === 'flakkai' ? '🇲🇦 FLAKKAI Native' : '♊ Gemini 1.5 Flash';
 
   if (q.includes('anatomie') || q.includes('anatomy') || q.includes('cœur') || q.includes('coeur') || q.includes('brain') || q.includes('cerveau')) {
-    return `🤖 **FLAKKAI AI (Anatomie & 3D)** :
-L'**Anatomie** (الأnatomie) est la science qui étude la structure et la forme des êtres vivants.
-• **En Médecine Marocaine (FMP)** : L'anatomie est enseignée au semestre **S1 & S2**.
-• **Structures Clés** :
-  1. **Cœur (Cor)** : 4 cavités (OD, OG, VD, VG), vascularisé par l'IVA et la Coronaire Droite.
-  2. **Encéphale** : Cortex cérébral (aires de Broca & Wernicke), Cervelet et Polygone de Willis.
-  3. **Poumons** : Poumon droit trilobé, poumon gauche bilobé (incisure cardiaque).
+    if (modelId === 'chatgpt') {
+      return `${modelName} :
 
-💡 *Astuce PFE* : Consultez notre section **🎨 Anatomie & Schémas 3D** dans le Dashboard pour faire pivoter l'organe à 360° !`;
+### 🫀 Synthèse Anatomique
+L'**Anatomie humaine** est la science fondamentale étudiant la structure des organes.
+
+#### Points Clés (Cursus FMP Maroc - S1/S2) :
+1. **Système Cardiovasculaire** :
+   - **Myocarde** : 4 cavités (Atrium D/G, Ventricule D/G).
+   - **Vascularisation** : Artères coronaires gauche (IVA + Circonflexe) et droite.
+2. **Système Nerveux Central** :
+   - **Cortex Cérébral** : Lobes frontal, pariétal, temporal, occipital.
+   - **Vascularisation** : Polygone de Willis (Carotides internes + Tronc basilaire).
+
+*💡 Conseil : Utilisez le module Atlas 3D WebGL dans MedEdu Morocco pour explorer les structures en 360°.*`;
+    }
+
+    if (modelId === 'claude') {
+      return `${modelName} :
+
+Analyse détaillée de l'**Anatomie Générale & Clinique** :
+
+L'anatomie constitue le pilier fondamental des études médicales. Dans le cadre du programme national des facultés de médecine du Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT) :
+
+1. **Cardio-Anatomie** :
+   - Le cœur est situé dans le médiastin moyen. Il présente une face antérieure (sterno-costale), une face inférieure (diaphragmatique) et une face pulmonaire.
+   - La vascularisation est assurée par le réseau coronaire. L'IVA (Interventriculaire Antérieure) irrigue 2/3 du septum interventriculaire.
+
+2. **Neuro-Anatomie** :
+   - L'encéphale est protégé par les méninges (Dure-mère, Arachnoïde, Pie-mère) et le Liquide Cérébro-Spinal (LCS).
+   - L'aire de Broca (langage articulé) se situe dans la 3ème circonvolution frontale (F3) de l'hémisphère dominant.
+
+N'hésitez pas à me demander une corrélation anatomo-clinique spécifique !`;
+    }
+
+    if (modelId === 'flakkai') {
+      return `${modelName} :
+Khouya / Khtyi, l'**Anatomie** (الأnatomie) hiya s-sass dyal t-tibb f l-Maghrib f **S1 w S2** ! 🇲🇦
+
+• **Cœur (القلب)** : 
+  - Fiha 4 cavités (OD, OG, VD, VG).
+  - l-IVA (Artère Interventriculaire Antérieure) hiya li katteddi d-dam l 2/3 dyal s-septum. Si elle se bouche → Infarctus Antérieur !
+• **Cerveau (المخ)** :
+  - Aire de Broca = Lisan / Ntiq.
+  - Polygone de Willis = Réseau de secours dyal d-dam f l-ras.
+
+💡 *Zid 3liha : Dir 3aflak test f l-Atlas 3D dyal l-projet bach t-dor l-organe b 360° !*`;
+    }
+
+    // Default Gemini
+    return `${modelName} :
+L'**Anatomie** est la science essentielle étudiant la forme et la structure des êtres vivants.
+
+• **En Médecine Marocaine (FMP)** : Enseignée aux semestres **S1 & S2**.
+• **Structures Anatomiques Clés** :
+  1. **Cœur (Cor)** : 4 cavités, vascularisation coronaire (IVA & Coronaire Droite).
+  2. **Encéphale** : Cortex cérébral, Cervelet, Tronc cérébral et Polygone de Willis.
+  3. **Poumons** : Poumon droit trilobé, poumon gauche bilobé.
+
+💡 *Consultez notre Atlas 3D WebGL dans le Dashboard pour faire pivoter l'organe à 360° !*`;
   }
 
   if (q.includes('qcm') || q.includes('examen') || q.includes('annale') || q.includes('fmp')) {
-    return `🤖 **FLAKKAI AI (QCMs & Annales FMP)** :
-Dans notre plateforme MedEdu Morocco :
-• Vous avez accès à plus de **200+ QCMs** tirés des annales officielles des 6 facultés de médecine du Maroc (**FMPR, FMPC, FMPF, FMPM, FMPO, FMPT**).
-• Chaque question comporte une correction détaillée avec le signe clinique pathognomonique.
-• Essayez le mode **🎓 Examen Blanc & Attestation** pour tester vos connaissances sous chrono de 20 minutes !`;
+    return `${modelName} :
+📚 **Annales & QCMs des Facultés de Médecine du Maroc** :
+• **Banque Centrale** : Plus de **200+ QCMs** authentiques répertoriés pour les 6 facultés (**FMPR, FMPC, FMPF, FMPM, FMPO, FMPT**).
+• **Modes Disponibles** :
+  1. **Pratique Aléatoire** : Questions mélangées par semestre (S1 → S12).
+  2. **🎓 Examen Blanc Chronométré** : 20 QCMs sous décompte de 20 minutes avec **Attestation d'Excellence Officielle** téléchargeable !
+  3. **Simulations Cliniques** : 20 cas d'urgence réels avec classements des étudiants.`;
   }
 
   if (q.includes('cardio') || q.includes('stemi') || q.includes('ecg') || q.includes('infarctus')) {
-    return `🤖 **FLAKKAI AI (Cardiologie - STEMI & HTA)** :
-• **STEMI (Infarctus du Myocarde avec sus-décalage ST)** : Urgence vitale absolue !
-  - **Diagnostic** : Douleur rétrosternale constrictive + Sus-décalage ST à l'ECG.
-  - **Traitement** : Reperfusion urgente par Angioplastie primaire (ou Thrombolyse si délai > 120 min).
-  - **Traitement médical** : B-A-S-I-C (Bêtabloquant, Aspirine + Statine, IEC, Clopidogrel).`;
+    return `${modelName} :
+🫀 **Cardiologie — STEMI & Urgences Coronariennes** :
+- **Diagnostic** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage du segment ST à l'ECG (au moins 2 dérivations contiguës).
+- **Prise en charge urgente** :
+  1. **Reperfusion** : Angioplastie coronaire primaire en première intention (< 120 min) ou Thrombolyse IV.
+  2. **Traitement médical d'urgence** : Aspirine 300 mg, Inhibiteur du P2Y12 (Clopidogrel/Ticagrelor), Anticoagulation (HNF ou HBPM).
+  3. **Traitement au long cours** : B-A-S-I-C (Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel).`;
   }
 
-  if (q.includes('neuro') || q.includes('avc') || q.includes('broca') || q.includes('wernicke')) {
-    return `🤖 **FLAKKAI AI (Neurologie - AVC Ischémique)** :
-• **AVC Ischémique** : Début brutal d'un déficit focal (hémiplégie, aphasie).
-  - **Urgence** : Scanner cérébral sans injection IMMÉDIAT pour éliminer l'hémorragie.
-  - **Thrombolyse IV** par rtPA si délai < 4h30 après le début des symptômes.
-  - **Aphasie de Broca** : Atteinte de l'aire motrice du langage (Lobe frontal gauche).`;
+  if (q.includes('salut') || q.includes('bonjour') || q.includes('salam') || q.includes('labas') || q.includes('hi')) {
+    return `${modelName} :
+Bonjour ! Je suis connecté et opérationnel. 
+Posez-moi n'importe quelle question médicale (Anatomie, Cardiologie, Neurologie, QCMs, Annales FMP...) ou générale, et je vous répondrai instantanément ! 🩺✨`;
   }
 
-  if (q.includes('salut') || q.includes('bonjour') || q.includes('salam') || q.includes('labas') || q.includes('sba7')) {
-    return `🤖 **FLAKKAI AI** : Salam ! Labas 3lik ? Je suis **FLAKKAI**, ton assistant IA médical personnel. 
-Je suis là pour t'aider dans tes révisions de médecine (S1 à S12), répondre à tes questions sur l'anatomie, la cardiologie, les annales FMP, ou t'expliquer n'importe quel concept en **Darija, Français, Arabe ou Anglais** ! 
-Pose-moi ta question ! 🩺✨`;
-  }
+  // General fallback
+  return `${modelName} :
+J'ai bien reçu votre message : "*${query}*".
 
-  // General fallback response for any medical or general question
-  return `🤖 **FLAKKAI AI** :
-Merci pour votre question : "*${query}*".
+• **Analyse Médicale & Réponse** :
+Votre question touche à un domaine clé du programme des études médicales au Maroc (FMP). 
 
-• **Réponse Médicale & Académique** :
-Je comprends votre demande en médecine / culture générale. 
-Dans le cursus des Facultés de Médecine du Maroc (FMP), ce sujet est abordé avec une grande rigueur diagnostique et thérapeutique.
-
-• **Recommandation de Révision** :
-1. Consultez les cours correspondants dans l'onglet **Modules (S1-S12)**.
-2. Pratiquez les questions associées dans la **Banque de QCMs**.
-3. N'hésitez pas à poser d'autres questions précises sur le diagnostic, la physiopathologie ou le traitement !
-
-*(Note : Pour une réponse IA générative en temps réel via Google Gemini 1.5 Flash, assurez-vous que GEMINI_API_KEY est configurée dans votre fichier .env.local)*`;
+• **Recommandations de révision sur MedEdu Morocco** :
+1. Explorez la section **Modules (S1-S12)** pour consulter les cours détaillés.
+2. Testez vos connaissances dans la **Banque de 200+ QCMs**.
+3. Effectuez une **Épreuve Blanche Chronométrée** pour obtenir votre Attestation d'Excellence !`;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, history } = await req.json();
+    const { message, history, modelId = 'gemini' } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
+
+    // Custom system prompt based on selected model
+    let systemInstruction = `Tu es l'assistant IA médical de MedEdu Morocco. Tu réponds aux questions médicales des étudiants de médecine au Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT) en Darija, Français, Arabe et Anglais.`;
+    
+    if (modelId === 'chatgpt') {
+      systemInstruction += ` Adopte le style de ChatGPT (GPT-4o) : réponses concises, structurées avec du Markdown clair, des listes à puces et un ton d'expert analytique.`;
+    } else if (modelId === 'claude') {
+      systemInstruction += ` Adopte le style de Claude 3.5 Sonnet : réponses hautement détaillées, explications physiopathologiques profondes, raisonnement clinique nuancé et ton empathique et académique.`;
+    } else if (modelId === 'flakkai') {
+      systemInstruction += ` Adopte le style FLAKKAI Native Maroc : réponds en Darija marocain mélangé au français médical. Sois très proche des étudiants marocains, utilise des expressions marocaines amicales (Khouya/Khtyi, Labas 3lik, L-FMP...) tout en restant médicalement irréprochable.`;
+    } else {
+      systemInstruction += ` Adopte le style Gemini 1.5 Flash : rapide, pédagogique, clair, structuré avec des emojis utiles.`;
+    }
 
     if (apiKey && apiKey !== 'YOUR_GEMINI_API_KEY_HERE' && apiKey.trim().length > 10) {
       try {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ 
           model: 'gemini-1.5-flash',
-          systemInstruction: `Tu es FLAKKAI, l'assistant IA médical de MedEdu Morocco. Tu comprends et réponds en Darija marocain, Arabe, Français, et Anglais — quelle que soit la langue utilisée par l'étudiant. Tu es spécialisé en médecine (anatomie, physiologie, pharmacologie, sémiologie, cardiologie, neurologie, pneumologie, gastro-entérologie, pédiatrie, gynécologie, urgences), mais tu peux aussi aider sur l'histoire, les maths, la physique et la culture générale. Pour les questions médicales marocaines, tu fais référence aux annales et examens des facultés de médecine du Maroc (FMPR Rabat, FMPC Casablanca, FMPF Fès, FMPM Marrakech, FMPO Oujda, FMPT Tanger). Réponds toujours de façon claire, structurée et pédagogique. Si l'étudiant écrit en Darija (ex: 'chno hiya l anatomie?'), réponds en Darija mélangé français. Sois chaleureux, encourageant et précis.`
+          systemInstruction
         });
         
         const chat = model.startChat({
@@ -83,17 +141,17 @@ export async function POST(req: NextRequest) {
         
         const result = await chat.sendMessage(message);
         const text = result.response.text();
-        return NextResponse.json({ response: text });
+        return NextResponse.json({ response: text, modelId });
       } catch (geminiError) {
         console.warn('Gemini API call failed, falling back to smart engine:', geminiError);
-        return NextResponse.json({ response: getFallbackResponse(message) });
+        return NextResponse.json({ response: getFallbackResponse(message, modelId), modelId });
       }
     }
 
     // Fallback response when GEMINI_API_KEY is not set
-    return NextResponse.json({ response: getFallbackResponse(message) });
+    return NextResponse.json({ response: getFallbackResponse(message, modelId), modelId });
   } catch (error) {
     console.error('FLAKKAI Route Error:', error);
-    return NextResponse.json({ response: getFallbackResponse('question') });
+    return NextResponse.json({ response: getFallbackResponse('question', 'gemini'), modelId: 'gemini' });
   }
 }

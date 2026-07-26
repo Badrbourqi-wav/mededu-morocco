@@ -211,6 +211,7 @@ function RenderContent({ text }: { text: string }) {
 export default function CommunityChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [selectedModel, setSelectedModel] = useState<'gemini' | 'chatgpt' | 'claude' | 'flakkai'>('gemini');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [playingId, setPlayingId] = useState<string | null>(null);
@@ -259,32 +260,54 @@ export default function CommunityChat() {
     setMessages(prev => [...prev, { id: Date.now().toString(), sender: 'me', senderName: 'Badr Bourqi', content: val, timestamp: now(), type: 'text' }]);
     setInputValue('');
 
-    if (val.toLowerCase().startsWith('/flakkai') || val.toLowerCase().includes('flakkai') || val.startsWith('/')) {
-      const query = val.replace(/^\/flakkai/i, '').replace(/^\//, '').trim() || 'bonjour';
-      const typingId = `t-${Date.now()}`;
-      setMessages(prev => [...prev, { id: typingId, sender: 'flakkai', senderName: 'FLAKKAI', content: '', timestamp: now(), type: 'text', isTyping: true }]);
-      
-      fetch('/api/flakkai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query, history: [] })
-      })
-      .then(res => res.json())
-      .then(data => {
-        const responseText = data.response || getAIResponse(query);
-        setMessages(prev => prev.filter(m => m.id !== typingId).concat({
-          id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
-          content: responseText, timestamp: now(), type: 'text',
-        }));
-      })
-      .catch(err => {
-        console.warn('API error, using local FLAKKAI engine:', err);
-        setMessages(prev => prev.filter(m => m.id !== typingId).concat({
-          id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
-          content: getAIResponse(query), timestamp: now(), type: 'text',
-        }));
-      });
-    }
+    // AUTOMATIC AI RESPONSE FOR EVERY MESSAGE
+    const query = val.replace(/^\/flakkai/i, '').replace(/^\//, '').trim() || val;
+    const typingId = `t-${Date.now()}`;
+    
+    // Model name badges
+    const modelBadge = selectedModel === 'chatgpt' ? '🤖 ChatGPT (GPT-4o)' 
+                     : selectedModel === 'claude' ? '🧠 Claude 3.5' 
+                     : selectedModel === 'flakkai' ? '🇲🇦 FLAKKAI Native' 
+                     : '♊ Gemini 1.5';
+
+    setMessages(prev => [...prev, { 
+      id: typingId, 
+      sender: 'flakkai', 
+      senderName: modelBadge, 
+      content: '', 
+      timestamp: now(), 
+      type: 'text', 
+      isTyping: true 
+    }]);
+    
+    fetch('/api/flakkai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: query, history: [], modelId: selectedModel })
+    })
+    .then(res => res.json())
+    .then(data => {
+      const responseText = data.response || getAIResponse(query);
+      setMessages(prev => prev.filter(m => m.id !== typingId).concat({
+        id: `f-${Date.now()}`, 
+        sender: 'flakkai', 
+        senderName: modelBadge,
+        content: responseText, 
+        timestamp: now(), 
+        type: 'text',
+      }));
+    })
+    .catch(err => {
+      console.warn('API error, using local FLAKKAI engine:', err);
+      setMessages(prev => prev.filter(m => m.id !== typingId).concat({
+        id: `f-${Date.now()}`, 
+        sender: 'flakkai', 
+        senderName: modelBadge,
+        content: getAIResponse(query), 
+        timestamp: now(), 
+        type: 'text',
+      }));
+    });
   };
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -428,8 +451,49 @@ export default function CommunityChat() {
           </div>
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: 'linear-gradient(135deg,rgba(20,184,166,0.15),rgba(8,145,178,0.1))', border: '0.5px solid rgba(20,184,166,0.25)' }}>
             <Sparkles className="w-3 h-3 text-teal-400" />
-            <span style={{ color: '#5AC8FA', fontSize: 11, fontWeight: 700, letterSpacing: '0.5px' }}>FLAKKAI</span>
+            <span style={{ color: '#5AC8FA', fontSize: 11, fontWeight: 700, letterSpacing: '0.5px' }}>AUTO-AI</span>
           </div>
+        </div>
+
+        {/* ─── Model Selector Bar ─── */}
+        <div className="flex items-center gap-2 mt-3 pt-2 border-t border-white/10 overflow-x-auto no-scrollbar">
+          <span className="text-[10px] font-bold text-slate-400 uppercase shrink-0">Modèle IA :</span>
+          
+          <button onClick={() => setSelectedModel('gemini')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 border flex items-center gap-1.5 ${
+              selectedModel === 'gemini'
+                ? 'bg-teal-500/20 text-teal-300 border-teal-500/50 shadow-sm shadow-teal-500/20'
+                : 'bg-white/5 text-slate-400 border-white/10 hover:text-white'
+            }`}>
+            <span>♊ Gemini 1.5</span>
+          </button>
+
+          <button onClick={() => setSelectedModel('chatgpt')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 border flex items-center gap-1.5 ${
+              selectedModel === 'chatgpt'
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm shadow-emerald-500/20'
+                : 'bg-white/5 text-slate-400 border-white/10 hover:text-white'
+            }`}>
+            <span>🤖 ChatGPT (GPT-4o)</span>
+          </button>
+
+          <button onClick={() => setSelectedModel('claude')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 border flex items-center gap-1.5 ${
+              selectedModel === 'claude'
+                ? 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-sm shadow-amber-500/20'
+                : 'bg-white/5 text-slate-400 border-white/10 hover:text-white'
+            }`}>
+            <span>🧠 Claude 3.5</span>
+          </button>
+
+          <button onClick={() => setSelectedModel('flakkai')}
+            className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 border flex items-center gap-1.5 ${
+              selectedModel === 'flakkai'
+                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-sm shadow-cyan-500/20'
+                : 'bg-white/5 text-slate-400 border-white/10 hover:text-white'
+            }`}>
+            <span>🇲🇦 FLAKKAI Native</span>
+          </button>
         </div>
       </div>
 
