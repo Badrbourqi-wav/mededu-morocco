@@ -295,23 +295,28 @@ export async function POST(req: NextRequest) {
     }
 
     if (apiKey && apiKey !== 'YOUR_GEMINI_API_KEY_HERE' && apiKey.trim().length > 10) {
-      try {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ 
-          model: 'gemini-1.5-flash',
-          systemInstruction
-        });
-        
-        const chat = model.startChat({
-          history: history || [],
-        });
-        
-        const result = await chat.sendMessage(message);
-        const text = result.response.text();
-        return NextResponse.json({ response: text, modelId, isFallback: false });
-      } catch (geminiError) {
-        console.warn('Gemini API call failed, falling back to smart engine:', geminiError);
-        return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId, isFallback: true });
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const targetModels = ['gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-1.5-flash'];
+      
+      for (const modelName of targetModels) {
+        try {
+          const model = genAI.getGenerativeModel({ 
+            model: modelName,
+            systemInstruction
+          });
+          
+          const chat = model.startChat({
+            history: history || [],
+          });
+          
+          const result = await chat.sendMessage(message);
+          const text = result.response.text();
+          if (text) {
+            return NextResponse.json({ response: text, modelId, isFallback: false });
+          }
+        } catch (geminiError) {
+          console.warn(`Gemini model ${modelName} failed:`, geminiError);
+        }
       }
     }
 
