@@ -217,62 +217,102 @@ Raideur de nuque + Fièvre + Céphalées intenses ➔ Hémocultures ➔ Ponction
 💡 *Astuce : Visitez l'Atlas 3D WebGL dans le Dashboard pour visualiser les organes en 3D interactive 360° !*`;
   }
 
-  // 5. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR (Fallback si l'API Scraper est HS)
+  // 5. GREETINGS & SALUTATIONS (Hello, Salam, Hey, etc.)
+  if (q.includes('hello') || q.includes('hellow') || q.includes('salut') || q.includes('salam') || q.includes('coucou') || q.includes('hey') || q.includes('marhaba') || q.includes('sbah') || q.includes('msah') || q.includes('bonjour') || q.includes('bonsoir')) {
+    if (modelId === 'chatgpt') {
+      return `${modelName} :
+Bonjour ! Comment puis-je vous aider aujourd'hui dans vos révisions médicales ? N'hésitez pas à me poser n'importe quelle question sur vos cours (S1-S12), l'ECG, l'anatomie ou la démarche diagnostique.`;
+    }
+    if (modelId === 'claude') {
+      return `${modelName} :
+Bienvenue ! Je suis à votre disposition pour analyser vos cas cliniques, clarifier les concepts physiopathologiques complexes ou revoir les annales des facultés de médecine marocaines. Quel sujet souhaitez-vous aborder aujourd'hui ?`;
+    }
+    if (modelId === 'flakkai') {
+      return `${modelName} :
+Salam Khouya / Khtyi ! 🇲🇦 Labas 3lik? Kifash n9dr n3awnek l-yoma f l-préparation dyal l-examens d l-médecine (Anatomie, Cardio, Neuro, QCMs...)? Gol liya chno 3ndek!`;
+    }
+    return `${modelName} :
+Bonjour et bienvenue sur MedEdu Morocco ! 🩺 Posez votre question sur n'importe quel module ou spécialité médicale, je suis là pour vous répondre de manière claire et détaillée.`;
+  }
+
+  // 6. PNEUMOLOGIE (Asthme, BPCO, Tuberculose, Pneumopathie)
+  if (q.includes('pneumo') || q.includes('asthme') || q.includes('bpco') || q.includes('tuberculose') || q.includes('poumon') || q.includes('pleurésie')) {
+    if (modelId === 'claude') {
+      return `${modelName} :
+#### Pneumologie Clinique (S5 / FMP Maroc)
+1. **Crise d'Asthme Aiguë Grave (AAG)** :
+   - **Signes de gravité** : Parole impossible, fréquence respiratoire > 30/min, fréquence cardiaque > 120/min, Silence auscultatoire.
+   - **Prise en charge** : Salbutamol nébulisé + O2 fort débit + Corticothérapie systémique IV.
+2. **Tuberculose Pulmonaire (Spécialité Marocaine PNT)** :
+   - Triade : Toux chronique > 15 jours + Hémoptysie + Sueurs nocturnes.
+   - Traitement standard (Rifampicine, Isoniazide, Pyrazinamide, Éthambutol : 2RHZE/4RH).`;
+    }
+    return `${modelName} :
+🫁 **Pneumologie** :
+- **Asthme Aigu Grave (AAG)** : B2-mimétiques en nébulisation + Corticothérapie IV + O2.
+- **Tuberculose Pulmonaire** : Déclaration obligatoire au Maroc (PNT). Traitement 2RHZE/4RH.`;
+  }
+
+  // 7. GASTRO-ENTÉROLOGIE & HÉPATOLOGIE (Cirrhose, Ulcère, MICI, Hépatite)
+  if (q.includes('gastro') || q.includes('ulcère') || q.includes('ulcere') || q.includes('cirrhose') || q.includes('foie') || q.includes('mici') || q.includes('crohn') || q.includes('hépatite')) {
+    return `${modelName} :
+🩺 **Gastro-Entérologie (S6 / FMP)**
+- **Cirrhose Hépatique** : Insuffisance hépatocellulaire (Ictère, baisse TP) + Hypertension Portale (Ascite, Varices Œsophagiennes).
+- **Ulcère Gastroduodénal** : Douleur épigastrique post-prandiale. Recherche systématique d'Helicobacter Pylori (Quadrithérapie au Bismuth ou Trithérapie IPP + Amox + Clarithro).`;
+  }
+
+  // 8. ENDOCRINOLOGIE & DIABÈTE
+  if (q.includes('diabète') || q.includes('diabete') || q.includes('insuline') || q.includes('thyroïde') || q.includes('thyroide') || q.includes('endocrino')) {
+    return `${modelName} :
+🩸 **Endocrinologie & Diabétologie**
+- **Diabète de Type 1** : Carence absolue en insuline. Risque principal = Acidocétose Diabétique (Glycémie > 2.5 g/L + Cétonurie + Acidose métabolique).
+- **Diabète de Type 2** : Insulinorésistance. Traitement de 1ère ligne = Hygiène hygiéno-diététique + Metformine.`;
+  }
+
+  // 9. DYNAMIC DARIJA & GENERAL MEDICAL CONSULTANT (Sans modèle stéréotypé)
+  if (modelId === 'flakkai') {
+    return `${modelName} :
+Khouya / Khtyi, par rapport l l-question dyalek 3la **"${cleanQ || 'hadd l-sujet'}"** : 🇲🇦
+
+• **Analyse Médicale & Conseil Révision** :
+Hadd l-point kayti7 dima f l-examens w les annales des facultés de médecine du Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT).
+
+1. **Pratique Diagnostique** : Dima bda b l-Anamnèse w Examen Clinique complet ➔ Examen paraclinique (Imagerie / Biologie).
+2. **Pour vos révisions** : Consultez les fiches détaillées dans la section **Modules** et faites une session de **20 QCMs** ciblés dans le Dashboard !
+
+*Des questions précises sur la posologie ou le traitement ? Écrivez-les directement !* 🩺`;
+  }
+
   if (modelId === 'chatgpt') {
     return `${modelName} :
+### 📋 Analyse Clinique — ${cleanQ || 'Question Médicale'}
 
-### 📋 Réponses & Analyse Médicale — ${cleanQ || 'Sujet Médical'}
+1. **Aperçu Synthétique** :
+   Votre question concerne une notion essentielle du cursus médical. L'évaluation repose sur un examen clinique méthodique associé aux examens complémentaires de première intention.
 
-#### 1. Aperçu Clinique
-Votre demande ("*${cleanQ || 'Sujet'}*") concerne un thème important du cursus médical (FMP Maroc). 
-
-#### 2. Recommandations Pratiques :
-- **Diagnostic** : Évaluation anamnestique et examens paracliniques ciblés.
-- **Révision** : Consultez le **Catalogue des Modules S1-S12** et la **Banque de 200+ QCMs** sur MedEdu Morocco.
-
-*💡 ChatGPT Insight : La clinique prime toujours sur la paraclinique.*`;
+2. **Conseil Pédagogique** :
+   Pour approfondir ce chapitre, référez-vous aux cours du curriculum national S1-S12 et entraînez-vous sur les annales officielles.`;
   }
 
   if (modelId === 'claude') {
     return `${modelName} :
+#### Synthèse Médicale Approfondie — ${cleanQ || 'Sujet Médical'}
 
-#### Synthèse Approfondie — ${cleanQ || 'Question Médicale'}
+Concernant votre interrogation sur **"${cleanQ}"** :
 
-En réponse à votre question concernant **${cleanQ || 'ce sujet'}** :
+1. **Cadre Physiopathologique & Démarche Diagnostique** :
+   Une prise en charge rigoureuse nécessite l'intégration des données de l'EBM (*Evidence-Based Medicine*) et la prise en compte des recommandations des sociétés savantes (SFMU, ESC, SRLF).
 
-1. **Cadre Physiopathologique & Sémiologique** :
-   Les données actuelles issues de la littérature médicale et des recommandations nationales marocaines (FMP) préconisent une approche systématique fondée sur l'EBM (*Evidence-Based Medicine*).
-
-2. **Orientations Thérapeutiques & Révision** :
-   Nous vous invitons à vous référer aux cours rédigés dans la section **Modules** de MedEdu Morocco ainsi qu'aux **Annales Authentiques des 6 Facultés** (Rabat, Casablanca, Fès, Marrakech, Oujda, Tanger).`;
-  }
-
-  if (modelId === 'flakkai') {
-    return `${modelName} :
-Khouya / Khtyi, par rapport l su2alek **"${cleanQ || 'hadd l-thema'}"** : 🇲🇦
-
-• **Explication Médicale** :
-Hadd s-su2al kayti7 bzzaf f les examens dyal l-FMP (Rabat, Casa, Fès, Kech, Oujda, Tanger) ! 
-
-• **Chno khasak t-dir?**
-1. Raje3 l-cours complet f l-section **Modules (S1-S12)**.
-2. Pratiquer les **QCMs** f l-Dashboard.
-3. Jarreb l-**Examen Blanc Chronométré** bach t-di Diplôme w Attestation d'Excellence Officielle !
-
-*Khali lina ay su2al khor f l-chat, rani m3ak 24/7 !* 🩺✨`;
+2. **Éléments de Révision** :
+   Retrouvez la fiche de cours correspondante et les QCMs d'entraînement dans votre espace étudiant MedEdu Morocco.`;
   }
 
   return `${modelName} :
-♊ **Analyse Pédagogique — ${cleanQ || 'Sujet Médical'}**
+💡 **Réponse Pédagogique**
 
-Merci pour votre question !
-• **Point Clé** : Ce sujet est essentiel dans la préparation des examens de médecine au Maroc (S1 à S12).
-• **Ressources Disponibles** :
-  1. **Atlas 3D WebGL** pour l'anatomie interactive.
-  2. **200+ QCMs** corrigés avec rationales.
-  3. **40+ Annales** des 6 facultés de médecine du Maroc.
-
-*Posez n'importe quelle question complémentaire !* 🩺`;
+Merci pour votre message concernant **"${cleanQ}"** !
+• **Orientation** : Ce sujet fait partie intégrante du programme d'études médicales au Maroc.
+• **Recommandation** : Explorez les fiches de révision et les modules d'entraînement QCM dans votre tableau de bord.`;
 }
 
 export async function POST(req: NextRequest) {
