@@ -205,16 +205,55 @@ Khouya, l-**AVC (L-falj / Accident Vasculaire Cérébral)** hiya urgence kbira !
 Raideur de nuque + Fièvre + Céphalées intenses ➔ Hémocultures ➔ Ponction Lombaire + Antibiothérapie IV immédiate !`;
   }
 
-  // 4. ANATOMIE GENERAL & 3D
-  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('os') || q.includes('muscle') || q.includes('poumon') || q.includes('cerveau')) {
+  // 4. ANATOMIE & DEFINITIONS
+  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('c\'est quoi l\'anatomie') || q.includes('chnahiya l anatomie')) {
+    if (modelId === 'chatgpt') {
+      return `${modelName} :
+L'**Anatomie** (du grec *ana* = à travers, et *tomein* = couper) est la branche des sciences biologiques et médicales qui étudie la structure, la forme, la situation et les rapports des différents organes et tissus du corps humain.
+
+Elle se divise en plusieurs spécialités :
+- **Anatomie Descriptive** : Étude détaillée de chaque organe (forme, dimensions, constitution).
+- **Anatomie Topographique / Régionale** : Étude des rapports des organes entre eux par région (Thorax, Abdomen, Membres, Tête & Cou).
+- **Anatomie Fonctionnelle** : Relation entre la structure d'un organe et sa fonction physiologique.
+- **Anatomie Pathologique (Anapath)** : Étude des altérations microscopiques et macroscopiques causées par les maladies.
+
+*C'est la discipline fondamentale enseignée en S1 et S2 dans les facultés de médecine au Maroc.*`;
+    }
+
+    if (modelId === 'claude') {
+      return `${modelName} :
+#### Concept & Fondements de l'Anatomie Humaine (S1/S2)
+
+L'Anatomie est la science fondamentale de la médecine. Elle pose le socle de toute la sémiologie et de la chirurgie.
+
+1. **Définition & Découpage** :
+   - **Anatomie Macroscopique** : Observation directe des structures (ostéologie, myologie, arthrologie, angiologie, névrologie, splanchnologie).
+   - **Anatomie Microscopique (Histologie)** : Organisation cellulaire et tissulaire.
+   - **Anatomie du Développement (Embryologie)** : Formation des organes de la fécondation à la naissance.
+
+2. **Importance en Pratique Médicale & Chirurgicale** :
+   La compréhension de l'anatomie est indispensable pour interpréter l'imagerie (Radio, TDM, IRM), réaliser l'examen physique (palpation, auscultation) et réaliser des actes chirurgicaux en toute sécurité.`;
+    }
+
+    if (modelId === 'flakkai') {
+      return `${modelName} :
+Khouya / Khtyi, l-**Anatomie (علم التشريح)** hiya l-baza dyal l-médecine كاملا ! 🇲🇦
+
+• **Chno hiya?**
+Hiya l-madda li katqra fiha l-kard (forme), l-blassa (situation), w les rapports dyal ga3 l-a3da3 d l-jissm (Cœur, Poumons, Cerveau, Os, Muscles...).
+
+• **Les branches dyalha f S1 & S2 :**
+1. **Ostéologie** : Dérassat l-3dam (Os).
+2. **Myologie** : Dérassat l-3adalat (Muscles).
+3. **Angiologie** : Dérassat l-3ro9 d-dam (Vaisseaux).
+4. **Névrologie** : Dérassat l-a3sab (Nerfs).
+
+💡 *Zid 3liha : N9dr n-traduire lik ay terme médical f l-Anatomie mn l-Français l l-Arabe wla l-Darija wla l-Anglais !*`;
+    }
+
     return `${modelName} :
-🎨 **Anatomie Générale & Clinique (S1/S2)**
-
-1. **Cardio-Anatomie** : Cœur rétrosternal, 4 cavités, vascularisé par l'IVA et la Coronaire Droite.
-2. **Pneumo-Anatomie** : Poumon droit (3 lobes : supérieur, moyen, inférieur), Poumon gauche (2 lobes + lingula).
-3. **Neuro-Anatomie** : Polygone de Willis (anastomose carotido-basilaire assurant la vascularisation cérébrale).
-
-💡 *Astuce : Visitez l'Atlas 3D WebGL dans le Dashboard pour visualiser les organes en 3D interactive 360° !*`;
+🎨 **Anatomie Humaine (Définition & Principes)**
+L'Anatomie est la science médicale qui étudie la morphologie, la structure et les relations spatiales des organes du corps humain. Elle comprend l'ostéologie (os), la myologie (muscles), l'arthrologie (articulations) et la splanchnologie (viscères).`;
   }
 
   // 5. GREETINGS & SALUTATIONS (Hello, Salam, Hey, etc.)
