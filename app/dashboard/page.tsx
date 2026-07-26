@@ -41,6 +41,7 @@ import {
 import PracticalCasesSection from '../../components/PracticalCasesSection';
 import CommunityChat from '../../components/CommunityChat';
 import Anatomy3DSection from '../../components/Anatomy3DSection';
+import MockExamCertificateSection from '../../components/MockExamCertificateSection';
 
 export default function DashboardPage() {
   const { activeSection, setActiveSection, activeCycleFilter, setActiveCycleFilter } = useViewStore();
@@ -74,6 +75,14 @@ export default function DashboardPage() {
     return (
       <DashboardLayout>
         <StudentProgressDashboard />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'CERTIFICATE_EXAM') {
+    return (
+      <DashboardLayout>
+        <MockExamCertificateSection />
       </DashboardLayout>
     );
   }

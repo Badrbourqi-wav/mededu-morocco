@@ -159,6 +159,23 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
               <ChevronRight className="w-4 h-4 text-orange-400/60 group-hover:translate-x-0.5 transition-transform" />
             </button>
 
+            <button 
+              onClick={() => handleNavClick('CERTIFICATE_EXAM')} 
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-all ${
+                activeSection === 'CERTIFICATE_EXAM'
+                  ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30 shadow-md shadow-amber-950/40 font-bold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              } group`}
+            >
+              <div className="flex items-center space-x-3">
+                <Award className={`w-5 h-5 ${activeSection === 'CERTIFICATE_EXAM' ? 'text-amber-400' : 'text-slate-400 group-hover:text-amber-400'}`} />
+                <span>Examen Blanc & Attestation</span>
+              </div>
+              <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                PFE 🎓
+              </span>
+            </button>
+
             <div className="pt-2 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1">
               CYCLES D ÉTUDES (S1-S12)
             </div>
