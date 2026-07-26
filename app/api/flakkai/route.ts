@@ -5,108 +5,215 @@ export const dynamic = 'force-dynamic';
 
 function getFallbackResponse(query: string, modelId: string = 'gemini'): string {
   const q = query.toLowerCase().trim();
-  const modelName = modelId === 'chatgpt' ? '🤖 ChatGPT (GPT-4o)' : modelId === 'claude' ? '🧠 Claude 3.5 Sonnet' : modelId === 'flakkai' ? '🇲🇦 FLAKKAI Native' : '♊ Gemini 1.5 Flash';
+  const cleanQ = query.replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
 
-  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('cœur') || q.includes('coeur') || q.includes('brain') || q.includes('cerveau')) {
+  // Model Badges
+  const modelName = modelId === 'chatgpt' ? '🤖 ChatGPT (GPT-4o)' 
+                  : modelId === 'claude' ? '🧠 Claude 3.5 Sonnet' 
+                  : modelId === 'flakkai' ? '🇲🇦 FLAKKAI Native (Maroc)' 
+                  : '♊ Gemini 1.5 Flash';
+
+  // 1. CARDIOLOGIE & URGENCES CORONARIENNES
+  if (q.includes('cardio') || q.includes('stemi') || q.includes('ecg') || q.includes('infarctus') || q.includes('hta') || q.includes('cœur') || q.includes('coeur')) {
     if (modelId === 'chatgpt') {
       return `${modelName} :
 
-### 🫀 Synthèse Anatomique
-L'**Anatomie humaine** est la science fondamentale étudiant la structure des organes.
+### 🫀 Synthèse Cardiologique & Urgences (S5 / FMP)
 
-#### Points Clés (Cursus FMP Maroc - S1/S2) :
-1. **Système Cardiovasculaire** :
-   - **Myocarde** : 4 cavités (Atrium D/G, Ventricule D/G).
-   - **Vascularisation** : Artères coronaires gauche (IVA + Circonflexe) et droite.
-2. **Système Nerveux Central** :
-   - **Cortex Cérébral** : Lobes frontal, pariétal, temporal, occipital.
-   - **Vascularisation** : Polygone de Willis (Carotides internes + Tronc basilaire).
+#### 1. STEMI (Infarctus du Myocarde avec sus-décalage ST)
+- **Triade diagnostique** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage ST $\ge 1$ mm dans 2 dérivations contiguës + Élévation des Troponines I/T.
+- **Prise en Charge Urgente (< 12h)** :
+  - **Angioplastie coronaire primaire** (délai < 120 min).
+  - **Thrombolyse IV** (Alteplase/Tenecteplase) si délai > 120 min.
+  - **Traitement Médical** : Aspirine 300 mg + Clopidogrel 600 mg + Heparine IV.
 
-*💡 Conseil : Utilisez le module Atlas 3D WebGL dans MedEdu Morocco pour explorer les structures en 360°.*`;
+#### 2. Hypertension Artérielle (HTA)
+- **Définition** : PAS $\ge 140$ mmHg et/ou PAD $\ge 90$ mmHg mesurée au cabinet.
+- **Première ligne** : IEC / ARA2, Antagonistes calciques, Diurétiques thiazidiques.
+
+*💡 ChatGPT Insight : La reperfusion coronaire dans le STEMI doit être initiée le plus rapidement possible ("Time is muscle").*`;
     }
 
     if (modelId === 'claude') {
       return `${modelName} :
 
-Analyse détaillée de l'**Anatomie Générale & Clinique** :
+#### Analyse Clinique & Physiopathologique — Cardiologie
 
-L'anatomie constitue le pilier fondamental des études médicales. Dans le cadre du programme national des facultés de médecine du Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT) :
+Dans le cadre du programme de cardiologie des facultés de médecine du Maroc (S5) :
 
-1. **Cardio-Anatomie** :
-   - Le cœur est situé dans le médiastin moyen. Il présente une face antérieure (sterno-costale), une face inférieure (diaphragmatique) et une face pulmonaire.
-   - La vascularisation est assurée par le réseau coronaire. L'IVA (Interventriculaire Antérieure) irrigue 2/3 du septum interventriculaire.
+1. **Physiopathologie du Syndrome Coronarien Aigu (SCA)** :
+   - Rupture d'une plaque d'athérome vulnérable $\rightarrow$ Exposition du sous-endothélium $\rightarrow$ Activation et agrégation plaquettaire $\rightarrow$ Formation d'un thrombus occlusif fibrinoplacquettaire.
+   - L'ischémie transmurale se traduit électriquement par une onde de lésion sous-épicardique (sus-décalage du segment ST).
 
-2. **Neuro-Anatomie** :
-   - L'encéphale est protégé par les méninges (Dure-mère, Arachnoïde, Pie-mère) et le Liquide Cérébro-Spinal (LCS).
-   - L'aire de Broca (langage articulé) se situe dans la 3ème circonvolution frontale (F3) de l'hémisphère dominant.
+2. **Évaluation Électrocardiographique (ECG)** :
+   - **Territoires** :
+     - V1-V4 : Antéro-septal (Artère IVA)
+     - D1, aVL, V5-V6 : Latéral (Artère Circonflexe)
+     - D2, D3, aVF : Inférieur (Artère Coronaire Droite)
 
-N'hésitez pas à me demander une corrélation anatomo-clinique spécifique !`;
+3. **Stratégie Thérapeutique Recommandée (ESC/SFMU)** :
+   - Protocole B-A-S-I-C au long cours : Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel.
+
+*N'hésitez pas à demander des détails sur l'interprétation des anomalies du rythme ou de la conduction.*`;
     }
 
     if (modelId === 'flakkai') {
       return `${modelName} :
-Khouya / Khtyi, l'**Anatomie** (الأnatomie) hiya s-sass dyal t-tibb f l-Maghrib f **S1 w S2** ! 🇲🇦
+Khouya / Khtyi, ha l-moukhassas dyal **Cardiologie & ECG** li kayti7 f l-examens dyal l-FMP (Rabat, Casa, Fès, Kech, Oujda, Tanger) ! 🇲🇦
 
-• **Cœur (القلب)** : 
-  - Fiha 4 cavités (OD, OG, VD, VG).
-  - l-IVA (Artère Interventriculaire Antérieure) hiya li katteddi d-dam l 2/3 dyal s-septum. Si elle se bouche → Infarctus Antérieur !
-• **Cerveau (المخ)** :
-  - Aire de Broca = Lisan / Ntiq.
-  - Polygone de Willis = Réseau de secours dyal d-dam f l-ras.
+• **STEMI (Infarctus l-qalb)** :
+  - **Kifash t-3rfha?** Douleur rétrosternale f s-sdar katteddi l l-bras l-isser + ECG fiha sus-décalage ST.
+  - **Chno dir?** Angioplastie f l-klinik/sbitar f a9al mn 2h (120 min), wlla Thrombolyse f d-dam.
+  - **Dwa** : Aspirine + Clopidogrel + Héparine.
 
-💡 *Zid 3liha : Dir 3aflak test f l-Atlas 3D dyal l-projet bach t-dor l-organe b 360° !*`;
+• **HTA (Tension)** :
+  - TA > 14/9 f 3 mesures différentes.
+  - Dwa dyal 1ère ligne : IEC (Lisinopril...), Antagonistes Calciques (Amlodipine).
+
+💡 *Dakhlo l-section QCMs Cardiologie f l-Dashboard bach t-pratiquer 30+ questions réelles !*`;
     }
 
-    // Default Gemini
     return `${modelName} :
-L'**Anatomie** est la science essentielle étudiant la forme et la structure des êtres vivants.
+🫀 **Cardiologie & Urgences Coronariennes (Synthèse Pédagogique)**
 
-• **En Médecine Marocaine (FMP)** : Enseignée aux semestres **S1 & S2**.
-• **Structures Anatomiques Clés** :
-  1. **Cœur (Cor)** : 4 cavités, vascularisation coronaire (IVA & Coronaire Droite).
-  2. **Encéphale** : Cortex cérébral, Cervelet, Tronc cérébral et Polygone de Willis.
-  3. **Poumons** : Poumon droit trilobé, poumon gauche bilobé.
+• **STEMI (Infarctus Aigu)** :
+  - **Diagnostic** : Douleur constrictive + Sus-décalage ST à l'ECG.
+  - **Reperfusion** : Angioplastie primaire (< 2h) ou Thrombolyse IV.
+  - **Traitement B-A-S-I-C** : Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel.
 
-💡 *Consultez notre Atlas 3D WebGL dans le Dashboard pour faire pivoter l'organe à 360° !*`;
+• **HTA** : PAS $\ge 140$ mmHg / PAD $\ge 90$ mmHg. Traitement par IEC/ARA2 + Calciquant.
+
+💡 *Astuce révision : Entraînez-vous sur nos 200+ QCMs dans le Dashboard !*`;
   }
 
-  if (q.includes('qcm') || q.includes('examen') || q.includes('annale') || q.includes('fmp')) {
+  // 2. NEUROLOGIE & AVC
+  if (q.includes('neuro') || q.includes('avc') || q.includes('cerveau') || q.includes('epilepsie') || q.includes('broca') || q.includes('méningite')) {
+    if (modelId === 'chatgpt') {
+      return `${modelName} :
+
+### 🧠 Neurologie Clinique — Prise en Charge de l'AVC Ischémique
+
+#### Protocoles d'Urgence (FAST / AVC)
+1. **Scanner Cérébral Sans Injection (TDM)** :
+   - **Objectif n°1** : Éliminer formellement un AVC Hémorragique (hyperdensité spontanée).
+2. **Thrombolyse IV (rtPA)** :
+   - Indiquée si fenêtre thérapeutique $< 4h30$ après l'apparition des premiers symptômes.
+3. **Thrombectomie Mécanique** :
+   - Indiquée si occlusion d'une grosse artère cérébrale (fenêtre jusqu'à 6h-24h).
+
+#### Différenciation des Aphasies :
+- **Aphasie de Broca** (Frontale) : Non-fluente, expression altérée, compréhension préservée.
+- **Aphasie de Wernicke** (Temporale) : Fluente (jargonophasie), compréhension gravement altérée.`;
+    }
+
+    if (modelId === 'claude') {
+      return `${modelName} :
+
+#### Démarche Diagnostique & Neurologie Approfondie (S6)
+
+1. **Sémiologie du Syndrome Méningé** :
+   - **Triade clinique** : Céphalées intenses en casque, Vomissements en fusée, Photophobie.
+   - **Signes physiques** : Raideur de la nuque, Signe de Kernig (douleur à l'extension du genou), Signe de Brudzinski.
+   - **Conduite à tenir** : Hémocultures $\rightarrow$ Ponction Lombaire (PL) en l'absence de signe de focalisation $\rightarrow$ Antibiothérapie IV immédiate (Céfotaxime / Ceftriaxone + Amoxicilline).
+
+2. **Physiopathologie de la Méningite Bactérienne** :
+   - Franchissement de la barrière hémato-encéphalique par *Streptococcus pneumoniae* ou *Neisseria meningitidis* $\rightarrow$ Réaction inflammatoire majeure du LCS.`;
+    }
+
+    if (modelId === 'flakkai') {
+      return `${modelName} :
+Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : 🇲🇦
+
+• **AVC (L-falj / Accident Vasculaire Cérébral)** :
+  - **Urgence absolue !** 1er réflexe = **Scanner cérébral blla injection** (bach n-t-3akdo wash machi نزيف / Hémorragie).
+  - Si ischémique w a9al mn 4h30 $\rightarrow$ Thrombolyse (rtPA f d-dam).
+
+• **Méningite (التهاب السحايا)** :
+  - Skhona (Fièvre) + Sda3 ras intense + Vomissements + Nuque yabsab (Raideur de nuque).
+  - Ponction Lombaire (PL) f l-zhar $\rightarrow$ Antibiothérapie IV immédiate !
+
+💡 *Zid 3liha : Raje3 les QCMs dyal Neurologie f l-Projet MedEdu Morocco !*`;
+    }
+
     return `${modelName} :
-📚 **Annales & QCMs des Facultés de Médecine du Maroc** :
-• **Banque Centrale** : Plus de **200+ QCMs** authentiques répertoriés pour les 6 facultés (**FMPR, FMPC, FMPF, FMPM, FMPO, FMPT**).
-• **Modes Disponibles** :
-  1. **Pratique Aléatoire** : Questions mélangées par semestre (S1 → S12).
-  2. **🎓 Examen Blanc Chronométré** : 20 QCMs sous décompte de 20 minutes avec **Attestation d'Excellence Officielle** téléchargeable !
-  3. **Simulations Cliniques** : 20 cas d'urgence réels avec classements des étudiants.`;
+🧠 **Neurologie & Prise en Charge des Urgences**
+
+• **AVC Ischémique** :
+  - **1er réflexe** : Scanner cérébral sans injection pour éliminer l'hémorragie.
+  - **Thrombolyse IV** si $< 4h30$.
+
+• **Méningite Bactérienne** :
+  - Raideur de nuque + Fièvre + Céphalées $\rightarrow$ Ponction Lombaire + Antibiothérapie IV immédiate.`;
   }
 
-  if (q.includes('cardio') || q.includes('stemi') || q.includes('ecg') || q.includes('infarctus')) {
+  // 3. ANATOMIE GENERAL & 3D
+  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('os') || q.includes('muscle') || q.includes('poumon')) {
     return `${modelName} :
-🫀 **Cardiologie — STEMI & Urgences Coronariennes** :
-- **Diagnostic** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage du segment ST à l'ECG (au moins 2 dérivations contiguës).
-- **Prise en charge urgente** :
-  1. **Reperfusion** : Angioplastie coronaire primaire en première intention (< 120 min) ou Thrombolyse IV.
-  2. **Traitement médical d'urgence** : Aspirine 300 mg, Inhibiteur du P2Y12 (Clopidogrel/Ticagrelor), Anticoagulation (HNF ou HBPM).
-  3. **Traitement au long cours** : B-A-S-I-C (Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel).`;
+🎨 **Anatomie Générale & Clinique (S1/S2)**
+
+1. **Cardio-Anatomie** : Cœur rétrosternal, 4 cavités, vascularisé par l'IVA et la Coronaire Droite.
+2. **Pneumo-Anatomie** : Poumon droit (3 lobes : supérieur, moyen, inférieur), Poumon gauche (2 lobes + lingula).
+3. **Neuro-Anatomie** : Polygone de Willis (anastomose carotido-basilaire assurant la vascularisation cérébrale).
+
+💡 *Astuce : Visitez l'Atlas 3D WebGL dans le Dashboard pour visualiser les organes en 3D interactive 360° !*`;
   }
 
-  if (q.includes('salut') || q.includes('bonjour') || q.includes('salam') || q.includes('labas') || q.includes('hi')) {
+  // 4. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR
+  if (modelId === 'chatgpt') {
     return `${modelName} :
-Bonjour ! Je suis connecté et opérationnel. 
-Posez-moi n'importe quelle question médicale (Anatomie, Cardiologie, Neurologie, QCMs, Annales FMP...) ou générale, et je vous répondrai instantanément ! 🩺✨`;
+
+### 📋 Réponses & Analyse Médicale — ${cleanQ || 'Sujet Médical'}
+
+#### 1. Aperçu Clinique
+Votre demande concerne un thème important du cursus médical (FMP Maroc). 
+
+#### 2. Recommandations Pratiques :
+- **Diagnostic** : Évaluation anamnestique et examens paracliniques ciblés.
+- **Révision** : Consultez le **Catalogue des Modules S1-S12** et la **Banque de 200+ QCMs** sur MedEdu Morocco.
+
+*💡 N'hésitez pas à poser une question précise sur la posologie, le traitement ou la physiopathologie.*`;
   }
 
-  // General fallback
+  if (modelId === 'claude') {
+    return `${modelName} :
+
+#### Synthèse Approfondie — ${cleanQ || 'Question Médicale'}
+
+En réponse à votre question concernant **${cleanQ || 'ce sujet'}** :
+
+1. **Cadre Physiopathologique & Sémiologique** :
+   Les données actuelles issues de la littérature médicale et des recommandations nationales marocaines (FMP) préconisent une approche systématique fondée sur l'EBM (*Evidence-Based Medicine*).
+
+2. **Orientations Thérapeutiques & Révision** :
+   Nous vous invitons à vous référer aux cours rédigés dans la section **Modules** de MedEdu Morocco ainsi qu'aux **Annales Authentiques des 6 Facultés** (Rabat, Casablanca, Fès, Marrakech, Oujda, Tanger).`;
+  }
+
+  if (modelId === 'flakkai') {
+    return `${modelName} :
+Khouya / Khtyi, par rapport l su2alek **"${cleanQ || 'hadd l-thema'}"** : 🇲🇦
+
+• **Explication Médicale** :
+Hadd s-su2al kayti7 bzzaf f les examens dyal l-FMP (Rabat, Casa, Fès, Kech, Oujda, Tanger) ! 
+
+• **Chno khasak t-dir?**
+1. Raje3 l-cours complet f l-section **Modules (S1-S12)**.
+2. Pratiquer les **QCMs** f l-Dashboard.
+3. Jarreb l-**Examen Blanc Chronométré** bach t-di Diplôme w Attestation d'Excellence Officielle !
+
+*Khali lina ay su2al khor f l-chat, rani m3ak 24/7 !* 🩺✨`;
+  }
+
   return `${modelName} :
-J'ai bien reçu votre message : "*${query}*".
+♊ **Analyse Pédagogique — ${cleanQ || 'Sujet Médical'}**
 
-• **Analyse Médicale & Réponse** :
-Votre question touche à un domaine clé du programme des études médicales au Maroc (FMP). 
+Merci pour votre question !
+• **Point Clé** : Ce sujet est essentiel dans la préparation des examens de médecine au Maroc (S1 à S12).
+• **Ressources Disponibles** :
+  1. **Atlas 3D WebGL** pour l'anatomie interactive.
+  2. **200+ QCMs** corrigés avec rationales.
+  3. **40+ Annales** des 6 facultés de médecine du Maroc.
 
-• **Recommandations de révision sur MedEdu Morocco** :
-1. Explorez la section **Modules (S1-S12)** pour consulter les cours détaillés.
-2. Testez vos connaissances dans la **Banque de 200+ QCMs**.
-3. Effectuez une **Épreuve Blanche Chronométrée** pour obtenir votre Attestation d'Excellence !`;
+*Posez n'importe quelle question complémentaire !* 🩺`;
 }
 
 export async function POST(req: NextRequest) {
@@ -114,7 +221,6 @@ export async function POST(req: NextRequest) {
     const { message, history, modelId = 'gemini' } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
 
-    // Custom system prompt based on selected model
     let systemInstruction = `Tu es l'assistant IA médical de MedEdu Morocco. Tu réponds aux questions médicales des étudiants de médecine au Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT) en Darija, Français, Arabe et Anglais.`;
     
     if (modelId === 'chatgpt') {
@@ -148,7 +254,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Fallback response when GEMINI_API_KEY is not set
     return NextResponse.json({ response: getFallbackResponse(message, modelId), modelId });
   } catch (error) {
     console.error('FLAKKAI Route Error:', error);
