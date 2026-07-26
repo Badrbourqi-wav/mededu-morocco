@@ -88,14 +88,14 @@ async function getFallbackResponse(query: string, modelId: string = 'gemini', sy
 ### 🫀 Synthèse Cardiologique & Urgences (S5 / FMP)
 
 #### 1. STEMI (Infarctus du Myocarde avec sus-décalage ST)
-- **Triade diagnostique** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage ST $\\ge 1$ mm dans 2 dérivations contiguës + Élévation des Troponines I/T.
+- **Triade diagnostique** : Douleur thoracique rétrosternale constrictive > 20 min + Sus-décalage ST ≥ 1 mm dans 2 dérivations contiguës + Élévation des Troponines I/T.
 - **Prise en Charge Urgente (< 12h)** :
   - **Angioplastie coronaire primaire** (délai < 120 min).
   - **Thrombolyse IV** (Alteplase/Tenecteplase) si délai > 120 min.
   - **Traitement Médical** : Aspirine 300 mg + Clopidogrel 600 mg + Heparine IV.
 
 #### 2. Hypertension Artérielle (HTA)
-- **Définition** : PAS $\\ge 140$ mmHg et/ou PAD $\\ge 90$ mmHg mesurée au cabinet.
+- **Définition** : PAS ≥ 140 mmHg et/ou PAD ≥ 90 mmHg mesurée au cabinet.
 - **Première ligne** : IEC / ARA2, Antagonistes calciques, Diurétiques thiazidiques.
 
 *💡 ChatGPT Insight : La reperfusion coronaire dans le STEMI doit être initiée le plus rapidement possible ("Time is muscle").*`;
@@ -109,7 +109,7 @@ async function getFallbackResponse(query: string, modelId: string = 'gemini', sy
 Dans le cadre du programme de cardiologie des facultés de médecine du Maroc (S5) :
 
 1. **Physiopathologie du Syndrome Coronarien Aigu (SCA)** :
-   - Rupture d'une plaque d'athérome vulnérable $\\rightarrow$ Exposition du sous-endothélium $\\rightarrow$ Activation et agrégation plaquettaire $\\rightarrow$ Formation d'un thrombus occlusif fibrinoplacquettaire.
+   - Rupture d'une plaque d'athérome vulnérable ➔ Exposition du sous-endothélium ➔ Activation et agrégation plaquettaire ➔ Formation d'un thrombus occlusif fibrinoplacquettaire.
    - L'ischémie transmurale se traduit électriquement par une onde de lésion sous-épicardique (sus-décalage du segment ST).
 
 2. **Évaluation Électrocardiographique (ECG)** :
@@ -148,73 +148,65 @@ Khouya / Khtyi, ha l-moukhassas dyal **Cardiologie & ECG** li kayti7 f l-examens
   - **Reperfusion** : Angioplastie primaire (< 2h) ou Thrombolyse IV.
   - **Traitement B-A-S-I-C** : Bêtabloquant, Aspirine, Statine, IEC, Clopidogrel.
 
-• **HTA** : PAS $\\ge 140$ mmHg / PAD $\\ge 90$ mmHg. Traitement par IEC/ARA2 + Calciquant.
+• **HTA** : PAS ≥ 140 mmHg / PAD ≥ 90 mmHg. Traitement par IEC/ARA2 + Calciquant.
 
 💡 *Astuce révision : Entraînez-vous sur nos 200+ QCMs dans le Dashboard !*`;
   }
 
-  // 2. NEUROLOGIE & AVC
-  if (q.includes('neuro') || q.includes('avc') || q.includes('cerveau') || q.includes('epilepsie') || q.includes('broca') || q.includes('méningite')) {
+  // 2. NEUROLOGIE : AVC
+  if (q.includes('avc') || q.includes('accident vasculaire') || q.includes('ischémie') || q.includes('hemorragie')) {
     if (modelId === 'chatgpt') {
       return `${modelName} :
-
-### 🧠 Neurologie Clinique — Prise en Charge de l'AVC Ischémique
-
-#### Protocoles d'Urgence (FAST / AVC)
+### 🧠 Prise en Charge de l'AVC Ischémique
 1. **Scanner Cérébral Sans Injection (TDM)** :
    - **Objectif n°1** : Éliminer formellement un AVC Hémorragique (hyperdensité spontanée).
 2. **Thrombolyse IV (rtPA)** :
-   - Indiquée si fenêtre thérapeutique $< 4h30$ après l'apparition des premiers symptômes.
+   - Indiquée si fenêtre thérapeutique < 4h30 après l'apparition des premiers symptômes.
 3. **Thrombectomie Mécanique** :
-   - Indiquée si occlusion d'une grosse artère cérébrale (fenêtre jusqu'à 6h-24h).
-
-#### Différenciation des Aphasies :
-- **Aphasie de Broca** (Frontale) : Non-fluente, expression altérée, compréhension préservée.
-- **Aphasie de Wernicke** (Temporale) : Fluente (jargonophasie), compréhension gravement altérée.`;
+   - Indiquée si occlusion d'une grosse artère cérébrale (fenêtre jusqu'à 6h-24h).`;
     }
-
     if (modelId === 'claude') {
       return `${modelName} :
-
-#### Démarche Diagnostique & Neurologie Approfondie (S6)
-
-1. **Sémiologie du Syndrome Méningé** :
-   - **Triade clinique** : Céphalées intenses en casque, Vomissements en fusée, Photophobie.
-   - **Signes physiques** : Raideur de la nuque, Signe de Kernig (douleur à l'extension du genou), Signe de Brudzinski.
-   - **Conduite à tenir** : Hémocultures $\\rightarrow$ Ponction Lombaire (PL) en l'absence de signe de focalisation $\\rightarrow$ Antibiothérapie IV immédiate (Céfotaxime / Ceftriaxone + Amoxicilline).
-
-2. **Physiopathologie de la Méningite Bactérienne** :
-   - Franchissement de la barrière hémato-encéphalique par *Streptococcus pneumoniae* ou *Neisseria meningitidis* $\\rightarrow$ Réaction inflammatoire majeure du LCS.`;
+#### Physiopathologie & Prise en Charge de l'AVC (S6)
+L'Accident Vasculaire Cérébral (AVC) représente une urgence diagnostique et thérapeutique absolue.
+1. **Ischémie vs Hémorragie** :
+   - L'ischémie (80% des cas) est due à une occlusion artérielle (athérome ou embole).
+   - L'hémorragie (20%) est souvent liée à l'HTA ou rupture d'anévrisme.
+2. **Imagerie** : L'IRM de diffusion est l'examen de choix (hypersignal précoce), mais le TDM sans injection est le plus accessible pour éliminer l'hémorragie en urgence.
+3. **Traitement** : Actilyse (Thrombolyse IV) si délai < 4h30 et absence de contre-indications (troubles de coagulation, chirurgie récente).`;
     }
-
     if (modelId === 'flakkai') {
       return `${modelName} :
-Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : 🇲🇦
-
-• **AVC (L-falj / Accident Vasculaire Cérébral)** :
-  - **Urgence absolue !** 1er réflexe = **Scanner cérébral blla injection** (bach n-t-3akdo wash machi نزيف / Hémorragie).
-  - Si ischémique w a9al mn 4h30 $\\rightarrow$ Thrombolyse (rtPA f d-dam).
-
-• **Méningite (التهاب السحايا)** :
-  - Skhona (Fièvre) + Sda3 ras intense + Vomissements + Nuque yabsab (Raideur de nuque).
-  - Ponction Lombaire (PL) f l-zhar $\\rightarrow$ Antibiothérapie IV immédiate !
-
-💡 *Zid 3liha : Raje3 les QCMs dyal Neurologie f l-Projet MedEdu Morocco !*`;
+Khouya, l-**AVC (L-falj / Accident Vasculaire Cérébral)** hiya urgence kbira ! 🇲🇦
+- **1er réflexe** = Scanner cérébral blla injection (bach n-t-3akdo wash machi نزيف / Hémorragie f dmagh).
+- Si l-AVC ischémique (3ar9 t-sadd) w l-patient ja f a9al mn 4h30 ➔ Kan-dirou Thrombolyse (rtPA f d-dam).
+- Si dazet 4h30 ➔ Dwa khor (Aspirine) w rééducation.`;
     }
-
     return `${modelName} :
-🧠 **Neurologie & Prise en Charge des Urgences**
-
-• **AVC Ischémique** :
-  - **1er réflexe** : Scanner cérébral sans injection pour éliminer l'hémorragie.
-  - **Thrombolyse IV** si $< 4h30$.
-
-• **Méningite Bactérienne** :
-  - Raideur de nuque + Fièvre + Céphalées $\\rightarrow$ Ponction Lombaire + Antibiothérapie IV immédiate.`;
+🧠 **AVC Ischémique** :
+- **1er réflexe** : Scanner cérébral sans injection pour éliminer l'hémorragie.
+- **Traitement Urgence** : Thrombolyse IV si le délai est < 4h30 depuis l'apparition des signes.`;
   }
 
-  // 3. ANATOMIE GENERAL & 3D
-  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('os') || q.includes('muscle') || q.includes('poumon')) {
+  // 3. NEUROLOGIE : MENINGITE
+  if (q.includes('méningite') || q.includes('meningite') || q.includes('sémiologie') || q.includes('céphalées')) {
+    if (modelId === 'claude') {
+      return `${modelName} :
+#### Démarche Diagnostique du Syndrome Méningé (S6)
+1. **Sémiologie du Syndrome Méningé** :
+   - **Triade clinique** : Céphalées intenses en casque, Vomissements en fusée, Photophobie.
+   - **Signes physiques** : Raideur de la nuque, Signe de Kernig (douleur à l'extension du genou).
+   - **Conduite à tenir** : Hémocultures ➔ Ponction Lombaire (PL) en l'absence de signe de focalisation ➔ Antibiothérapie IV immédiate (Céfotaxime / Ceftriaxone).
+2. **Physiopathologie** :
+   - Franchissement de la BHE par *Streptococcus pneumoniae* ➔ Réaction inflammatoire majeure du LCS.`;
+    }
+    return `${modelName} :
+🧠 **Méningite Bactérienne** :
+Raideur de nuque + Fièvre + Céphalées intenses ➔ Hémocultures ➔ Ponction Lombaire + Antibiothérapie IV immédiate !`;
+  }
+
+  // 4. ANATOMIE GENERAL & 3D
+  if (q.includes('anatomie') || q.includes('anatomy') || q.includes('os') || q.includes('muscle') || q.includes('poumon') || q.includes('cerveau')) {
     return `${modelName} :
 🎨 **Anatomie Générale & Clinique (S1/S2)**
 
@@ -225,14 +217,14 @@ Khouya / Khtyi, l- points l-assassiyin f **Neurologie (S6)** li khasak t-3rf : �
 💡 *Astuce : Visitez l'Atlas 3D WebGL dans le Dashboard pour visualiser les organes en 3D interactive 360° !*`;
   }
 
-  // 4. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR (Fallback si l'API Scraper est HS)
+  // 5. GENERAL MEDICAL OR ACADEMIC QUERY GENERATOR (Fallback si l'API Scraper est HS)
   if (modelId === 'chatgpt') {
     return `${modelName} :
 
 ### 📋 Réponses & Analyse Médicale — ${cleanQ || 'Sujet Médical'}
 
 #### 1. Aperçu Clinique
-Votre demande concerne un thème important du cursus médical (FMP Maroc). 
+Votre demande ("*${cleanQ || 'Sujet'}*") concerne un thème important du cursus médical (FMP Maroc). 
 
 #### 2. Recommandations Pratiques :
 - **Diagnostic** : Évaluation anamnestique et examens paracliniques ciblés.
@@ -285,8 +277,10 @@ Merci pour votre question !
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, history, modelId = 'gemini' } = await req.json();
-    const apiKey = process.env.GEMINI_API_KEY;
+    const { message, history, modelId = 'gemini', clientApiKey } = await req.json();
+    
+    // Prefer client-provided key, fallback to env variable
+    const apiKey = (clientApiKey && clientApiKey.trim().length > 10) ? clientApiKey : process.env.GEMINI_API_KEY;
 
     let systemInstruction = `Tu es l'assistant IA médical de MedEdu Morocco. Tu réponds aux questions médicales des étudiants de médecine au Maroc (FMPR, FMPC, FMPF, FMPM, FMPO, FMPT) en Darija, Français, Arabe et Anglais.`;
     
@@ -314,16 +308,16 @@ export async function POST(req: NextRequest) {
         
         const result = await chat.sendMessage(message);
         const text = result.response.text();
-        return NextResponse.json({ response: text, modelId });
+        return NextResponse.json({ response: text, modelId, isFallback: false });
       } catch (geminiError) {
         console.warn('Gemini API call failed, falling back to smart engine:', geminiError);
-        return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId });
+        return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId, isFallback: true });
       }
     }
 
-    return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId });
+    return NextResponse.json({ response: await getFallbackResponse(message, modelId, systemInstruction), modelId, isFallback: true });
   } catch (error) {
     console.error('FLAKKAI Route Error:', error);
-    return NextResponse.json({ response: await getFallbackResponse('question', 'gemini', ''), modelId: 'gemini' });
+    return NextResponse.json({ response: await getFallbackResponse('question', 'gemini', ''), modelId: 'gemini', isFallback: true });
   }
 }

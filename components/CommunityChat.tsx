@@ -218,6 +218,9 @@ export default function CommunityChat() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
   const [ctxMenu, setCtxMenu] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [clientApiKey, setClientApiKey] = useState('');
+  const [showApiKeyBanner, setShowApiKeyBanner] = useState(false);
+  const [tempKeyInput, setTempKeyInput] = useState('');
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -232,10 +235,22 @@ export default function CommunityChat() {
   const fmtDur = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
   useEffect(() => {
+    const savedKey = localStorage.getItem('mededu_gemini_api_key');
+    if (savedKey) setClientApiKey(savedKey);
+  }, []);
+
+  const handleSaveApiKey = () => {
+    if (!tempKeyInput.trim()) return;
+    setClientApiKey(tempKeyInput.trim());
+    localStorage.setItem('mededu_gemini_api_key', tempKeyInput.trim());
+    setShowApiKeyBanner(false);
+  };
+
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
     }
-  }, [messages]);
+  }, [messages, showApiKeyBanner]);
 
   useEffect(() => {
     if (isRecording) {
@@ -283,11 +298,14 @@ export default function CommunityChat() {
     fetch('/api/flakkai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: query, history: [], modelId: selectedModel })
+      body: JSON.stringify({ message: query, history: [], modelId: selectedModel, clientApiKey })
     })
     .then(res => res.json())
     .then(data => {
       const responseText = data.response || getAIResponse(query);
+      if (data.isFallback && !clientApiKey) {
+        setShowApiKeyBanner(true);
+      }
       setMessages(prev => prev.filter(m => m.id !== typingId).concat({
         id: `f-${Date.now()}`, 
         sender: 'flakkai', 
@@ -689,6 +707,35 @@ export default function CommunityChat() {
           <span style={{ color: '#FF453A', fontSize: 13, flex: 1, fontWeight: 500 }}>Enregistrement en cours…</span>
           <span style={{ color: '#FF453A', fontFamily: 'monospace', fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{fmtDur(recordingSeconds)}</span>
           <span style={{ color: 'rgba(255,69,58,0.45)', fontSize: 11 }}>Tap 🎤 pour envoyer</span>
+        </div>
+      )}
+
+      {/* ─── API Key Banner ─── */}
+      {showApiKeyBanner && (
+        <div style={{ padding: '16px', background: 'linear-gradient(135deg, rgba(20,184,166,0.1), rgba(8,145,178,0.15))', borderTop: '1px solid rgba(20,184,166,0.3)', borderBottom: '1px solid rgba(20,184,166,0.3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div>
+              <p style={{ color: '#5AC8FA', fontSize: 14, fontWeight: 700, marginBottom: 4 }}>🔓 Débloquez l'IA Complète (Claude, GPT, Gemini)</p>
+              <p style={{ color: '#E5E5EA', fontSize: 13, lineHeight: 1.4 }}>Les API gratuites sont actuellement surchargées. Pour obtenir de vraies réponses IA sans aucune limite, ajoutez votre propre clé Gemini API gratuite (ça prend 2 minutes sur Google AI Studio).</p>
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input 
+                type="password"
+                placeholder="Collez votre clé API Gemini ici..."
+                value={tempKeyInput}
+                onChange={e => setTempKeyInput(e.target.value)}
+                style={{ flex: 1, padding: '8px 14px', borderRadius: 8, background: '#1C1C1E', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 14, outline: 'none' }}
+              />
+              <button 
+                onClick={handleSaveApiKey}
+                style={{ padding: '8px 16px', borderRadius: 8, background: '#0A84FF', color: '#fff', fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+                Enregistrer
+              </button>
+            </div>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style={{ color: '#30D158', fontSize: 12, textDecoration: 'underline' }}>
+              Comment obtenir une clé gratuite ?
+            </a>
+          </div>
         </div>
       )}
 
