@@ -259,8 +259,8 @@ export default function CommunityChat() {
     setMessages(prev => [...prev, { id: Date.now().toString(), sender: 'me', senderName: 'Badr Bourqi', content: val, timestamp: now(), type: 'text' }]);
     setInputValue('');
 
-    if (val.toLowerCase().startsWith('/flakkai')) {
-      const query = val.slice(8).trim() || 'bonjour';
+    if (val.toLowerCase().startsWith('/flakkai') || val.toLowerCase().includes('flakkai') || val.startsWith('/')) {
+      const query = val.replace(/^\/flakkai/i, '').replace(/^\//, '').trim() || 'bonjour';
       const typingId = `t-${Date.now()}`;
       setMessages(prev => [...prev, { id: typingId, sender: 'flakkai', senderName: 'FLAKKAI', content: '', timestamp: now(), type: 'text', isTyping: true }]);
       
@@ -271,16 +271,17 @@ export default function CommunityChat() {
       })
       .then(res => res.json())
       .then(data => {
+        const responseText = data.response || getAIResponse(query);
         setMessages(prev => prev.filter(m => m.id !== typingId).concat({
           id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
-          content: data.response || 'Erreur de réponse.', timestamp: now(), type: 'text',
+          content: responseText, timestamp: now(), type: 'text',
         }));
       })
       .catch(err => {
-        console.error(err);
+        console.warn('API error, using local FLAKKAI engine:', err);
         setMessages(prev => prev.filter(m => m.id !== typingId).concat({
           id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
-          content: 'Désolé, une erreur est survenue avec le serveur FLAKKAI.', timestamp: now(), type: 'text',
+          content: getAIResponse(query), timestamp: now(), type: 'text',
         }));
       });
     }

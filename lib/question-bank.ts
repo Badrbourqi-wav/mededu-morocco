@@ -1,4 +1,4 @@
-﻿// lib/question-bank.ts
+// lib/question-bank.ts
 // MedEdu Morocco — Global Centralized QCM Bank
 // 60+ questions across all medical disciplines S1-S12
 
@@ -3670,18 +3670,27 @@ export function generateRandomQuiz(
     const base = shuffled[i % shuffled.length];
     const uniqueId = `${base.id}-q-${result.length + 1}`;
     
-    // Ensure exactly 5 options A, B, C, D, E
-    const options = base.options.map(opt => ({ ...opt }));
-    while (options.length < 5) {
-      const letter = String.fromCharCode(65 + options.length);
-      const text = extraDistractors[(result.length + options.length) % extraDistractors.length];
-      options.push({ id: letter, text });
-    }
+    // Find text of the correct option
+    const originalCorrectText = base.options.find(o => o.id === base.correctOption)?.text || base.options[0].text;
+    
+    // Copy options and shuffle them
+    const shuffledOptions = shuffleArray(base.options.map(opt => ({ ...opt })));
+
+    // Assign fresh letters A, B, C, D, E and find new correct letter
+    let newCorrectOption = 'A';
+    const finalOptions = shuffledOptions.map((opt, idx) => {
+      const letter = String.fromCharCode(65 + idx);
+      if (opt.text === originalCorrectText || opt.id === base.correctOption) {
+        newCorrectOption = letter;
+      }
+      return { id: letter, text: opt.text };
+    });
 
     result.push({
       ...base,
       id: uniqueId,
-      options: options.slice(0, 5),
+      options: finalOptions,
+      correctOption: newCorrectOption,
     });
     i++;
   }
