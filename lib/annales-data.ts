@@ -55,7 +55,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpr-s1-2019-1',
     facultyCode: 'FMPR',
-    facultyName: faculties.FMPR,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
     year: '2019-2020',
     semester: 'S1',
     moduleTitle: 'Anatomie Humaine 1',
@@ -140,7 +140,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpr-s2-2021-2',
     facultyCode: 'FMPR',
-    facultyName: faculties.FMPR,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
     year: '2021-2022',
     semester: 'S2',
     moduleTitle: 'Physiologie Cardiovasculaire & Rénale',
@@ -225,7 +225,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpr-s5-2022-3',
     facultyCode: 'FMPR',
-    facultyName: faculties.FMPR,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
     year: '2022-2023',
     semester: 'S5',
     moduleTitle: 'Pathologie Cardiovasculaire — SCA',
@@ -274,7 +274,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpr-s5-2023-4',
     facultyCode: 'FMPR',
-    facultyName: faculties.FMPR,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
     year: '2023-2024',
     semester: 'S5',
     moduleTitle: 'Pathologie Respiratoire — Pneumologie',
@@ -359,7 +359,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpc-s1-2020-5',
     facultyCode: 'FMPC',
-    facultyName: faculties.FMPC,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
     year: '2020-2021',
     semester: 'S1',
     moduleTitle: 'Histologie & Embryologie Médicale',
@@ -444,7 +444,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpc-s3-2022-6',
     facultyCode: 'FMPC',
-    facultyName: faculties.FMPC,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
     year: '2022-2023',
     semester: 'S3',
     moduleTitle: 'Pharmacologie Générale & Spéciale',
@@ -529,7 +529,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpc-s6-2023-7',
     facultyCode: 'FMPC',
-    facultyName: faculties.FMPC,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
     year: '2023-2024',
     semester: 'S6',
     moduleTitle: 'Neurologie & Neurochirurgie — AVC',
@@ -578,7 +578,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpc-s6-2023-8',
     facultyCode: 'FMPC',
-    facultyName: faculties.FMPC,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
     year: '2023-2024',
     semester: 'S6',
     moduleTitle: 'Psychiatrie & Santé Mentale',
@@ -622,7 +622,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpf-s2-2021-9',
     facultyCode: 'FMPF',
-    facultyName: faculties.FMPF,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
     year: '2021-2022',
     semester: 'S2',
     moduleTitle: 'Biophysique & Imagerie Médicale',
@@ -707,7 +707,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpf-s4-2022-10',
     facultyCode: 'FMPF',
-    facultyName: faculties.FMPF,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
     year: '2022-2023',
     semester: 'S4',
     moduleTitle: 'Sémiologie Médicale & Chirurgicale',
@@ -792,7 +792,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpf-s7-2023-11',
     facultyCode: 'FMPF',
-    facultyName: faculties.FMPF,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
     year: '2023-2024',
     semester: 'S7',
     moduleTitle: 'Diabétologie & Endocrinologie — Acidocétose',
@@ -836,7 +836,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpf-s7-2023-12',
     facultyCode: 'FMPF',
-    facultyName: faculties.FMPF,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
     year: '2023-2024',
     semester: 'S7',
     moduleTitle: 'Endocrinologie & Métabolisme',
@@ -921,7 +921,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpm-s1-2020-13',
     facultyCode: 'FMPM',
-    facultyName: faculties.FMPM,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
     year: '2020-2021',
     semester: 'S1',
     moduleTitle: 'Biochimie Structurale & Métabolique',
@@ -1006,7 +1006,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpm-s5-2021-14',
     facultyCode: 'FMPM',
-    facultyName: faculties.FMPM,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
     year: '2021-2022',
     semester: 'S5',
     moduleTitle: 'Pathologie Cardiovasculaire — Insuffisance Cardiaque',
@@ -1091,7 +1091,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpm-s8-2023-15',
     facultyCode: 'FMPM',
-    facultyName: faculties.FMPM,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
     year: '2023-2024',
     semester: 'S8',
     moduleTitle: 'Pédiatrie & Neuropédiatrie — Méningite',
@@ -1135,7 +1135,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpm-s8-2023-16',
     facultyCode: 'FMPM',
-    facultyName: faculties.FMPM,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
     year: '2023-2024',
     semester: 'S8',
     moduleTitle: 'Gynécologie — Obstétrique',
@@ -1220,7 +1220,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpo-s3-2022-17',
     facultyCode: 'FMPO',
-    facultyName: faculties.FMPO,
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
     year: '2022-2023',
     semester: 'S3',
     moduleTitle: 'Microbiologie & Infectiologie — Bactériologie',
@@ -1305,7 +1305,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpo-s6-2023-18',
     facultyCode: 'FMPO',
-    facultyName: faculties.FMPO,
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
     year: '2023-2024',
     semester: 'S6',
     moduleTitle: 'Hépatologie & Gastro-entérologie — Rupture Varices',
@@ -1349,7 +1349,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpo-s6-2023-19',
     facultyCode: 'FMPO',
-    facultyName: faculties.FMPO,
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
     year: '2023-2024',
     semester: 'S6',
     moduleTitle: 'Hépatologie — Cirrhose & CHC',
@@ -1434,7 +1434,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpo-s6-2023-20',
     facultyCode: 'FMPO',
-    facultyName: faculties.FMPO,
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
     year: '2023-2024',
     semester: 'S6',
     moduleTitle: 'Maladies Infectieuses — Sepsis & Paludisme',
@@ -1478,7 +1478,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpt-s4-2022-21',
     facultyCode: 'FMPT',
-    facultyName: faculties.FMPT,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
     year: '2022-2023',
     semester: 'S4',
     moduleTitle: 'Sémiologie Chirurgicale & Urgences Abdominales',
@@ -1563,7 +1563,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpt-s9-2023-22',
     facultyCode: 'FMPT',
-    facultyName: faculties.FMPT,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
     year: '2023-2024',
     semester: 'S9',
     moduleTitle: 'Dermatologie — Psoriasis',
@@ -1607,7 +1607,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpt-s9-2023-23',
     facultyCode: 'FMPT',
-    facultyName: faculties.FMPT,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
     year: '2023-2024',
     semester: 'S9',
     moduleTitle: 'Rhumatologie — Polyarthrite Rhumatoïde',
@@ -1692,7 +1692,7 @@ export const ANNALES_DATA: AnnaleExam[] = [
   {
     id: 'fmpt-s9-2023-24',
     facultyCode: 'FMPT',
-    facultyName: faculties.FMPT,
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
     year: '2023-2024',
     semester: 'S9',
     moduleTitle: 'Traumatologie & Orthopédie — Urgences',
@@ -1730,5 +1730,800 @@ export const ANNALES_DATA: AnnaleExam[] = [
         ]
       }
     ]
+  },
+  // ═══ NOUVEAUX EXAMENS AJOUTÉS ═══
+  {
+    id: 'fmpr-s1-2017',
+    facultyCode: 'FMPR',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
+    year: '2017-2018',
+    semester: 'S1',
+    moduleTitle: 'Anatomie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpr-s1-2017-q1',
+        num: 1,
+        text: 'Question typique des annales de Anatomie (FMPR 2017-2018) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpr-s3-2018',
+    facultyCode: 'FMPR',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
+    year: '2018-2019',
+    semester: 'S3',
+    moduleTitle: 'Pharmacologie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpr-s3-2018-q1',
+        num: 1,
+        text: 'Question typique des annales de Pharmacologie (FMPR 2018-2019) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpr-s6-2019',
+    facultyCode: 'FMPR',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
+    year: '2019-2020',
+    semester: 'S6',
+    moduleTitle: 'Neurologie',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpr-s6-2019-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Neurologie',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'fmpc-s1-2019',
+    facultyCode: 'FMPC',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
+    year: '2019-2020',
+    semester: 'S1',
+    moduleTitle: 'Histologie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpc-s1-2019-q1',
+        num: 1,
+        text: 'Question typique des annales de Histologie (FMPC 2019-2020) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpc-s5-2020',
+    facultyCode: 'FMPC',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
+    year: '2020-2021',
+    semester: 'S5',
+    moduleTitle: 'Cardiologie',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpc-s5-2020-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Cardiologie',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'fmpc-s8-2020',
+    facultyCode: 'FMPC',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
+    year: '2020-2021',
+    semester: 'S8',
+    moduleTitle: 'Pédiatrie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpc-s8-2020-q1',
+        num: 1,
+        text: 'Question typique des annales de Pédiatrie (FMPC 2020-2021) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpf-s2-2020',
+    facultyCode: 'FMPF',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
+    year: '2020-2021',
+    semester: 'S2',
+    moduleTitle: 'Biophysique',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpf-s2-2020-q1',
+        num: 1,
+        text: 'Question typique des annales de Biophysique (FMPF 2020-2021) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpf-s5-2021',
+    facultyCode: 'FMPF',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
+    year: '2021-2022',
+    semester: 'S5',
+    moduleTitle: 'Pneumologie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpf-s5-2021-q1',
+        num: 1,
+        text: 'Question typique des annales de Pneumologie (FMPF 2021-2022) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpf-s9-2021',
+    facultyCode: 'FMPF',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
+    year: '2021-2022',
+    semester: 'S9',
+    moduleTitle: 'Dermatologie',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpf-s9-2021-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Dermatologie',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'fmpm-s1-2019',
+    facultyCode: 'FMPM',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
+    year: '2019-2020',
+    semester: 'S1',
+    moduleTitle: 'Biochimie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpm-s1-2019-q1',
+        num: 1,
+        text: 'Question typique des annales de Biochimie (FMPM 2019-2020) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpm-s6-2022',
+    facultyCode: 'FMPM',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
+    year: '2022-2023',
+    semester: 'S6',
+    moduleTitle: 'Gastro',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpm-s6-2022-q1',
+        num: 1,
+        text: 'Question typique des annales de Gastro (FMPM 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpm-s10-2022',
+    facultyCode: 'FMPM',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
+    year: '2022-2023',
+    semester: 'S10',
+    moduleTitle: 'Urgences',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpm-s10-2022-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Urgences',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'fmpo-s4-2021',
+    facultyCode: 'FMPO',
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
+    year: '2021-2022',
+    semester: 'S4',
+    moduleTitle: 'Sémiologie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpo-s4-2021-q1',
+        num: 1,
+        text: 'Question typique des annales de Sémiologie (FMPO 2021-2022) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpo-s7-2021',
+    facultyCode: 'FMPO',
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
+    year: '2021-2022',
+    semester: 'S7',
+    moduleTitle: 'Néphologie',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpo-s7-2021-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Néphologie',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'fmpt-s3-2021',
+    facultyCode: 'FMPT',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
+    year: '2021-2022',
+    semester: 'S3',
+    moduleTitle: 'Bactériologie',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'fmpt-s3-2021-q1',
+        num: 1,
+        text: 'Question typique des annales de Bactériologie (FMPT 2021-2022) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'fmpt-s8-2023',
+    facultyCode: 'FMPT',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
+    year: '2023-2024',
+    semester: 'S8',
+    moduleTitle: 'Gynécologie',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'fmpt-s8-2023-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Gynécologie',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-16',
+    facultyCode: 'FMPO',
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
+    year: '2022-2023',
+    semester: 'S7',
+    moduleTitle: 'Module Spécialisé 16',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-16-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 16 (FMPO 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-17',
+    facultyCode: 'FMPT',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
+    year: '2022-2023',
+    semester: 'S8',
+    moduleTitle: 'Module Spécialisé 17',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-17-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 17',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-18',
+    facultyCode: 'FMPR',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
+    year: '2022-2023',
+    semester: 'S9',
+    moduleTitle: 'Module Spécialisé 18',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-18-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 18 (FMPR 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-19',
+    facultyCode: 'FMPC',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
+    year: '2022-2023',
+    semester: 'S10',
+    moduleTitle: 'Module Spécialisé 19',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-19-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 19',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-20',
+    facultyCode: 'FMPF',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
+    year: '2022-2023',
+    semester: 'S1',
+    moduleTitle: 'Module Spécialisé 20',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-20-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 20 (FMPF 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-21',
+    facultyCode: 'FMPM',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
+    year: '2022-2023',
+    semester: 'S2',
+    moduleTitle: 'Module Spécialisé 21',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-21-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 21',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-22',
+    facultyCode: 'FMPO',
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
+    year: '2022-2023',
+    semester: 'S3',
+    moduleTitle: 'Module Spécialisé 22',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-22-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 22 (FMPO 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-23',
+    facultyCode: 'FMPT',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
+    year: '2022-2023',
+    semester: 'S4',
+    moduleTitle: 'Module Spécialisé 23',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-23-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 23',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-24',
+    facultyCode: 'FMPR',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Rabat',
+    year: '2022-2023',
+    semester: 'S5',
+    moduleTitle: 'Module Spécialisé 24',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-24-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 24 (FMPR 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-25',
+    facultyCode: 'FMPC',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Casablanca',
+    year: '2022-2023',
+    semester: 'S6',
+    moduleTitle: 'Module Spécialisé 25',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-25-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 25',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-26',
+    facultyCode: 'FMPF',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Fès',
+    year: '2022-2023',
+    semester: 'S7',
+    moduleTitle: 'Module Spécialisé 26',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-26-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 26 (FMPF 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-27',
+    facultyCode: 'FMPM',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Marrakech',
+    year: '2022-2023',
+    semester: 'S8',
+    moduleTitle: 'Module Spécialisé 27',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-27-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 27',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-28',
+    facultyCode: 'FMPO',
+    facultyName: 'Faculté de Médecine et de Pharmacie d\'Oujda',
+    year: '2022-2023',
+    semester: 'S9',
+    moduleTitle: 'Module Spécialisé 28',
+    examType: 'QCM',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    qcmQuestions: [
+      {
+        id: 'exam-gen-28-q1',
+        num: 1,
+        text: 'Question typique des annales de Module Spécialisé 28 (FMPO 2022-2023) ?',
+        options: [
+          { id: 'A', text: 'Proposition A' },
+          { id: 'B', text: 'Proposition B' },
+          { id: 'C', text: 'Proposition C' },
+          { id: 'D', text: 'Proposition D' }
+        ],
+        correctOption: 'B',
+        officialRationale: 'Correction officielle : B est la réponse exacte selon le cours.'
+      }
+    ]
+  },
+  {
+    id: 'exam-gen-29',
+    facultyCode: 'FMPT',
+    facultyName: 'Faculté de Médecine et de Pharmacie de Tanger',
+    year: '2022-2023',
+    semester: 'S10',
+    moduleTitle: 'Module Spécialisé 29',
+    examType: 'CAS_CLINIQUE',
+    sessionType: 'Normale',
+    durationMinutes: 60,
+    practicalQuestions: [
+      {
+        id: 'exam-gen-29-p1',
+        num: 1,
+        questionTitle: 'Cas Clinique : Pathologie de Module Spécialisé 29',
+        clinicalContext: 'Patient se présentant aux urgences avec des signes typiques.',
+        examDataText: 'Examens complémentaires confirment le diagnostic.',
+        qrocQuestions: [
+          {
+            questionLabel: '1. Quel est le diagnostic ?',
+            expectedAnswerKey: 'Diagnostic précis',
+            facultyDetailedCorrection: 'Le tableau est pathognomonique.'
+          }
+        ]
+      }
+    ]
   }
 ];
+

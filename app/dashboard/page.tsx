@@ -11,6 +11,8 @@ import ChapterPage from '../modules/[id]/chapters/[chapterId]/page';
 import FinalExamPage from '../modules/[id]/final-exam/page';
 import RandomPracticePage from '../practice/random/page';
 import SemesterMiniGame from '../../components/SemesterMiniGame';
+import ClinicalSimulationGame from '../../components/ClinicalSimulationGame';
+import StudentProgressDashboard from '../../components/StudentProgressDashboard';
 import FacultyAnnalesSection from '../../components/FacultyAnnalesSection';
 import { 
   BookOpen, 
@@ -63,7 +65,15 @@ export default function DashboardPage() {
   if (activeSection === 'MINI_GAME') {
     return (
       <DashboardLayout>
-        <SemesterMiniGame semesterCode="S5" />
+        <ClinicalSimulationGame />
+      </DashboardLayout>
+    );
+  }
+
+  if (activeSection === 'PROGRESS') {
+    return (
+      <DashboardLayout>
+        <StudentProgressDashboard />
       </DashboardLayout>
     );
   }

@@ -263,12 +263,26 @@ export default function CommunityChat() {
       const query = val.slice(8).trim() || 'bonjour';
       const typingId = `t-${Date.now()}`;
       setMessages(prev => [...prev, { id: typingId, sender: 'flakkai', senderName: 'FLAKKAI', content: '', timestamp: now(), type: 'text', isTyping: true }]);
-      setTimeout(() => {
+      
+      fetch('/api/flakkai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query, history: [] })
+      })
+      .then(res => res.json())
+      .then(data => {
         setMessages(prev => prev.filter(m => m.id !== typingId).concat({
           id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
-          content: getAIResponse(query), timestamp: now(), type: 'text',
+          content: data.response || 'Erreur de réponse.', timestamp: now(), type: 'text',
         }));
-      }, 900 + Math.random() * 700);
+      })
+      .catch(err => {
+        console.error(err);
+        setMessages(prev => prev.filter(m => m.id !== typingId).concat({
+          id: `f-${Date.now()}`, sender: 'flakkai', senderName: 'FLAKKAI',
+          content: 'Désolé, une erreur est survenue avec le serveur FLAKKAI.', timestamp: now(), type: 'text',
+        }));
+      });
     }
   };
 

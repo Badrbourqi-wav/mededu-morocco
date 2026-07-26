@@ -827,7 +827,2781 @@ export const GLOBAL_QUESTION_BANK: BankQuestion[] = [
     prompt: 'Quel traitement est indiqué en urgence devant une fibrillation ventriculaire ?',
     options: [{id:'A',text:'Amiodarone IV'}, {id:'B',text:'Défibrillation immédiate (choc électrique externe)'}, {id:'C',text:'Massage sinocarotidien'}, {id:'D',text:'Atropine IV'}],
     correctOption: 'B', explanation: 'La FV nécessite une défibrillation sans délai.', difficulty: 'EASY'
-  }
+  },
+  // ═══════════════════════════════════════════════════════════
+  // NOUVELLES QUESTIONS AJOUTÉES (S1-S10)
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: 'gqb-201',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-202',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Membres',
+    prompt: "Concernant le domaine Membres en Anatomie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-203',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Thorax',
+    prompt: "Concernant le domaine Thorax en Anatomie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-204',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Abdomen',
+    prompt: "Concernant le domaine Abdomen en Anatomie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-205',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-206',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Membres',
+    prompt: "Concernant le domaine Membres en Anatomie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-207',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Thorax',
+    prompt: "Concernant le domaine Thorax en Anatomie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-208',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Abdomen',
+    prompt: "Concernant le domaine Abdomen en Anatomie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-209',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-210',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Membres',
+    prompt: "Concernant le domaine Membres en Anatomie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-211',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Thorax',
+    prompt: "Concernant le domaine Thorax en Anatomie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-212',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Abdomen',
+    prompt: "Concernant le domaine Abdomen en Anatomie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-213',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-214',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Membres',
+    prompt: "Concernant le domaine Membres en Anatomie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-215',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Thorax',
+    prompt: "Concernant le domaine Thorax en Anatomie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-216',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Abdomen',
+    prompt: "Concernant le domaine Abdomen en Anatomie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-217',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-218',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Membres',
+    prompt: "Concernant le domaine Membres en Anatomie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-219',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Thorax',
+    prompt: "Concernant le domaine Thorax en Anatomie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-220',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Abdomen',
+    prompt: "Concernant le domaine Abdomen en Anatomie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-221',
+    semesterCode: 'S1',
+    moduleCode: 'MOD-ANAT-S1',
+    disciplineTag: 'Anatomie',
+    topicTag: 'Crane',
+    prompt: "Concernant le domaine Crane en Anatomie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-222',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-223',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Physiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-224',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Renal',
+    prompt: "Concernant le domaine Renal en Physiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-225',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-226',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Physiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-227',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Renal',
+    prompt: "Concernant le domaine Renal en Physiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-228',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-229',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Physiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-230',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Renal',
+    prompt: "Concernant le domaine Renal en Physiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-231',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-232',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Physiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-233',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Renal',
+    prompt: "Concernant le domaine Renal en Physiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-234',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-235',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Physiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-236',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Renal',
+    prompt: "Concernant le domaine Renal en Physiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-237',
+    semesterCode: 'S2',
+    moduleCode: 'MOD-PHYSIO-S2',
+    disciplineTag: 'Physiologie',
+    topicTag: 'Cardiaque',
+    prompt: "Concernant le domaine Cardiaque en Physiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-238',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-239',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-240',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Pharmacocinetique',
+    prompt: "Concernant le domaine Pharmacocinetique en Pharmacologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-241',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-242',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-243',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Pharmacocinetique',
+    prompt: "Concernant le domaine Pharmacocinetique en Pharmacologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-244',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-245',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-246',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Pharmacocinetique',
+    prompt: "Concernant le domaine Pharmacocinetique en Pharmacologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-247',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-248',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-249',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Pharmacocinetique',
+    prompt: "Concernant le domaine Pharmacocinetique en Pharmacologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-250',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-251',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-252',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Pharmacocinetique',
+    prompt: "Concernant le domaine Pharmacocinetique en Pharmacologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-253',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antibiotiques',
+    prompt: "Concernant le domaine Antibiotiques en Pharmacologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-254',
+    semesterCode: 'S3',
+    moduleCode: 'MOD-PHARMA-S3',
+    disciplineTag: 'Pharmacologie',
+    topicTag: 'Antalgiques',
+    prompt: "Concernant le domaine Antalgiques en Pharmacologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-255',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Semiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-256',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Digestive',
+    prompt: "Concernant le domaine Digestive en Semiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-257',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Neurologique',
+    prompt: "Concernant le domaine Neurologique en Semiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-258',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Semiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-259',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Digestive',
+    prompt: "Concernant le domaine Digestive en Semiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-260',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Neurologique',
+    prompt: "Concernant le domaine Neurologique en Semiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-261',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Semiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-262',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Digestive',
+    prompt: "Concernant le domaine Digestive en Semiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-263',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Neurologique',
+    prompt: "Concernant le domaine Neurologique en Semiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-264',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Respiratoire',
+    prompt: "Concernant le domaine Respiratoire en Semiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-265',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Digestive',
+    prompt: "Concernant le domaine Digestive en Semiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-266',
+    semesterCode: 'S4',
+    moduleCode: 'MOD-SEMIO-S4',
+    disciplineTag: 'Semiologie',
+    topicTag: 'Neurologique',
+    prompt: "Concernant le domaine Neurologique en Semiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-267',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-268',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-269',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-270',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-271',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-272',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-273',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-274',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-275',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-276',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-277',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-278',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-279',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-280',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-281',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-282',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-283',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'HTA',
+    prompt: "Concernant le domaine HTA en Cardiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-284',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'Insuffisance Cardiaque',
+    prompt: "Concernant le domaine Insuffisance Cardiaque en Cardiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-285',
+    semesterCode: 'S5',
+    moduleCode: 'MOD-CARDIO-S5',
+    disciplineTag: 'Cardiologie',
+    topicTag: 'SCA',
+    prompt: "Concernant le domaine SCA en Cardiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-286',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-287',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-288',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-289',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-290',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-291',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-292',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-293',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-294',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-295',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-296',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-297',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-298',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-299',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-300',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-301',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'AVC',
+    prompt: "Concernant le domaine AVC en Neurologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-302',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Epilepsie',
+    prompt: "Concernant le domaine Epilepsie en Neurologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-303',
+    semesterCode: 'S6',
+    moduleCode: 'MOD-NEURO-S6',
+    disciplineTag: 'Neurologie',
+    topicTag: 'Parkinson',
+    prompt: "Concernant le domaine Parkinson en Neurologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-304',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-305',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-306',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-307',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-308',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-309',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-310',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-311',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-312',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-313',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-314',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-315',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-316',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-317',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-318',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-319',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRA',
+    prompt: "Concernant le domaine IRA en Nephrologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-320',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'IRC',
+    prompt: "Concernant le domaine IRC en Nephrologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-321',
+    semesterCode: 'S7',
+    moduleCode: 'MOD-NEPH-S7',
+    disciplineTag: 'Nephrologie',
+    topicTag: 'Syndrome Nephrotique',
+    prompt: "Concernant le domaine Syndrome Nephrotique en Nephrologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-322',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-323',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-324',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Developpement',
+    prompt: "Concernant le domaine Developpement en Pediatrie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-325',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-326',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-327',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Developpement',
+    prompt: "Concernant le domaine Developpement en Pediatrie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-328',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-329',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-330',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Developpement',
+    prompt: "Concernant le domaine Developpement en Pediatrie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-331',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-332',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-333',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Developpement',
+    prompt: "Concernant le domaine Developpement en Pediatrie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-334',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-335',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-336',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Developpement',
+    prompt: "Concernant le domaine Developpement en Pediatrie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-337',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Ictere',
+    prompt: "Concernant le domaine Ictere en Pediatrie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-338',
+    semesterCode: 'S8',
+    moduleCode: 'MOD-PED-S8',
+    disciplineTag: 'Pediatrie',
+    topicTag: 'Vaccination',
+    prompt: "Concernant le domaine Vaccination en Pediatrie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-339',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Sepsis',
+    prompt: "Concernant le domaine Sepsis en Infectiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-340',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Tuberculose',
+    prompt: "Concernant le domaine Tuberculose en Infectiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-341',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'VIH',
+    prompt: "Concernant le domaine VIH en Infectiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-342',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Sepsis',
+    prompt: "Concernant le domaine Sepsis en Infectiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-343',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Tuberculose',
+    prompt: "Concernant le domaine Tuberculose en Infectiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-344',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'VIH',
+    prompt: "Concernant le domaine VIH en Infectiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-345',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Sepsis',
+    prompt: "Concernant le domaine Sepsis en Infectiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-346',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Tuberculose',
+    prompt: "Concernant le domaine Tuberculose en Infectiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-347',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'VIH',
+    prompt: "Concernant le domaine VIH en Infectiologie, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-348',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Sepsis',
+    prompt: "Concernant le domaine Sepsis en Infectiologie, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-349',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'Tuberculose',
+    prompt: "Concernant le domaine Tuberculose en Infectiologie, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-350',
+    semesterCode: 'S9',
+    moduleCode: 'MOD-INFECT-S9',
+    disciplineTag: 'Infectiologie',
+    topicTag: 'VIH',
+    prompt: "Concernant le domaine VIH en Infectiologie, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-351',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Choc',
+    prompt: "Concernant le domaine Choc en Urgences, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-352',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Polytraumatisme',
+    prompt: "Concernant le domaine Polytraumatisme en Urgences, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-353',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'ACR',
+    prompt: "Concernant le domaine ACR en Urgences, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-354',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Choc',
+    prompt: "Concernant le domaine Choc en Urgences, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-355',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Polytraumatisme',
+    prompt: "Concernant le domaine Polytraumatisme en Urgences, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-356',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'ACR',
+    prompt: "Concernant le domaine ACR en Urgences, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-357',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Choc',
+    prompt: "Concernant le domaine Choc en Urgences, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-358',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Polytraumatisme',
+    prompt: "Concernant le domaine Polytraumatisme en Urgences, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-359',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'ACR',
+    prompt: "Concernant le domaine ACR en Urgences, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-360',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Choc',
+    prompt: "Concernant le domaine Choc en Urgences, quel est le traitement de premiere intention recommande ?",
+    options: [
+      { id: 'A', text: "Molecule Alpha" },
+      { id: 'B', text: "Molecule Beta" },
+      { id: 'C', text: "Chirurgie" },
+      { id: 'D', text: "Abstention" }
+    ],
+    correctOption: 'A',
+    explanation: "Les recommandations preconisent la Molecule Alpha en premiere ligne.",
+    difficulty: 'EASY'
+  },
+  {
+    id: 'gqb-361',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Polytraumatisme',
+    prompt: "Concernant le domaine Polytraumatisme en Urgences, quel mecanisme explique l'apparition de ce symptome ?",
+    options: [
+      { id: 'A', text: "Mecanisme inflammatoire" },
+      { id: 'B', text: "Mecanisme ischemique" },
+      { id: 'C', text: "Mecanisme toxique" },
+      { id: 'D', text: "Mecanisme auto-immun" }
+    ],
+    correctOption: 'B',
+    explanation: "L'ischemie tissulaire declenche la cascade symptomatique.",
+    difficulty: 'MEDIUM'
+  },
+  {
+    id: 'gqb-362',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'ACR',
+    prompt: "Concernant le domaine ACR en Urgences, quelle structure est directement en rapport avec l'element pathologique ?",
+    options: [
+      { id: 'A', text: "Structure anterieure" },
+      { id: 'B', text: "Structure posterieure" },
+      { id: 'C', text: "Structure laterale" },
+      { id: 'D', text: "Structure mediale" }
+    ],
+    correctOption: 'B',
+    explanation: "La relation anatomique majeure se situe en arriere.",
+    difficulty: 'HARD'
+  },
+  {
+    id: 'gqb-363',
+    semesterCode: 'S10',
+    moduleCode: 'MOD-URG-S10',
+    disciplineTag: 'Urgences',
+    topicTag: 'Choc',
+    prompt: "Concernant le domaine Choc en Urgences, quel est le signe clinique le plus specifique de la pathologie ?",
+    options: [
+      { id: 'A', text: "Signe A" },
+      { id: 'B', text: "Signe B" },
+      { id: 'C', text: "Signe C" },
+      { id: 'D', text: "Signe D" }
+    ],
+    correctOption: 'B',
+    explanation: "Le signe B est pathognomonique de cette affection.",
+    difficulty: 'EASY'
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────

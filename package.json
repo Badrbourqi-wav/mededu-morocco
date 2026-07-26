@@ -11,11 +11,13 @@
     "prisma:push": "prisma db push"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^5.10.0",
     "@types/three": "^0.185.1",
     "framer-motion": "^11.18.2",
     "lucide-react": "^0.330.0",
     "next": "^14.1.0",
+    "next-auth": "^4.24.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.185.1",

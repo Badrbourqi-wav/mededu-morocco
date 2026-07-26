@@ -144,6 +144,21 @@ export default function DashboardLayout({ children, activeCycle, onSectionChange
               <ChevronRight className="w-4 h-4 text-teal-400/60 group-hover:translate-x-0.5 transition-transform" />
             </button>
 
+            <button 
+              onClick={() => handleNavClick('PROGRESS')} 
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition-all ${
+                activeSection === 'PROGRESS'
+                  ? 'bg-orange-500/15 text-orange-300 border border-orange-500/30 shadow-md shadow-orange-950/40 font-bold'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              } group`}
+            >
+              <div className="flex items-center space-x-3">
+                <Award className={`w-5 h-5 ${activeSection === 'PROGRESS' ? 'text-orange-400' : 'text-slate-400 group-hover:text-orange-400'}`} />
+                <span>Mon Progrès</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-orange-400/60 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+
             <div className="pt-2 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase mb-1">
               CYCLES D ÉTUDES (S1-S12)
             </div>
